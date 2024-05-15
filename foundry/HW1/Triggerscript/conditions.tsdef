@@ -1,0 +1,3452 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LogicDatabase>
+  <Logic dbid="2" Name="CanGetUnits">
+    <Type>
+      <Version v="5">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Location" Type="Vector" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Distance" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Player" Type="Player" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="ObjectType" Type="ObjectType" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="8">
+            <Value Name="UnitList" Type="UnitList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="Count" Type="Integer" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="9">
+            <Value Name="FilterList" Type="UnitList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="10">
+            <Value Name="PlayerList" Type="PlayerList" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="6">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Location" Type="Vector" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Distance" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Player" Type="Player" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="ObjectType" Type="ObjectType" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="8">
+            <Value Name="UnitList" Type="UnitList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="Count" Type="Integer" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="9">
+            <Value Name="FilterList" Type="UnitList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="10">
+            <Value Name="PlayerList" Type="PlayerList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="11">
+            <Value Name="BoxForward" Type="Vector" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="13">
+            <Value Name="BoxHalfX" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="14">
+            <Value Name="BoxHalfY" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="15">
+            <Value Name="BoxHalfZ" Type="Float" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="4" Name="CanGetSquads">
+    <Type>
+      <Version v="8">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Location" Type="Vector" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Distance" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Player" Type="Player" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="9">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="ProtoSquad" Type="ProtoSquad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="Count" Type="Integer" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="10">
+            <Value Name="FilterList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="11">
+            <Value Name="ObjectType" Type="ObjectType" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="12">
+            <Value Name="PlayerList" Type="PlayerList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="15">
+            <Value Name="BoxForward" Type="Vector" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="16">
+            <Value Name="BoxHalfX" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="17">
+            <Value Name="BoxHalfY" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="18">
+            <Value Name="BoxHalfZ" Type="Float" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="9">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Location" Type="Vector" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Distance" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Player" Type="Player" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="9">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="ProtoSquad" Type="ProtoSquad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="Count" Type="Integer" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="10">
+            <Value Name="FilterList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="11">
+            <Value Name="ObjectType" Type="ObjectType" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="12">
+            <Value Name="PlayerList" Type="PlayerList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="15">
+            <Value Name="BoxForward" Type="Vector" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="16">
+            <Value Name="BoxHalfX" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="17">
+            <Value Name="BoxHalfY" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="18">
+            <Value Name="BoxHalfZ" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="19">
+            <Value Name="IgnoreAir" Type="Bool" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="5" Name="TechStatus">
+    <Type>
+      <Version v="1">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Tech" Type="Tech" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="TechStatus" Type="TechStatus" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Tech" Type="Tech" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="TechStatus" Type="TechStatus" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="Unit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="7" Name="TriggerActiveTime">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Operator" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Time" Type="Time" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="8" Name="UnitUnitDistance">
+    <Type>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit1" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Unit2" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Operator" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="Distance" Type="Float" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="9" Name="UnitLocationDistance">
+    <Type>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Location" Type="Vector" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Operator" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="Distance" Type="Float" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="80" Name="IsAlive">
+    <Type>
+      <Version v="3">
+        <Params>
+          <Param sigid="3">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="UnitList" Type="UnitList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="81" Name="IsDead">
+    <Type>
+      <Version v="3">
+        <Params>
+          <Param sigid="3">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="UnitList" Type="UnitList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="16" Name="UILocationOK">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UILocation" Type="UILocation" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Location" Type="UILocation" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="17" Name="UILocationCancel">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UILocation" Type="UILocation" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="14" Name="CompareCount">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstCount" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondCount" Type="Integer" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="15" Name="CanPayCost">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Cost" Type="Cost" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="82" Name="CheckPlacement">
+    <Type>
+      <Version v="5">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Location" Type="Vector" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="ProtoObject" Type="ProtoObject" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="CheckObstruction" Type="Bool" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="LOSType" Type="LOSType" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="SearchScale" Type="Integer" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="OutSuggestion" Type="Vector" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="8">
+            <Value Name="LOSCenterOnly" Type="Bool" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="9">
+            <Value Name="ProtoSquad" Type="ProtoSquad" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="6">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Location" Type="Vector" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="ProtoObject" Type="ProtoObject" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="CheckObstruction" Type="Bool" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="LOSType" Type="LOSType" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="SearchScale" Type="Integer" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="OutSuggestion" Type="Vector" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="8">
+            <Value Name="LOSCenterOnly" Type="Bool" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="9">
+            <Value Name="ProtoSquad" Type="ProtoSquad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="10">
+            <Value Name="CheckUnitObstructions" Type="Bool" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="11">
+            <Value Name="CheckSquadObstructions" Type="Bool" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="27" Name="CanUsePower">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Power" Type="Power" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="28" Name="IsUnitPower">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Power" Type="Power" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="29" Name="IsOwnedBy">
+    <Type>
+      <Version v="3">
+        <Params>
+          <Param sigid="2">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="UnitList" Type="UnitList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="4">
+        <Params>
+          <Param sigid="2">
+            <Value Name="Player" Type="Player" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="UnitList" Type="UnitList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="8">
+            <Value Name="Team" Type="Team" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="30" Name="IsProtoObject">
+    <Type>
+      <Version v="2">
+        <Params>
+          <Param sigid="3">
+            <Value Name="Unit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ProtoObject" Type="ProtoObject" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="118" Name="NextPlayer">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="NextPlayer" Type="Player" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="119" Name="NextTeam">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="NextTeam" Type="Team" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="128" Name="UnitListLocationDistance">
+    <Type>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UnitList" Type="UnitList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Location" Type="Vector" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Compare" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="Distance" Type="Float" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="TestAll" Type="Bool" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="131" Name="PlayerInState">
+    <Type>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="PlayerState" Type="PlayerState" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="136" Name="ContainsGarrisoned">
+    <Type>
+      <Version v="3">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Player" Type="Player" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="ObjectType" Type="ObjectType" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="114" Name="CompareBool">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstBool" Type="Bool" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Compare" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondBool" Type="Bool" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="140" Name="NextUnit">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="NextUnit" Type="Unit" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="141" Name="NextSquad">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="NextSquad" Type="Squad" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="155" Name="UIUnitOK">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UIUnit" Type="UIUnit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Unit" Type="UIUnit" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="156" Name="UIUnitCancel">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UIUnit" Type="UIUnit" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="157" Name="UISquadOK">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UISquad" Type="UISquad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Squad" Type="UISquad" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="158" Name="UISquadCancel">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UISquad" Type="UISquad" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="356" Name="CanGetOneUnit">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UnitList" Type="UnitList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPos" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Unit" Type="Unit" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="357" Name="CanGetOneSquad">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="SquadList" Type="SquadList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPos" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="476" Name="CompareLeader">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstLeader" Type="Leader" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondLeader" Type="Leader" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="477" Name="PlayerUsingLeader">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Leader" Type="Leader" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="485" Name="CanGetOneProtoObject">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="ProtoObjectList" Type="ProtoObjectList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="FoundProtoObject" Type="ProtoObject" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="486" Name="CanGetOneProtoSquad">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="ProtoSquadList" Type="ProtoSquadList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="FoundProtoSquad" Type="ProtoSquad" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="487" Name="CanGetOneObjectType">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="ObjectTypeList" Type="ObjectTypeList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="FoundObjectType" Type="ObjectType" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="488" Name="CanGetOneTech">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TechList" Type="TechList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="FoundTech" Type="Tech" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="494" Name="NextProtoObject">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="NextProtoObject" Type="ProtoObject" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="495" Name="NextProtoSquad">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="NextProtoSquad" Type="ProtoSquad" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="496" Name="NextObjectType">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="NextObjectType" Type="ObjectType" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="497" Name="NextTech">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="NextTech" Type="Tech" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="20" Name="PlayerSelectingUnit">
+    <Type>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Unit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="21" Name="PlayerLookingAtUnit">
+    <Type>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Unit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="22" Name="PlayerLookingAtLocation" />
+  <Logic dbid="170" Name="CompareTime">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstTime" Type="Time" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondTime" Type="Time" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="171" Name="CompareString">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstString" Type="String" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondString" Type="String" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="175" Name="ComparePercent">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstPercent" Type="Float" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondPercent" Type="Float" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="182" Name="CompareHitpoints">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstHP" Type="Float" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondHP" Type="Float" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="191" Name="IsMultiplayerActive" />
+  <Logic dbid="192" Name="CanRetrieveExternals">
+    <Type>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Power" Type="Power" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="Cost" Type="Cost" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="UnitList" Type="UnitList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="3">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Power" Type="Power" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="Cost" Type="Cost" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="UnitList" Type="UnitList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="8">
+            <Value Name="LocationList" Type="VectorList" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="238" Name="SquadLocationDistance">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Location" Type="Vector" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Operator" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="Distance" Type="Float" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="240" Name="CompareCiv">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstCiv" Type="Civ" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondCiv" Type="Civ" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="260" Name="IsHitZoneActive">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="HZName" Type="String" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="256" Name="CompareAmmoPercent">
+    <Type>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="AmmoPercent" Type="Float" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="CurrentAmmoPercent" Type="Float" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="264" Name="IsIdle">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Duration" Type="Time" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="266" Name="GameTime">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareTime" Type="Time" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="268" Name="GameTimeReached">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TestTime" Type="Time" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="TimeRemaining" Type="Time" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="269" Name="TriggerActiveTimeReached">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TestTime" Type="Time" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="TimeRemaining" Type="Time" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="280" Name="PlayerSelectingSquad">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="282" Name="NextObject">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="NextObject" Type="Object" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="292" Name="NextLocation">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="NextLocation" Type="Vector" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="293" Name="RandomListLocation">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="LocationList" Type="VectorList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="RandomLocation" Type="Vector" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="314" Name="RefCountUnit">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="UnitList" Type="UnitList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="RefCountType" Type="RefCountType" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="CompareType" Type="Operator" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="8">
+            <Value Name="CompareCount" Type="Integer" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="MaxCount" Type="Integer" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="315" Name="RefCountSquad">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="RefCountType" Type="RefCountType" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="CompareType" Type="Operator" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="CompareCount" Type="Integer" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="MaxCount" Type="Integer" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="320" Name="UnitFlag">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="UnitList" Type="UnitList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="FlagType" Type="UnitFlag" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="CompareValue" Type="Bool" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="8">
+            <Value Name="AllOn" Type="Bool" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="327" Name="UILocationUILockError">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UILocation" Type="UILocation" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="328" Name="UIUnitUILockError">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UIUnit" Type="UIUnit" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="329" Name="UISquadUILockError">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UISquad" Type="UISquad" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="331" Name="UILocationWaiting">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UILocation" Type="UILocation" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="332" Name="UIUnitWaiting">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UIUnit" Type="UIUnit" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="333" Name="UISquadWaiting">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UISquad" Type="UISquad" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="339" Name="CompareCost">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstCost" Type="Cost" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="OrFlag" Type="Bool" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="SecondCost" Type="Cost" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="340" Name="CheckResourceTotals">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Cost" Type="Cost" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="352" Name="ComparePopulation">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="PopBucket" Type="PopBucket" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Compare" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="Amount" Type="Integer" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="362" Name="CheckDiplomacy">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="UnitList" Type="UnitList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="RelationType" Type="RelationType" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="Player" Type="Player" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="Team" Type="Team" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="386" Name="CheckModeChange">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="OutNormal" Type="Bool" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="OutResult" Type="Bool" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="414" Name="IsBuilt">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="416" Name="IsMoving">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="426" Name="PlayerIsHuman">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="427" Name="PlayerIsGaia">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="428" Name="ComparePlayers">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstPlayer" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondPlayer" Type="Player" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="429" Name="CompareTeams">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstTeam" Type="Team" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondTeam" Type="Team" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="434" Name="CanGetOnePlayer">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="PlayerList" Type="PlayerList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPos" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Player" Type="Player" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="435" Name="CanGetOneTeam">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TeamList" Type="TeamList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPos" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Team" Type="Team" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="436" Name="ComparePlayerUnitCount">
+    <Type>
+      <Version v="1">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ObjectType" Type="ObjectType" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="CompareCount" Type="Integer" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ObjectType" Type="ObjectType" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="CompareCount" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="IncludeTraining" Type="Invalid" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="438" Name="IsSquadAtMaxSize">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="440" Name="CanRetrieveExternalLocation">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="ExternalLocation" Type="Vector" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="441" Name="CanRetrieveExternalLocationList">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="2">
+            <Value Name="ExternalLocationList" Type="VectorList" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="444" Name="NextKBBase">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="NextKBBase" Type="KBBase" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="453" Name="CompareFloat">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstFloat" Type="Float" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Compare" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondFloat" Type="Float" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="461" Name="IsUnderAttack">
+    <Type>
+      <Version v="1">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Interval" Type="Time" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Interval" Type="Time" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="508" Name="HasAttached">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="509" Name="IsMobile">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="513" Name="CompareProtoSquad">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstProtoSquad" Type="ProtoSquad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Compare" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondProtoSquad" Type="ProtoSquad" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="518" Name="HasCinematicTagFired">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="CinematicTag" Type="CinematicTag" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="524" Name="CanGetBuilder">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="BuilderUnit" Type="Unit" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="BuilderSquad" Type="Unit" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="527" Name="UIButtonPressed">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UIButton" Type="UIButton" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="X" Type="Float" Optional="false" Output="true" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Y" Type="Float" Optional="false" Output="true" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="Analog" Type="Float" Optional="false" Output="true" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="ActionModifier" Type="Bool" Optional="false" Output="true" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="SpeedModifier" Type="Bool" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="528" Name="UIButtonWaiting">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UIButton" Type="UIButton" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="546" Name="CompareAIMissionType">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="AIMissionID" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="AIMissionType" Type="MissionType" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="547" Name="CompareAIMissionState">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="AIMissionID" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="AIMissionState" Type="MissionState" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="548" Name="CompareAIMissionTargetType">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="AIMissionTargetID" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="AIMissionTargetType" Type="MissionTargetType" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="552" Name="CanGetOneInteger">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="IntegerList" Type="IntegerList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="FoundInteger" Type="Integer" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="558" Name="CanGetUnitsAlongRay">
+    <Type>
+      <Version v="1">
+        <Params>
+          <Param sigid="1">
+            <Value Name="nStartLoc" Type="Vector" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="nEndLoc" Type="Vector" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="nRadius" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="utUnitList" Type="UnitList" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="nStartLoc" Type="Vector" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="nEndLoc" Type="Vector" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="nRadius" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="utUnitList" Type="UnitList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="nSortFlag" Type="Invalid" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="nReverseSortFlag" Type="Invalid" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="nDebugColor" Type="Color" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="563" Name="CanRemoveOneInteger">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="IntegerList" Type="IntegerList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="FoundInteger" Type="Integer" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="565" Name="CanGetOneLocation">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="LocationList" Type="VectorList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="FoundLocation" Type="Vector" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="566" Name="CanRemoveOneLocation">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="LocationList" Type="VectorList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="RemovedLocation" Type="Vector" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="575" Name="CompareProtoObject">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstProtoObject" Type="ProtoObject" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondProtoObject" Type="ProtoObject" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="576" Name="CompareTech">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstTech" Type="Tech" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondTech" Type="Tech" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="577" Name="ProtoObjectListContains">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="ProtoObjectList" Type="ProtoObjectList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ProtoObject" Type="ProtoObject" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="578" Name="ProtoSquadListContains">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="ProtoSquadList" Type="ProtoSquadList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ProtoSquad" Type="ProtoSquad" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="579" Name="TechListContains">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TechList" Type="TechList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Tech" Type="Tech" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="583" Name="CanRemoveOneProtoObject">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="List" Type="ProtoObjectList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Removed" Type="ProtoObject" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="584" Name="CanRemoveOneProtoSquad">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="List" Type="ProtoSquadList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Removed" Type="ProtoSquad" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="585" Name="CanRemoveOneTech">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="List" Type="TechList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Removed" Type="Tech" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="586" Name="BidState">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="BidID" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="BidState" Type="BidState" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="596" Name="BuildingCommandDone">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="BuildingCommandState" Type="BuildingCommandState" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SquadList" Type="SquadList" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="600" Name="AITopicIsActive">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TopicID" Type="Integer" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="1059" Name="AITopicGetTickets">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TopicID" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CountOut" Type="Integer" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="602" Name="HasGarrisoned">
+    <Type>
+      <Version v="1">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="NumGarrisoned" Type="Integer" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="603" Name="IsGarrisoned">
+    <Type>
+      <Version v="1">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InSquad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="InSquadList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="604" Name="IsAttached">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="606" Name="ComparePlayerSquadCount">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ProtoSquad" Type="ProtoSquad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="CompareCount" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="IncludeTraining" Type="Bool" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="611" Name="IsPassable">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="SquadList" Type="SquadList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="TestLocation" Type="Vector" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="621" Name="CanGetCentroid">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="SquadList" Type="SquadList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Centroid" Type="Vector" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="624" Name="PlayerIsPrimaryUser">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="PlayerID" Type="Player" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="629" Name="IsConfigDefined">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="ConfigName" Type="String" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="627" Name="IsCoop" />
+  <Logic dbid="635" Name="CustomCommandCheck">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="CommandID" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CountOut" Type="Integer" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="649" Name="IsObjectType">
+    <Type>
+      <Version v="1">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ObjectType" Type="ObjectType" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InSquad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="InObjectType" Type="ObjectType" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="InUnit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="InObject" Type="Object" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="InProtoObject" Type="ProtoObject" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="640" Name="UISquadListOK">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UISquadList" Type="UISquadList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="SquadList" Type="UISquadList" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="641" Name="UISquadListCancel">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UISquadList" Type="UISquadList" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="642" Name="UISquadListUILockError">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UISquadList" Type="UISquadList" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="643" Name="UISquadListWaiting">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UISquadList" Type="UISquadList" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="661" Name="IsTimerDone">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TimerID" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CurrentTime" Type="Time" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="662" Name="NextKBSquad">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="NextKBSquad" Type="KBSquad" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="709" Name="IsAttacking">
+    <Type>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="3">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="UnitList" Type="UnitList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="SquadList" Type="SquadList" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="714" Name="CanGetUnitLaunchLocation">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Location" Type="Vector" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="722" Name="IsGathering">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="723" Name="IsCapturing">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Unit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="740" Name="PlayerIsComputerAI">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="743" Name="CanGetGreatestThreat">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TargetSquad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ThreatSquad" Type="Squad" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="744" Name="CanGetTargetedSquad">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="AttackingSquad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="TargetedSquad" Type="Squad" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="746" Name="IsObjectiveComplete">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Objective" Type="Objective" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="752" Name="CompareVector">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="VectorA" Type="Vector" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="VectorB" Type="Vector" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Epsilon" Type="Float" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="762" Name="GetTableRow">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TableID" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Row" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="UserClassType" Type="UserClassType" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="UserClassData" Type="Invalid" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="763" Name="CheckPop">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="5">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="1">
+            <Value Name="ProtoSquad" Type="ProtoSquad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CheckBids" Type="Bool" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="BonusLimit" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="NumCanTrain" Type="Integer" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="789" Name="IsUserModeNormal">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="800" Name="IsHitched">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="2">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="HitchedToSquad" Type="Squad" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="801" Name="HasHitched">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="HitchedSquad" Type="Squad" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="807" Name="SquadSquadDistance">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad1" Type="Squad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Squad2" Type="Squad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Operator" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="Distance" Type="Float" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="814" Name="IsInQueue">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="ProtoSquad" Type="ProtoSquad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Player" Type="Player" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Team" Type="Team" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="813" Name="EventTriggered">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="EventID" Type="Integer" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="819" Name="CanGetObjects">
+    <Type>
+      <Version v="1">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Location" Type="Vector" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Distance" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Player" Type="Player" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="ProtoObject" Type="ProtoObject" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="FilterList" Type="ObjectList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="ObjectList" Type="ObjectList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="Count" Type="Integer" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Location" Type="Vector" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Distance" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Player" Type="Player" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="ProtoObject" Type="ProtoObject" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="FilterList" Type="ObjectList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="ObjectList" Type="ObjectList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="Count" Type="Integer" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="8">
+            <Value Name="PlayerList" Type="PlayerList" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="835" Name="CanGetOneObject">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="ObjectList" Type="ObjectList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPos" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Object" Type="Object" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="844" Name="CanGetCorpseUnits">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Location" Type="Vector" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Radius" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Units" Type="UnitList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="NumUnits" Type="Integer" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="860" Name="CanGetOneTime">
+    <Type>
+      <Version v="1">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TimeList" Type="TimeList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="FoundTime" Type="Time" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TimeList" Type="TimeList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="FoundTime" Type="Time" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="865" Name="CanGetOneDesignLine">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="DesignLineList" Type="DesignLineList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="FoundDesignLine" Type="DesignLine" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="866" Name="CompareDesignLine">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FirstDesignLine" Type="DesignLine" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="SecondDesignLine" Type="DesignLine" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="877" Name="CanRetrieveExternalFlag">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InExternalFlagIndex" Type="Integer" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="OutExternalFlag" Type="Bool" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="883" Name="AICanGetTopicFocus">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TopicID" Type="Integer" Optional="false" Output="true" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="PlayerID" Type="Player" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="885" Name="CanGetOneFloat">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FloatList" Type="FloatList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="FoundFloat" Type="Float" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="825" Name="CompareLocStringID">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="LocStringA" Type="LocStringID" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CompareType" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="LocStringB" Type="LocStringID" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="893" Name="UILocationMinigameWaiting">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UILocationMinigame" Type="UILocationMinigame" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="894" Name="UILocationMinigameOK">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UILocationMinigame" Type="UILocationMinigame" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Location" Type="Vector" Optional="false" Output="true" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Data" Type="Float" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="895" Name="UILocationMinigameCancel">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UILocationMinigame" Type="UILocationMinigame" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="896" Name="UILocationMinigameUILockError">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="UILocationMinigame" Type="UILocationMinigame" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="899" Name="IsSelectable">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InUnit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="InUnitList" Type="UnitList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="InSquad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="InSquadList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="InObject" Type="Object" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="InObjectList" Type="ObjectList" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="905" Name="ChatCompleted">
+    <Type>
+      <Version v="2">
+        <Params>
+          <Param sigid="2">
+            <Value Name="Delay" Type="Time" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="906" Name="CinematicCompleted" />
+  <Logic dbid="911" Name="SquadFlag">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Squad" Type="Squad" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="SquadList" Type="SquadList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="FlagType" Type="SquadFlag" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="CompareValue" Type="Bool" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="AllOn" Type="Bool" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="908" Name="CanGetSocketUnits">
+    <Type>
+      <Version v="1">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InUnit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="OutSocketUnits" Type="UnitList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="OutTurretSocketUnits" Type="UnitList" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InUnit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="OutSocketUnits" Type="UnitList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="OutTurretSocketUnits" Type="UnitList" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="InOnlyEmptySockets" Type="Bool" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="909" Name="CanGetOneSocketUnit">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InUnit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="InBuildingIndex" Type="Integer" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="InTurretIndex" Type="Integer" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="OutSocketUnit" Type="Unit" Optional="true" Output="true" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="OutTurretSocketUnit" Type="Unit" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="913" Name="FadeCompleted" />
+  <Logic dbid="916" Name="IsAutoAttackable">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InUnit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="InUnitList" Type="UnitList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="InSquad" Type="Squad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="InSquadList" Type="SquadList" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="OutAutoAttackable" Type="Invalid" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="918" Name="IsBeingGatheredFrom">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InUnit" Type="Unit" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="InUnitList" Type="UnitList" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="920" Name="AICanGetDifficultySetting">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="PlayerID" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="SettingName" Type="String" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="DefaultName" Type="String" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="Value" Type="Float" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="929" Name="ConceptGetParent" />
+  <Logic dbid="930" Name="ConceptGetCommand">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="PlayerID" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Concept" Type="Concept" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Command" Type="Integer" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="931" Name="ConceptGetStateChange">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="PlayerID" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Concept" Type="Concept" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="State" Type="Integer" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="932" Name="ConceptCompareState">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="PlayerID" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Concept" Type="Concept" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Operator" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="State" Type="Integer" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="942" Name="IsEmptySocketUnit">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InUnit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="944" Name="IsForbidden">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InPlayer" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="InProtoSquad" Type="ProtoSquad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="InProtoObject" Type="ProtoObject" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="InProtoTech" Type="Tech" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="954" Name="CanGetSocketParentBuilding">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InSocket" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="OutParentBuilding" Type="Unit" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="956" Name="CanGetRandomLocation">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InLocation" Type="Vector" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="InInnerRadius" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="InOuterRadius" Type="Float" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="InTestObstructions" Type="Bool" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="5">
+            <Value Name="InTestPathing" Type="Bool" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="6">
+            <Value Name="InProtoObjectID" Type="ProtoObject" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="7">
+            <Value Name="InProtoSquadID" Type="ProtoSquad" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="8">
+            <Value Name="OutLocation" Type="Vector" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="972" Name="CheckDifficulty">
+    <Type>
+      <Version v="1">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InPlayer" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="InDifficulty" Type="Difficulty" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+      <Version v="2">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InPlayer" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="InDifficulty" Type="Difficulty" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="InOperator" Type="Operator" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="974" Name="CanGetDesignSpheres">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Type" Type="String" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CenterPointList" Type="VectorList" Optional="false" Output="true" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="RadiusList" Type="FloatList" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="975" Name="CanRemoveOneFloat">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="FloatList" Type="FloatList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="ListPosition" Type="ListPosition" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="FoundFloat" Type="Float" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="977" Name="CanRetrieveExternalFloat">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="ExternalFloat" Type="Float" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="980" Name="MarkerSquadsInArea">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="SquadList" Type="SquadList" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="Point" Type="Vector" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Radius" Type="Float" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="ResultList" Type="SquadList" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="986" Name="CanGetSocketPlugUnit">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InSocketUnit" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="OutPlugUnit" Type="Unit" Optional="true" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="990" Name="CanGetHoverPoint">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InPlayer" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="OutHoverPoint" Type="Vector" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="991" Name="CanGetCoopPlayer">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="TestPlayer" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="CoopPlayer" Type="Player" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="1028" Name="CompareUnit">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="InUnit1" Type="Unit" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="InOperator" Type="Operator" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="InUnit2" Type="Unit" Optional="false" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="1053" Name="ASYNCUnitsOnScreenSelected">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="1">
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
+          </Param>
+          <Param sigid="2">
+            <Value Name="SearchRadius" Type="Float" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="3">
+            <Value Name="Location" Type="Vector" Optional="true" Output="false" />
+          </Param>
+          <Param sigid="4">
+            <Value Name="IgnoreObjectTypes" Type="ObjectTypeList" Optional="true" Output="false" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="1056" Name="CheckAndSetFalse">
+    <Type>
+      <Version v="0">
+        <Params>
+          <Param sigid="2">
+            <Value Name="Bool" Type="Bool" Optional="false" Output="true" />
+          </Param>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+</LogicDatabase>

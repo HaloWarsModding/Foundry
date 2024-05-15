@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ScriptComb2": {
+      "commandName": "Project",
+      "commandLineArgs": "$(ProjectDir)/ $(SolutionDir)/Foundry.Data.Triggerscript/"
+    }
+  }
+}

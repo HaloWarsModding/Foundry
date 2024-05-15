@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "foundry": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

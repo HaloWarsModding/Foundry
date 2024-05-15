@@ -1,0 +1,4401 @@
+[
+  {
+    "name": "CanGetUnits",
+    "inputs": [
+      {
+        "name": "FilterPlayer",
+        "valueType": "Player",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "FilterPlayerList",
+        "valueType": "PlayerList",
+        "optional": true,
+        "sigId": 10
+      },
+      {
+        "name": "FilterObjectType",
+        "valueType": "ObjectType",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "FilterLocation",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "FilterDistance",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "FilterBoxForward",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 11
+      },
+      {
+        "name": "FilterBoxHalfX",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 13
+      },
+      {
+        "name": "FilterBoxHalfY",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 14
+      },
+      {
+        "name": "FilterBoxHalfZ",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 15
+      },
+      {
+        "name": "FilterUnitList",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 9
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundUnits",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 8
+      },
+      {
+        "name": "FoundUnitCount",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 6
+      }
+    ],
+    "dbid": 2,
+    "version": 6
+  },
+  {
+    "name": "IsDead",
+    "inputs": [
+      {
+        "name": "TestUnit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "TestUnitList",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "TestSquad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "TestSquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 6
+      }
+    ],
+    "outputs": [],
+    "dbid": 81,
+    "version": 3
+  },
+  {
+    "name": "CanGetSquads",
+    "inputs": [
+      {
+        "name": "FilterPlayer",
+        "valueType": "Player",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "FilterPlayerList",
+        "valueType": "PlayerList",
+        "optional": true,
+        "sigId": 12
+      },
+      {
+        "name": "FilterProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": true,
+        "sigId": 6
+      },
+      {
+        "name": "FilterLocation",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "FilterRadius",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "FilterBoxForward",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 15
+      },
+      {
+        "name": "FilterBoxHalfX",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 16
+      },
+      {
+        "name": "FilterBoxHalfY",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 17
+      },
+      {
+        "name": "FilterBoxHalfZ",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 18
+      },
+      {
+        "name": "FilterSquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 10
+      },
+      {
+        "name": "FilterObjectType",
+        "valueType": "ObjectType",
+        "optional": true,
+        "sigId": 11
+      },
+      {
+        "name": "IgnoreAirUnits",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 19
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundSquads",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 9
+      },
+      {
+        "name": "FoundSquadCount",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 7
+      }
+    ],
+    "dbid": 4,
+    "version": 9
+  },
+  {
+    "name": "TriggerActiveTime",
+    "inputs": [
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareTime",
+        "valueType": "Time",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 7,
+    "version": 1
+  },
+  {
+    "name": "ChatCompleted",
+    "inputs": [
+      {
+        "name": "Delay",
+        "valueType": "Time",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 905,
+    "version": 2
+  },
+  {
+    "name": "IsAlive",
+    "inputs": [
+      {
+        "name": "TestUnit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "TestUnitList",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "TestSquad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "TestSquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 6
+      }
+    ],
+    "outputs": [],
+    "dbid": 80,
+    "version": 3
+  },
+  {
+    "name": "CompareBool",
+    "inputs": [
+      {
+        "name": "FirstBool",
+        "valueType": "Bool",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondBool",
+        "valueType": "Bool",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 114,
+    "version": 1
+  },
+  {
+    "name": "EventTriggered",
+    "inputs": [
+      {
+        "name": "EventID",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 813,
+    "version": 1
+  },
+  {
+    "name": "CompareInteger",
+    "inputs": [
+      {
+        "name": "FirstInteger",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondInteger",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 14,
+    "version": 1
+  },
+  {
+    "name": "IsOwnedBy",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "Team",
+        "valueType": "Team",
+        "optional": true,
+        "sigId": 8
+      },
+      {
+        "name": "TestUnit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "TestUnitList",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "TestSquad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 6
+      },
+      {
+        "name": "TestSquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 7
+      }
+    ],
+    "outputs": [],
+    "dbid": 29,
+    "version": 4
+  },
+  {
+    "name": "IsCoop",
+    "inputs": [],
+    "outputs": [],
+    "dbid": 627,
+    "version": 1
+  },
+  {
+    "name": "CheckDifficulty",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Operator",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 3
+      },
+      {
+        "name": "Difficulty",
+        "valueType": "Difficulty",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 972,
+    "version": 2
+  },
+  {
+    "name": "IsUnderAttack",
+    "inputs": [
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "SquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "Interval",
+        "valueType": "Time",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 461,
+    "version": 2
+  },
+  {
+    "name": "CinematicCompleted",
+    "inputs": [],
+    "outputs": [],
+    "dbid": 906,
+    "version": 1
+  },
+  {
+    "name": "IsAttacking",
+    "inputs": [
+      {
+        "name": "TestSquad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "TestSquads",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 4
+      }
+    ],
+    "outputs": [
+      {
+        "name": "TargetedUnit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "TargetedUnits",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "TargetedSquad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "TargetedSquads",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 6
+      }
+    ],
+    "dbid": 709,
+    "version": 3
+  },
+  {
+    "name": "GameTimeReached",
+    "inputs": [
+      {
+        "name": "TestTime",
+        "valueType": "Time",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "TimeRemaining",
+        "valueType": "Time",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "dbid": 268,
+    "version": 1
+  },
+  {
+    "name": "CanGetOneSquad",
+    "inputs": [
+      {
+        "name": "SquadList",
+        "valueType": "SquadList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundSquad",
+        "valueType": "Squad",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 357,
+    "version": 1
+  },
+  {
+    "name": "CompareVector",
+    "inputs": [
+      {
+        "name": "VectorA",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "VectorB",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "Epsilion",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 752,
+    "version": 1
+  },
+  {
+    "name": "CompareFloat",
+    "inputs": [
+      {
+        "name": "FirstFloat",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondFloat",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 453,
+    "version": 1
+  },
+  {
+    "name": "CanGetOneInteger",
+    "inputs": [
+      {
+        "name": "IntegerList",
+        "valueType": "IntegerList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundInteger",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 552,
+    "version": 1
+  },
+  {
+    "name": "NextLocation",
+    "inputs": [
+      {
+        "name": "LocationIterator",
+        "valueType": "Iterator",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "NextLocation",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 292,
+    "version": 1
+  },
+  {
+    "name": "RefCountUnit",
+    "inputs": [
+      {
+        "name": "Unit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "UnitList",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "SquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "RefCountType",
+        "valueType": "RefCountType",
+        "optional": false,
+        "sigId": 5
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": true,
+        "sigId": 7
+      },
+      {
+        "name": "CompareCount",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 8
+      }
+    ],
+    "outputs": [
+      {
+        "name": "MaxCount",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 6
+      }
+    ],
+    "dbid": 314,
+    "version": 1
+  },
+  {
+    "name": "NextUnit",
+    "inputs": [
+      {
+        "name": "UnitIterator",
+        "valueType": "Iterator",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "NextUnit",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 140,
+    "version": 1
+  },
+  {
+    "name": "IsIdle",
+    "inputs": [
+      {
+        "name": "Unit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "IdleDuration",
+        "valueType": "Time",
+        "optional": true,
+        "sigId": 3
+      }
+    ],
+    "dbid": 264,
+    "version": 1
+  },
+  {
+    "name": "CompareTime",
+    "inputs": [
+      {
+        "name": "FirstTime",
+        "valueType": "Time",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondTime",
+        "valueType": "Time",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 170,
+    "version": 1
+  },
+  {
+    "name": "CanGetRandomLocation",
+    "inputs": [
+      {
+        "name": "OrigLocation",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "InnerRadius",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "OuterRadius",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 3
+      },
+      {
+        "name": "TestObstructions",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "TestPathing",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "TestProtoObject",
+        "valueType": "ProtoObject",
+        "optional": true,
+        "sigId": 6
+      },
+      {
+        "name": "TestProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": true,
+        "sigId": 7
+      }
+    ],
+    "outputs": [
+      {
+        "name": "RandomLocation",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 8
+      }
+    ],
+    "dbid": 956,
+    "version": 1
+  },
+  {
+    "name": "NextSquad",
+    "inputs": [
+      {
+        "name": "SquadIterator",
+        "valueType": "Iterator",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "NextSquad",
+        "valueType": "Squad",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 141,
+    "version": 1
+  },
+  {
+    "name": "CompareProtoSquad",
+    "inputs": [
+      {
+        "name": "FirstProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 513,
+    "version": 1
+  },
+  {
+    "name": "TimerIsDone",
+    "inputs": [
+      {
+        "name": "TimerID",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "CurrentTime",
+        "valueType": "Time",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "dbid": 661,
+    "version": 1
+  },
+  {
+    "name": "CanGetOneLocation",
+    "inputs": [
+      {
+        "name": "LocationList",
+        "valueType": "VectorList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundLocation",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 565,
+    "version": 1
+  },
+  {
+    "name": "CanGetOneUnit",
+    "inputs": [
+      {
+        "name": "UnitList",
+        "valueType": "UnitList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundUnit",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 356,
+    "version": 1
+  },
+  {
+    "name": "CanGetOneProtoSquad",
+    "inputs": [
+      {
+        "name": "ProtoSquadList",
+        "valueType": "ProtoSquadList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 486,
+    "version": 1
+  },
+  {
+    "name": "CanGetOneSocketUnit",
+    "inputs": [
+      {
+        "name": "ParentBuilding",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "BuildingSocketIndex",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "TurretSocketIndex",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 3
+      }
+    ],
+    "outputs": [
+      {
+        "name": "BuildingSocket",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "TurretSocket",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 5
+      }
+    ],
+    "dbid": 909,
+    "version": 1
+  },
+  {
+    "name": "CanGetSocketUnits",
+    "inputs": [
+      {
+        "name": "ParentBuilding",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "EmptySocketsOnly",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 4
+      }
+    ],
+    "outputs": [
+      {
+        "name": "BuildingSockets",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "TurretSockets",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 3
+      }
+    ],
+    "dbid": 908,
+    "version": 2
+  },
+  {
+    "name": "CompareHitpoints",
+    "inputs": [
+      {
+        "name": "FirstHitpoints",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondHitpoints",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 182,
+    "version": 1
+  },
+  {
+    "name": "CheckResourcesTotals",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Compare",
+        "valueType": "Cost",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 340,
+    "version": 1
+  },
+  {
+    "name": "IsGarrisoned",
+    "inputs": [
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "SquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 603,
+    "version": 2
+  },
+  {
+    "name": "CompareCount",
+    "inputs": [
+      {
+        "name": "First",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Compare",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "Second",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 14,
+    "version": 1
+  },
+  {
+    "name": "NextPlayer",
+    "inputs": [
+      {
+        "name": "PlayerIterator",
+        "valueType": "Iterator",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "NextPlayer",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 118,
+    "version": 1
+  },
+  {
+    "name": "CompareAIMissionState",
+    "inputs": [
+      {
+        "name": "MissionID",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "MissionState",
+        "valueType": "MissionState",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 547,
+    "version": 1
+  },
+  {
+    "name": "IsBuilt",
+    "inputs": [
+      {
+        "name": "Unit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 414,
+    "version": 1
+  },
+  {
+    "name": "BuildingCommandDone",
+    "inputs": [
+      {
+        "name": "BuildingCommandState",
+        "valueType": "BuildingCommandState",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "SquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 3
+      }
+    ],
+    "dbid": 596,
+    "version": 1
+  },
+  {
+    "name": "CanGetOnePlayer",
+    "inputs": [
+      {
+        "name": "PlayerList",
+        "valueType": "PlayerList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundPlayer",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 434,
+    "version": 1
+  },
+  {
+    "name": "CheckPop",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 5
+      },
+      {
+        "name": "ProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CheckBids",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "BonusLimit",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 3
+      }
+    ],
+    "outputs": [
+      {
+        "name": "NumCanTrain",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 4
+      }
+    ],
+    "dbid": 763,
+    "version": 1
+  },
+  {
+    "name": "IsConfigDefined",
+    "inputs": [
+      {
+        "name": "ConfigName",
+        "valueType": "String",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 629,
+    "version": 1
+  },
+  {
+    "name": "ComparePlayerSquadCount",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 3
+      },
+      {
+        "name": "CompareCount",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 4
+      },
+      {
+        "name": "IncludeTraining",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 5
+      }
+    ],
+    "outputs": [],
+    "dbid": 606,
+    "version": 1
+  },
+  {
+    "name": "IsObjectType",
+    "inputs": [
+      {
+        "name": "Unit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "Object",
+        "valueType": "Object",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "ProtoObject",
+        "valueType": "ProtoObject",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "ObjectType",
+        "valueType": "ObjectType",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 649,
+    "version": 2
+  },
+  {
+    "name": "ComparePercent",
+    "inputs": [
+      {
+        "name": "FirstPercent",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondPercent",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 175,
+    "version": 1
+  },
+  {
+    "name": "CanGetOneDesignLine",
+    "inputs": [
+      {
+        "name": "DesignLineList",
+        "valueType": "DesignLineList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundDesignLine",
+        "valueType": "DesignLine",
+        "optional": true,
+        "sigId": 3
+      }
+    ],
+    "dbid": 865,
+    "version": 1
+  },
+  {
+    "name": "CanGetOneFloat",
+    "inputs": [
+      {
+        "name": "FloatList",
+        "valueType": "FloatList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundFloat",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 3
+      }
+    ],
+    "dbid": 885,
+    "version": 1
+  },
+  {
+    "name": "IsMoving",
+    "inputs": [
+      {
+        "name": "Unit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 416,
+    "version": 1
+  },
+  {
+    "name": "SquadLocationDistance",
+    "inputs": [
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Location",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 3
+      },
+      {
+        "name": "CompareDistance",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 4
+      }
+    ],
+    "outputs": [],
+    "dbid": 238,
+    "version": 1
+  },
+  {
+    "name": "HasGarrisoned",
+    "inputs": [
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "NumGarrisoned",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "dbid": 602,
+    "version": 2
+  },
+  {
+    "name": "FadeCompleted",
+    "inputs": [],
+    "outputs": [],
+    "dbid": 913,
+    "version": 1
+  },
+  {
+    "name": "CanGetOneProtoObject",
+    "inputs": [
+      {
+        "name": "ProtoObjectList",
+        "valueType": "ProtoObjectList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ProtoObject",
+        "valueType": "ProtoObject",
+        "optional": false,
+        "sigId": 4
+      }
+    ],
+    "dbid": 485,
+    "version": 1
+  },
+  {
+    "name": "CompareProtoObject",
+    "inputs": [
+      {
+        "name": "FirstProtoObject",
+        "valueType": "ProtoObject",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondProtoObject",
+        "valueType": "ProtoObject",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 575,
+    "version": 1
+  },
+  {
+    "name": "IsEmptySocketUnit",
+    "inputs": [
+      {
+        "name": "SocketUnit",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 942,
+    "version": 1
+  },
+  {
+    "name": "IsForbidden",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "ProtoObject",
+        "valueType": "ProtoObject",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "Tech",
+        "valueType": "Tech",
+        "optional": true,
+        "sigId": 4
+      }
+    ],
+    "outputs": [],
+    "dbid": 944,
+    "version": 1
+  },
+  {
+    "name": "CanGetSocketParentBuilding",
+    "inputs": [
+      {
+        "name": "SocketUnit",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ParentBuilding",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 954,
+    "version": 1
+  },
+  {
+    "name": "TechStatus",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Tech",
+        "valueType": "Tech",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "TechStatus",
+        "valueType": "TechStatus",
+        "optional": false,
+        "sigId": 3
+      },
+      {
+        "name": "UniqueUnit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 4
+      }
+    ],
+    "outputs": [],
+    "dbid": 5,
+    "version": 2
+  },
+  {
+    "name": "CanGetOneTech",
+    "inputs": [
+      {
+        "name": "TechList",
+        "valueType": "TechList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "Tech",
+        "valueType": "Tech",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 488,
+    "version": 1
+  },
+  {
+    "name": "CanGetSocketPlugUnit",
+    "inputs": [
+      {
+        "name": "SocketUnit",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "PlugUnit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "dbid": 986,
+    "version": 1
+  },
+  {
+    "name": "CompareTech",
+    "inputs": [
+      {
+        "name": "FirstTech",
+        "valueType": "Tech",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondTech",
+        "valueType": "Tech",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 576,
+    "version": 1
+  },
+  {
+    "name": "IsHitched",
+    "inputs": [
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "HitchedToSquad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 3
+      }
+    ],
+    "dbid": 800,
+    "version": 1
+  },
+  {
+    "name": "CanGetCorpseUnits",
+    "inputs": [
+      {
+        "name": "Location",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "Radius",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "CorpseUnits",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "NumCorpseUnits",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 4
+      }
+    ],
+    "dbid": 844,
+    "version": 1
+  },
+  {
+    "name": "CanGetOneObject",
+    "inputs": [
+      {
+        "name": "ObjectList",
+        "valueType": "ObjectList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundObject",
+        "valueType": "Object",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 835,
+    "version": 1
+  },
+  {
+    "name": "CheckModeChange",
+    "inputs": [
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "Result",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "IsNormal",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "dbid": 386,
+    "version": 1
+  },
+  {
+    "name": "CustomCommandCheck",
+    "inputs": [
+      {
+        "name": "CommandID",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "Count",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "dbid": 635,
+    "version": 1
+  },
+  {
+    "name": "PlayerInState",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "PlayerState",
+        "valueType": "PlayerState",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 131,
+    "version": 2
+  },
+  {
+    "name": "CompareDesignLine",
+    "inputs": [
+      {
+        "name": "FirstDesignLine",
+        "valueType": "DesignLine",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareTyper",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondDesignLine",
+        "valueType": "DesignLine",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 866,
+    "version": 1
+  },
+  {
+    "name": "GameTime",
+    "inputs": [
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareTime",
+        "valueType": "Time",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 266,
+    "version": 1
+  },
+  {
+    "name": "IsAttached",
+    "inputs": [
+      {
+        "name": "TestSquad",
+        "valueType": "Squad",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 604,
+    "version": 1
+  },
+  {
+    "name": "ContainsGarrisoned",
+    "inputs": [
+      {
+        "name": "ContainerUnit",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "PlayerFilter",
+        "valueType": "Player",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "ObjectTypeFilter",
+        "valueType": "ObjectType",
+        "optional": true,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 136,
+    "version": 3
+  },
+  {
+    "name": "CanGetSquads",
+    "inputs": [
+      {
+        "name": "FilterPlayer",
+        "valueType": "Player",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "FilterPlayerList",
+        "valueType": "PlayerList",
+        "optional": true,
+        "sigId": 12
+      },
+      {
+        "name": "FilterProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": true,
+        "sigId": 6
+      },
+      {
+        "name": "FilterLocation",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "FilterRadius",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "FilterBoxForward",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 15
+      },
+      {
+        "name": "FilterBoxHalfX",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 16
+      },
+      {
+        "name": "FilterBoxHalfY",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 17
+      },
+      {
+        "name": "FilterBoxHalfZ",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 18
+      },
+      {
+        "name": "FilterSquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 10
+      },
+      {
+        "name": "FilterObjectType",
+        "valueType": "ObjectType",
+        "optional": true,
+        "sigId": 11
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundSquads",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 9
+      },
+      {
+        "name": "FoundSquadCount",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 7
+      }
+    ],
+    "dbid": 4,
+    "version": 8
+  },
+  {
+    "name": "CheckDiplomacy",
+    "inputs": [
+      {
+        "name": "Unit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "UnitList",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "SquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "Diplomacy",
+        "valueType": "Diplomacy",
+        "optional": false,
+        "sigId": 5
+      },
+      {
+        "name": "ComparePlayer",
+        "valueType": "Player",
+        "optional": true,
+        "sigId": 6
+      },
+      {
+        "name": "CompareTeam",
+        "valueType": "Team",
+        "optional": true,
+        "sigId": 7
+      }
+    ],
+    "outputs": [],
+    "dbid": 362,
+    "version": 1
+  },
+  {
+    "name": "CanGetUnitLaunchLocation",
+    "inputs": [
+      {
+        "name": "AttackingUnit",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "LaunchLocation",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 714,
+    "version": 1
+  },
+  {
+    "name": "CanGetUnitsAlongRay",
+    "inputs": [
+      {
+        "name": "Start",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "End",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "Radius",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "Sort",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "ReverseSort",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 6
+      },
+      {
+        "name": "DebugColor",
+        "valueType": "Color",
+        "optional": true,
+        "sigId": 7
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ResultUnitList",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 4
+      }
+    ],
+    "dbid": 558,
+    "version": 2
+  },
+  {
+    "name": "CanGetGreatestThreat",
+    "inputs": [
+      {
+        "name": "TargetSquad",
+        "valueType": "Squad",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ThreatSquad",
+        "valueType": "Squad",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 743,
+    "version": 1
+  },
+  {
+    "name": "IsProtoObject",
+    "inputs": [
+      {
+        "name": "Unit",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 3
+      },
+      {
+        "name": "ProtoObject",
+        "valueType": "ProtoObject",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 30,
+    "version": 2
+  },
+  {
+    "name": "CompareUnit",
+    "inputs": [
+      {
+        "name": "FirstUnit",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondUnit",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 1028,
+    "version": 1
+  },
+  {
+    "name": "CanRetrieveExternals",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "ExternPlayer",
+        "valueType": "Player",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "ExternPower",
+        "valueType": "Power",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "ExternSquad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "ExternSquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 7
+      },
+      {
+        "name": "ExternUnit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "ExternUnitList",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 6
+      },
+      {
+        "name": "ExternCost",
+        "valueType": "Cost",
+        "optional": true,
+        "sigId": 5
+      }
+    ],
+    "dbid": 192,
+    "version": 2
+  },
+  {
+    "name": "ComparePlayers",
+    "inputs": [
+      {
+        "name": "FirstPlayer",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Operator",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondPlayer",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 428,
+    "version": 1
+  },
+  {
+    "name": "CanGetSquads",
+    "inputs": [
+      {
+        "name": "FilterPlayer",
+        "valueType": "Player",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "FilterPlayerList",
+        "valueType": "PlayerList",
+        "optional": true,
+        "sigId": 12
+      },
+      {
+        "name": "FilterProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": true,
+        "sigId": 6
+      },
+      {
+        "name": "FilterLocation",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "FilterDistance",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "FilterSquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 10
+      },
+      {
+        "name": "FilterObjectType",
+        "valueType": "ObjectType",
+        "optional": true,
+        "sigId": 11
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundSquads",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 9
+      },
+      {
+        "name": "FoundSquadCount",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 7
+      }
+    ],
+    "dbid": 4,
+    "version": 6
+  },
+  {
+    "name": "PlayerIsComputerAI",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 740,
+    "version": 1
+  },
+  {
+    "name": "PlayerIsHuman",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 426,
+    "version": 1
+  },
+  {
+    "name": "CanGetDesignSpheres",
+    "inputs": [
+      {
+        "name": "Type",
+        "valueType": "String",
+        "optional": true,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "CenterPointList",
+        "valueType": "VectorList",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "RadiusList",
+        "valueType": "FloatList",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 974,
+    "version": 1
+  },
+  {
+    "name": "CanRemoveOneLocation",
+    "inputs": [
+      {
+        "name": "LocationList",
+        "valueType": "VectorList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "RemovedLocation",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 566,
+    "version": 1
+  },
+  {
+    "name": "CanRemoveOneFloat",
+    "inputs": [
+      {
+        "name": "FloatList",
+        "valueType": "FloatList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "RemovedFloat",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 975,
+    "version": 1
+  },
+  {
+    "name": "CanGetOneTeam",
+    "inputs": [
+      {
+        "name": "TeamList",
+        "valueType": "TeamList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundTeam",
+        "valueType": "Team",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 435,
+    "version": 1
+  },
+  {
+    "name": "CompareTeams",
+    "inputs": [
+      {
+        "name": "FirstTeam",
+        "valueType": "Team",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Operator",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondTeam",
+        "valueType": "Team",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 429,
+    "version": 1
+  },
+  {
+    "name": "IsMap",
+    "inputs": [
+      {
+        "name": "MapName",
+        "valueType": "String",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 1087,
+    "version": 1
+  },
+  {
+    "name": "NextTeam",
+    "inputs": [
+      {
+        "name": "TeamIterator",
+        "valueType": "Iterator",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "NextTeam",
+        "valueType": "Team",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 119,
+    "version": 1
+  },
+  {
+    "name": "UIButtonPressed",
+    "inputs": [
+      {
+        "name": "UIButton",
+        "valueType": "UIButton",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "X",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "Y",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "Analog",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "ActionModifier",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "SpeedModifier",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 6
+      }
+    ],
+    "dbid": 527,
+    "version": 2
+  },
+  {
+    "name": "CanGetHoverPoint",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "HoverPoint",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 990,
+    "version": 1
+  },
+  {
+    "name": "UILocationWaiting",
+    "inputs": [
+      {
+        "name": "UILocation",
+        "valueType": "UILocation",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 331,
+    "version": 1
+  },
+  {
+    "name": "UILocationOK",
+    "inputs": [
+      {
+        "name": "UILocation",
+        "valueType": "UILocation",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ResultLocation",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 16,
+    "version": 1
+  },
+  {
+    "name": "UILocationCancel",
+    "inputs": [
+      {
+        "name": "UILocation",
+        "valueType": "UILocation",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 17,
+    "version": 1
+  },
+  {
+    "name": "UILocationUILockError",
+    "inputs": [
+      {
+        "name": "UILocation",
+        "valueType": "UILocation",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 327,
+    "version": 1
+  },
+  {
+    "name": "CanRetrieveExternalLocationList",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "VectorList",
+        "valueType": "VectorList",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 441,
+    "version": 2
+  },
+  {
+    "name": "IsSelectable",
+    "inputs": [
+      {
+        "name": "Unit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "UnitList",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "SquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "Object",
+        "valueType": "Object",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "ObjectList",
+        "valueType": "ObjectList",
+        "optional": true,
+        "sigId": 6
+      }
+    ],
+    "outputs": [],
+    "dbid": 899,
+    "version": 1
+  },
+  {
+    "name": "ASYNCUnitsOnScreenSelected",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "SearchRadius",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "Location",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "IgnoreTypes",
+        "valueType": "ObjectTypeList",
+        "optional": true,
+        "sigId": 4
+      }
+    ],
+    "outputs": [],
+    "dbid": 1053,
+    "version": 1
+  },
+  {
+    "name": "ConceptGetCommand",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Concept",
+        "valueType": "Concept",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "Command",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 930,
+    "version": 1
+  },
+  {
+    "name": "ConceptGetStateChange",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Concept",
+        "valueType": "Concept",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "State",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 931,
+    "version": 1
+  },
+  {
+    "name": "CanUsePower",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Power",
+        "valueType": "Power",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 27,
+    "version": 1
+  },
+  {
+    "name": "CheckPlacement",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Location",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "PlacementProtoObject",
+        "valueType": "ProtoObject",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "CheckObstruction",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "LOSType",
+        "valueType": "LOSType",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "SearchScale",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 6
+      },
+      {
+        "name": "LOSCenterOnly",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 8
+      }
+    ],
+    "outputs": [
+      {
+        "name": "Suggestion",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 7
+      }
+    ],
+    "dbid": 82,
+    "version": 4
+  },
+  {
+    "name": "CanRetrieveExternalLocation",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "Location",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "dbid": 440,
+    "version": 1
+  },
+  {
+    "name": "CheckPlacement",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Location",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "PlacementProtoObject",
+        "valueType": "ProtoObject",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "CheckObstruction",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "LOSType",
+        "valueType": "LOSType",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "SearchScale",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 6
+      }
+    ],
+    "outputs": [
+      {
+        "name": "Suggestion",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 7
+      }
+    ],
+    "dbid": 82,
+    "version": 3
+  },
+  {
+    "name": "RefCountSquad",
+    "inputs": [
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "SquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "RefCountType",
+        "valueType": "RefCountType",
+        "optional": false,
+        "sigId": 3
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "CompareCount",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 5
+      }
+    ],
+    "outputs": [
+      {
+        "name": "MaxCount",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 6
+      }
+    ],
+    "dbid": 315,
+    "version": 1
+  },
+  {
+    "name": "IsObjectType",
+    "inputs": [
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ObjectType",
+        "valueType": "ObjectType",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 649,
+    "version": 1
+  },
+  {
+    "name": "CanPayCost",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ResourceAmount",
+        "valueType": "Cost",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 15,
+    "version": 1
+  },
+  {
+    "name": "CanGetUnits",
+    "inputs": [
+      {
+        "name": "FilterPlayer",
+        "valueType": "Player",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "FilterPlayerList",
+        "valueType": "PlayerList",
+        "optional": true,
+        "sigId": 10
+      },
+      {
+        "name": "FilterObjectType",
+        "valueType": "ObjectType",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "FilterLocation",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "FilterDistance",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "FilterUnitList",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 9
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundUnits",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 8
+      },
+      {
+        "name": "FoundUnitCount",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 6
+      }
+    ],
+    "dbid": 2,
+    "version": 5
+  },
+  {
+    "name": "CanGetBuilder",
+    "inputs": [
+      {
+        "name": "Unit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "BuilderUnit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "BuilderSquad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 4
+      }
+    ],
+    "dbid": 524,
+    "version": 1
+  },
+  {
+    "name": "ProtoObjectListContains",
+    "inputs": [
+      {
+        "name": "ProtoObjectList",
+        "valueType": "ProtoObjectList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ProtoObject",
+        "valueType": "ProtoObject",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 577,
+    "version": 1
+  },
+  {
+    "name": "CanGetCoopPlayer",
+    "inputs": [
+      {
+        "name": "TestPlayer",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "CoopPlayer",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 991,
+    "version": 1
+  },
+  {
+    "name": "UISquadListWaiting",
+    "inputs": [
+      {
+        "name": "UISquadList",
+        "valueType": "UISquadList",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 643,
+    "version": 1
+  },
+  {
+    "name": "UISquadListOK",
+    "inputs": [
+      {
+        "name": "UISquadList",
+        "valueType": "UISquadList",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ResultSquadList",
+        "valueType": "SquadList",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 640,
+    "version": 1
+  },
+  {
+    "name": "UISquadListCancel",
+    "inputs": [
+      {
+        "name": "UISquadList",
+        "valueType": "UISquadList",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 641,
+    "version": 1
+  },
+  {
+    "name": "UISquadListUILockError",
+    "inputs": [
+      {
+        "name": "UISquadList",
+        "valueType": "UISquadList",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 642,
+    "version": 1
+  },
+  {
+    "name": "CheckPlacement",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Location",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "PlacementProtoObject",
+        "valueType": "ProtoObject",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "PlacementProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": true,
+        "sigId": 9
+      },
+      {
+        "name": "CheckObstruction",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "LOSType",
+        "valueType": "LOSType",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "SearchScale",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 6
+      },
+      {
+        "name": "LOSCenterOnly",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 8
+      },
+      {
+        "name": "CheckUnitObstructions",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 10
+      },
+      {
+        "name": "CheckSquadObstructions",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 11
+      }
+    ],
+    "outputs": [
+      {
+        "name": "Suggestion",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 7
+      }
+    ],
+    "dbid": 82,
+    "version": 6
+  },
+  {
+    "name": "CanRetrieveExternalFloat",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "Float",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "dbid": 977,
+    "version": 1
+  },
+  {
+    "name": "MarkerSquadsInArea",
+    "inputs": [
+      {
+        "name": "SquadList",
+        "valueType": "SquadList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Point",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "Radius",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ResultsList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 4
+      }
+    ],
+    "dbid": 980,
+    "version": 1
+  },
+  {
+    "name": "PlayerUsingLeader",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Leader",
+        "valueType": "Leader",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 477,
+    "version": 1
+  },
+  {
+    "name": "CanRetrieveExternals",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "ExternPlayer",
+        "valueType": "Player",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "ExternPower",
+        "valueType": "Power",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "ExternSquad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "ExternUnit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "ExternCost",
+        "valueType": "Cost",
+        "optional": true,
+        "sigId": 5
+      }
+    ],
+    "dbid": 192,
+    "version": 1
+  },
+  {
+    "name": "IsUnderAttack",
+    "inputs": [
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Interval",
+        "valueType": "Time",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 461,
+    "version": 1
+  },
+  {
+    "name": "IsOwnedBy",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "TestUnit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "TestUnitList",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "TestSquad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 6
+      },
+      {
+        "name": "TestSquadList",
+        "valueType": "SquadList",
+        "optional": true,
+        "sigId": 7
+      }
+    ],
+    "outputs": [],
+    "dbid": 29,
+    "version": 3
+  },
+  {
+    "name": "UnitUnitDistance",
+    "inputs": [
+      {
+        "name": "FirstUnit",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "SecondUnit",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 3
+      },
+      {
+        "name": "CompareDistance",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 4
+      }
+    ],
+    "outputs": [],
+    "dbid": 8,
+    "version": 2
+  },
+  {
+    "name": "ComparePlayerUnitCount",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ObjectType",
+        "valueType": "ObjectType",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "IncludeTraining",
+        "valueType": "Bool",
+        "optional": true,
+        "sigId": 5
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 3
+      },
+      {
+        "name": "CompareCount",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 4
+      }
+    ],
+    "outputs": [],
+    "dbid": 436,
+    "version": 2
+  },
+  {
+    "name": "CompareCiv",
+    "inputs": [
+      {
+        "name": "FirstCiv",
+        "valueType": "Civ",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondCiv",
+        "valueType": "Civ",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 240,
+    "version": 1
+  },
+  {
+    "name": "ASYNCPlayerSelectingSquad",
+    "inputs": [
+      {
+        "name": "Player",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 280,
+    "version": 1
+  },
+  {
+    "name": "BidState",
+    "inputs": [
+      {
+        "name": "BidID",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "BidState",
+        "valueType": "BidState",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 586,
+    "version": 1
+  },
+  {
+    "name": "AITopicIsActive",
+    "inputs": [
+      {
+        "name": "AITopicID",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 600,
+    "version": 1
+  },
+  {
+    "name": "GetTableRow",
+    "inputs": [
+      {
+        "name": "TableID",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "RowID",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "UserClassType",
+        "valueType": "UserClassType",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [
+      {
+        "name": "Building",
+        "valueType": "ObjectType",
+        "optional": false,
+        "sigId": 5
+      },
+      {
+        "name": "BuildCount",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 6
+      },
+      {
+        "name": "Priority",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 7
+      }
+    ],
+    "dbid": 762,
+    "version": 1
+  },
+  {
+    "name": "CanRemoveOneInteger",
+    "inputs": [
+      {
+        "name": "IntegerList",
+        "valueType": "IntegerList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "RemovedInteger",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 563,
+    "version": 1
+  },
+  {
+    "name": "ProtoSquadListContains",
+    "inputs": [
+      {
+        "name": "ProtoSquadList",
+        "valueType": "ProtoSquadList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 578,
+    "version": 1
+  },
+  {
+    "name": "CanRemoveOneTech",
+    "inputs": [
+      {
+        "name": "TechList",
+        "valueType": "TechList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "RemovedTech",
+        "valueType": "Tech",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 585,
+    "version": 1
+  },
+  {
+    "name": "TechListContains",
+    "inputs": [
+      {
+        "name": "TechList",
+        "valueType": "TechList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Tech",
+        "valueType": "Tech",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 579,
+    "version": 2
+  },
+  {
+    "name": "IsCapturing",
+    "inputs": [
+      {
+        "name": "Unit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 723,
+    "version": 1
+  },
+  {
+    "name": "IsGathering",
+    "inputs": [
+      {
+        "name": "Unit",
+        "valueType": "Unit",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "Squad",
+        "valueType": "Squad",
+        "optional": true,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 722,
+    "version": 1
+  },
+  {
+    "name": "NextKBBase",
+    "inputs": [
+      {
+        "name": "Iterator",
+        "valueType": "Iterator",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "NextKBBase",
+        "valueType": "KBBase",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 444,
+    "version": 1
+  },
+  {
+    "name": "CompareLeader",
+    "inputs": [
+      {
+        "name": "FirstLeader",
+        "valueType": "Leader",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondLeader",
+        "valueType": "Leader",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 476,
+    "version": 1
+  },
+  {
+    "name": "CanGetCentroid",
+    "inputs": [
+      {
+        "name": "SquadList",
+        "valueType": "SquadList",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "Centroid",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 621,
+    "version": 1
+  },
+  {
+    "name": "CompareAIMissionType",
+    "inputs": [
+      {
+        "name": "MissionID",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "MissionType",
+        "valueType": "MissionType",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [],
+    "dbid": 546,
+    "version": 1
+  },
+  {
+    "name": "AICanGetDifficultySetting",
+    "inputs": [
+      {
+        "name": "PlayerID",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "SettingName",
+        "valueType": "String",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "Default",
+        "valueType": "String",
+        "optional": true,
+        "sigId": 3
+      }
+    ],
+    "outputs": [
+      {
+        "name": "Value",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 4
+      }
+    ],
+    "dbid": 920,
+    "version": 1
+  },
+  {
+    "name": "CompareLocStringID",
+    "inputs": [
+      {
+        "name": "FirstLocString",
+        "valueType": "LocStringID",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Operator",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondLocString",
+        "valueType": "LocStringID",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 825,
+    "version": 1
+  },
+  {
+    "name": "NextProtoSquad",
+    "inputs": [
+      {
+        "name": "Iterator",
+        "valueType": "Iterator",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 495,
+    "version": 1
+  },
+  {
+    "name": "CompareString",
+    "inputs": [
+      {
+        "name": "FirstString",
+        "valueType": "String",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "SecondString",
+        "valueType": "String",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "outputs": [],
+    "dbid": 171,
+    "version": 1
+  },
+  {
+    "name": "CanRemoveOneProtoSquad",
+    "inputs": [
+      {
+        "name": "ProtoSquadList",
+        "valueType": "ProtoSquadList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "RemovedProtoSquad",
+        "valueType": "ProtoSquad",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 584,
+    "version": 1
+  },
+  {
+    "name": "CanRemoveOneProtoObject",
+    "inputs": [
+      {
+        "name": "ProtoObjectList",
+        "valueType": "ProtoObjectList",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "ListPosition",
+        "valueType": "ListPosition",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "outputs": [
+      {
+        "name": "RemovedProtoObject",
+        "valueType": "ProtoObject",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 583,
+    "version": 1
+  },
+  {
+    "name": "CheckAndSetFalse",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "Bool",
+        "valueType": "Bool",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 1056,
+    "version": 1
+  },
+  {
+    "name": "AITopicGetTickets",
+    "inputs": [
+      {
+        "name": "TopicID",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "TicketCount",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 1059,
+    "version": 1
+  },
+  {
+    "name": "CanGetCTFMissionTarget",
+    "inputs": [
+      {
+        "name": "AIPlayer",
+        "valueType": "Player",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "MissionTargetID",
+        "valueType": "Integer",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 1081,
+    "version": 1
+  },
+  {
+    "name": "UILocationMinigameWaiting",
+    "inputs": [
+      {
+        "name": "UILocationMinigame",
+        "valueType": "UILocationMinigame",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 893,
+    "version": 1
+  },
+  {
+    "name": "UILocationMinigameCancel",
+    "inputs": [
+      {
+        "name": "UILocationMinigame",
+        "valueType": "UILocationMinigame",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 895,
+    "version": 1
+  },
+  {
+    "name": "UILocationMinigameUILockError",
+    "inputs": [
+      {
+        "name": "UILocationMinigame",
+        "valueType": "UILocationMinigame",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 896,
+    "version": 1
+  },
+  {
+    "name": "UILocationMinigameOK",
+    "inputs": [
+      {
+        "name": "UILocationMinigame",
+        "valueType": "UILocationMinigame",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ResultLocation",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "ResultQuality",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 3
+      }
+    ],
+    "dbid": 894,
+    "version": 1
+  },
+  {
+    "name": "UISquadWaiting",
+    "inputs": [
+      {
+        "name": "UISquad",
+        "valueType": "UISquad",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 333,
+    "version": 1
+  },
+  {
+    "name": "UISquadOK",
+    "inputs": [
+      {
+        "name": "UISquad",
+        "valueType": "UISquad",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ResultSquad",
+        "valueType": "Squad",
+        "optional": false,
+        "sigId": 2
+      }
+    ],
+    "dbid": 157,
+    "version": 1
+  },
+  {
+    "name": "UISquadCancel",
+    "inputs": [
+      {
+        "name": "UISquad",
+        "valueType": "UISquad",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 158,
+    "version": 1
+  },
+  {
+    "name": "UISquadUILockError",
+    "inputs": [
+      {
+        "name": "UISquad",
+        "valueType": "UISquad",
+        "optional": false,
+        "sigId": 1
+      }
+    ],
+    "outputs": [],
+    "dbid": 329,
+    "version": 1
+  },
+  {
+    "name": "UnitLocationDistance",
+    "inputs": [
+      {
+        "name": "Unit",
+        "valueType": "Unit",
+        "optional": false,
+        "sigId": 1
+      },
+      {
+        "name": "Location",
+        "valueType": "Vector",
+        "optional": false,
+        "sigId": 2
+      },
+      {
+        "name": "CompareType",
+        "valueType": "Operator",
+        "optional": false,
+        "sigId": 3
+      },
+      {
+        "name": "CompareDistance",
+        "valueType": "Float",
+        "optional": false,
+        "sigId": 4
+      }
+    ],
+    "outputs": [],
+    "dbid": 9,
+    "version": 2
+  },
+  {
+    "name": "CanGetUnits",
+    "inputs": [
+      {
+        "name": "FilterPlayer",
+        "valueType": "Player",
+        "optional": true,
+        "sigId": 3
+      },
+      {
+        "name": "FilterObjectType",
+        "valueType": "ObjectType",
+        "optional": true,
+        "sigId": 4
+      },
+      {
+        "name": "FilterLocation",
+        "valueType": "Vector",
+        "optional": true,
+        "sigId": 1
+      },
+      {
+        "name": "FilterDistance",
+        "valueType": "Float",
+        "optional": true,
+        "sigId": 2
+      },
+      {
+        "name": "FilterUnitList",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 9
+      }
+    ],
+    "outputs": [
+      {
+        "name": "FoundUnits",
+        "valueType": "UnitList",
+        "optional": true,
+        "sigId": 8
+      },
+      {
+        "name": "FoundUnitCount",
+        "valueType": "Integer",
+        "optional": true,
+        "sigId": 6
+      }
+    ],
+    "dbid": 2,
+    "version": 4
+  }
+]
