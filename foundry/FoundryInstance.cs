@@ -59,19 +59,20 @@ namespace Foundry
 			Browser.Form.Text = "Browser";
 			Browser.Show(this, DockState.DockLeft);
 
-            Editor view = new Editor(this);
-            Triggerscript xml = new YAXSerializer<Triggerscript>().DeserializeFromFile("D:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\Extract\\data\\triggerscripts\\capflagplayer.triggerscript");
+			Editor view = new Editor(this);
+			//Triggerscript xml = new YAXSerializer<Triggerscript>(new YAXLib.Options.SerializerOptions() { ExceptionBehavior = YAXLib.Enums.YAXExceptionTypes.Ignore} )
+			//	.DeserializeFromFile("D:\\repos\\Foundry\\_resources\\workspace\\data\\triggerscripts\\skirmishai_raw_.triggerscript");
 			//new YAXSerializer<Triggerscript>().SerializeToFile(xml, "out.triggerscript");
-            view.TriggerscriptFile = xml;
-            //view.NodeData = new ScriptData(Instance, xml);
-            view.Show(this.dockpanel, DockState.Document);
+			//view.TriggerscriptFile = xml;
+			//view.NodeData = new ScriptData(Instance, xml);
+			view.Show(this.dockpanel, DockState.Document);
 
-            InitConfig();
+			InitConfig();
 			InitToolstrip();
 			//InitModules();
 
 #if DEBUG
-			OpenWorkspace("D:\\repos\\Foundry\\_resources\\workspace\\NewWorkspace1.fworkspace");
+			//OpenWorkspace("D:\\repos\\Foundry\\_resources\\workspace\\NewWorkspace1.fworkspace");
 #endif
 		}
         private void OnClose(object o, EventArgs e)
@@ -607,7 +608,7 @@ namespace Foundry
 			}
 
 			OpenedWorkspaceFile = item;
-			Directory.SetCurrentDirectory(OpenedWorkspaceFile.ParentDirectory.FullPath);
+			//Directory.SetCurrentDirectory(OpenedWorkspaceFile.ParentDirectory.FullPath);
 			EnsureNamedWorkspaceDirsExist();
 
 			//alert all modules that a workspace has been opened.

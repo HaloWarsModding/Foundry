@@ -1,5 +1,5 @@
 ﻿using YAXLib;
-using Foundry.Triggerscript;
+using Foundry.HW1.Triggerscript;
 
 void PrintEnum(Dictionary<int, Dictionary<int, ProtoLogic>> effects)
 {

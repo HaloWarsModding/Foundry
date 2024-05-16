@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using YAXLib;
 using YAXLib.Attributes;
-using static Foundry.HW1.Triggerscript.Database;
 
 namespace Foundry.HW1.Triggerscript
 {

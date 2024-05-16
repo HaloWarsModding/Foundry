@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static Foundry.HW1.Triggerscript.EditorHelpers;
 
 namespace Foundry.HW1.Triggerscript
 {
@@ -13,27 +14,29 @@ namespace Foundry.HW1.Triggerscript
         {
             if (selection.TriggerId != -1)
             {
-                if (selection.LogicIndex == -1)
+                if (selection.LogicIndex == -1) //no logic selected
                 {
                     ShowTriggerOptionsMenu(script.Triggers[selection.TriggerId], point);
                 }
                 else
                 {
-                    if (selection.LogicType == TriggerLogicSlot.Condition)
+                    Logic logic = SelectedLogic(script, selection);
+                    if (logic != null)
                     {
-                        ShowConditionOptionsMenu(script.Triggers[selection.TriggerId].Conditions.ElementAt(selection.LogicIndex), point);
-                    }
-                    else if (selection.LogicType == TriggerLogicSlot.EffectTrue)
-                    {
-                        ShowEffectOptionsMenu(script.Triggers[selection.TriggerId].TriggerEffectsOnTrue.ElementAt(selection.LogicIndex), point);
-                    }
-                    else if (selection.LogicType == TriggerLogicSlot.EffectFalse)
-                    {
-                        ShowEffectOptionsMenu(script.Triggers[selection.TriggerId].TriggerEffectsOnFalse.ElementAt(selection.LogicIndex), point);
+                        if (selection.VarSigId == -1)
+                        {
+                            if (selection.LogicType == TriggerLogicSlot.Condition) ShowConditionOptionsMenu((Condition)logic, point);
+                            else ShowEffectOptionsMenu((Effect)logic, point);
+                        }
+                        else
+                        {
+                            ShowSetVarMenu(script, logic, selection.VarSigId, point);
+                        }
                     }
                 }
             }
         }
+      
         public static void ShowTriggerOptionsMenu(Trigger trigger, Point point)
         {
             ContextMenuStrip menu = new ContextMenuStrip();
@@ -45,14 +48,12 @@ namespace Foundry.HW1.Triggerscript
                     e.Cancel = true;
                 }
             };
-
-
+                        
             //Info
             ToolStripLabel info = new ToolStripLabel("Trigger");
             menu.Items.Add(info);
             ToolStripSeparator infoSep = new ToolStripSeparator();
             menu.Items.Add(infoSep);
-
 
             //Name text box
             ToolStripLabel nameLabel = new ToolStripLabel("Name:");
@@ -87,7 +88,6 @@ namespace Foundry.HW1.Triggerscript
             };
             menu.Items.Add(active);
 
-
             //Conditional button
             Image conditionalOffImg = Properties.Resources.bullet_black;
             Image conditionalOnImg = Properties.Resources.bullet_orange;
@@ -101,7 +101,6 @@ namespace Foundry.HW1.Triggerscript
                 conditional.Image = trigger.ConditionalTrigger ? conditionalOnImg : conditionalOffImg;
             };
             menu.Items.Add(conditional);
-
 
             //Show
             menu.Show(point);
@@ -203,6 +202,110 @@ namespace Foundry.HW1.Triggerscript
                 effect.Comment = comment.Text;
             };
             menu.Items.Add(comment);
+
+
+            menu.Show(point);
+        }
+
+        public static void ShowSetVarMenu(Triggerscript script, Logic logic, int sigid, Point point)
+        {
+            if (!logic.StaticParamInfo.ContainsKey(sigid)) return;
+
+            ContextMenuStrip menu = new ContextMenuStrip();
+            var paramInfo = logic.StaticParamInfo[sigid];
+            int currentId = logic.GetValueOfParam(sigid);
+
+            //Info
+            menu.Items.Add(new ToolStripLabel(paramInfo.Name + " [" + paramInfo.Type + "]"));
+            menu.Items.Add(new ToolStripSeparator());
+
+            //New var
+            ToolStripMenuItem add = new ToolStripMenuItem();
+            add.Text = "Add new var...";
+            add.Click += (s, e) =>
+            {
+                Var var = new Var()
+                {
+                    Name = "new" + paramInfo.Type,
+                    ID = NextVarId(script),
+                    IsNull = false,
+                    Type = paramInfo.Type,
+                    Value = ""
+                };
+                script.TriggerVars.Add(var.ID, var);
+                menu.Close();
+                ShowVarOptionsMenu(var, point);
+            };
+            menu.Items.Add(add);
+
+            //Null var
+            ToolStripMenuItem nullVar = new ToolStripMenuItem();
+            nullVar.Text = "Set null";
+            nullVar.Click += (s, e) =>
+            {
+                logic.SetValueOfParam(sigid, GetOrAddNullVar(script, paramInfo.Type));
+            };
+            menu.Items.Add(nullVar);
+            nullVar.Enabled = paramInfo.Optional; //only nullable if optional.
+            nullVar.ToolTipText = "Only optional parameters can be set to null.";
+            menu.Items.Add(new ToolStripSeparator());
+                        
+            //Vars to pick from
+            ToolStripComboBox availableVars = new ToolStripComboBox();
+            availableVars.AutoSize = false;
+            availableVars.Size = new Size(165, 20);
+            foreach (var v in Variables(script, paramInfo.Type))
+            {
+                availableVars.Items.Add(v);
+                if (v.ID == currentId) availableVars.SelectedIndex = availableVars.Items.Count - 1;
+            }
+            availableVars.ComboBox.SelectedIndexChanged += (s, e) =>
+            {
+                logic.SetValueOfParam(sigid, ((Var)availableVars.SelectedItem).ID);
+            };
+            menu.Items.Add(availableVars);
+
+
+            menu.Show(point);
+        }
+        public static void ShowVarOptionsMenu(Var var, Point point)
+        {
+            ContextMenuStrip menu = new ContextMenuStrip();
+            menu.Closing += (s, e) =>
+            {
+                //keep the menu open if something was clicked.
+                if (e.CloseReason == ToolStripDropDownCloseReason.ItemClicked)
+                {
+                    e.Cancel = true;
+                }
+            };
+
+            //Info
+            ToolStripLabel varLabel = new ToolStripLabel(var.Type + " Variable");
+            menu.Items.Add(varLabel);
+            menu.Items.Add(new ToolStripSeparator());
+
+            //Name
+            menu.Items.Add(new ToolStripLabel("Name:"));
+            ToolStripTextBox name = new ToolStripTextBox();
+            name.Text = var.Name;
+            name.BorderStyle = BorderStyle.FixedSingle;
+            name.TextChanged += (s, e) =>
+            {
+                var.Name = name.Text;
+            };
+            menu.Items.Add(name);
+
+            //Value
+            menu.Items.Add(new ToolStripLabel("Value:"));
+            ToolStripTextBox val = new ToolStripTextBox();
+            val.Text = var.Value;
+            val.BorderStyle = BorderStyle.FixedSingle;
+            val.TextChanged += (s, e) =>
+            {
+                var.Value = name.Text;
+            };
+            menu.Items.Add(val);
 
 
             menu.Show(point);

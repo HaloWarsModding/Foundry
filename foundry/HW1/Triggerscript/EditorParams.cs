@@ -8,23 +8,26 @@ namespace Foundry.HW1.Triggerscript
 {
     public static class EditorParams
     {
-        public static int HeaderHeight { get; } = 12;
-        public static int FooterHeight { get; } = 4;
-        public static int CommentHeight { get; } = 26;
+        public static int DefaultWidth { get; set; } = 30;
+        public static int HeaderHeight { get; } = 6;
+        public static int FooterHeight { get; } = 2;
+        public static int CommentHeight { get; } = 12;
 
-        public static int LogicSpacing { get; } = 3;
-        public static int LogicSectionSpacing { get; } = 7;
+        public static int LogicSpacing { get; } = 1;
+        public static int LogicSectionSpacing { get; } = 3;
 
-        public static int VarNameHeight { get; } = 4;
-        public static int VarValHeight { get; } = 5;
+        public static int VarNameHeight { get; } = 2;
+        public static int VarValHeight { get; } = 3;
         public static int VarHeight { get { return VarValHeight + VarNameHeight; } }
-        public static int VarSpacing { get; } = 2;
+        public static int VarSpacing { get; } = 1;
 
         public static int Margin { get; } = 1;
 
-        public static Font TitleFont { get; } = new Font("Consolas", 2.7f, FontStyle.Regular);
-        public static Font SubtitleFont { get; } = new Font("Consolas", 2.55f, FontStyle.Regular);
-        public static Font TextFont { get; } = new Font("Consolas", 2.4f, FontStyle.Regular);
+        public static int TriggerSpacingMultiplier { get; } = 3;
+
+        public static Font TitleFont { get; } = new Font("Consolas", 1.5f, FontStyle.Regular);
+        public static Font SubtitleFont { get; } = new Font("Consolas", 1.25f, FontStyle.Regular);
+        public static Font TextFont { get; } = new Font("Consolas", 1.0f, FontStyle.Regular);
 
         public static Color TextColor { get; } = Color.White;
         public static Color BodyColor { get; } = Color.FromArgb(90, 90, 90);

@@ -70,6 +70,31 @@ namespace Foundry.HW1.Triggerscript
             MouseUp += OnMouseUp;
             MouseMove += OnMouseMove;
             MouseWheel += OnMouseScroll;
+
+            KeyDown += (s, e) =>
+            {
+                if (e.KeyData == Keys.F4)
+                {
+                    OpenFileDialog ofd = new OpenFileDialog();
+                    ofd.Filter = "Triggerscript|*.triggerscript";
+                    if (ofd.ShowDialog() == DialogResult.OK)
+                    {
+                        TriggerscriptFile = new YAXSerializer<Triggerscript>(new SerializerOptions() { ExceptionBehavior = YAXExceptionTypes.Ignore })
+                            .DeserializeFromFile(ofd.FileName);
+                    };
+                }
+
+                if (e.KeyData == Keys.F5)
+                {
+                    SaveFileDialog sfd = new SaveFileDialog();
+                    sfd.Filter = "Triggerscript|*.triggerscript";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        new YAXSerializer<Triggerscript>(new SerializerOptions() { ExceptionBehavior = YAXExceptionTypes.Ignore })
+                            .SerializeToFile(TriggerscriptFile, sfd.FileName);
+                    };
+                }
+            };
         }
 
 
@@ -158,8 +183,18 @@ namespace Foundry.HW1.Triggerscript
         private void OnPaint(object o, PaintEventArgs e)
         {
             if (TriggerscriptFile == null) return;
+
+            Rectangle viewClip = new Rectangle(
+                ViewMatrix.Inverted().TransformPoint(e.ClipRectangle.Location).X,
+                ViewMatrix.Inverted().TransformPoint(e.ClipRectangle.Location).Y,
+                (int)(e.ClipRectangle.Size.Width * (1/ ViewZoom)),
+                (int)(e.ClipRectangle.Size.Height * (1 / ViewZoom))
+                );
             e.Graphics.Transform = ViewMatrix;
-            DrawScript(e.Graphics, e.ClipRectangle, TriggerscriptFile, Selection, Selection);
+
+            Quality quality = ViewZoom > .75 ? Quality.High : Quality.Low;
+
+            DrawScript(e.Graphics, quality, viewClip, TriggerscriptFile, Selection, Selection);
         }
 
 

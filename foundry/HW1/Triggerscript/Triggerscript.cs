@@ -9,6 +9,7 @@ using YAXLib;
 using YAXLib.Attributes;
 using YAXLib.Enums;
 using static Foundry.HW1.Triggerscript.Database;
+using static Foundry.HW1.Triggerscript.EditorParams;
 
 namespace Foundry.HW1.Triggerscript
 {
@@ -932,18 +933,6 @@ namespace Foundry.HW1.Triggerscript
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     public class Var
     {
-        public Var()
-        {
-        }
-        public Var(Var copy) : this()
-        {
-            this.ID = copy.ID;
-            this.Type = copy.Type;
-            this.Name = copy.Name;
-            this.IsNull = copy.IsNull;
-            this.Value = copy.Value;
-        }
-
         [YAXAttributeForClass()]
         public int ID { get; set; }
 
@@ -966,6 +955,13 @@ namespace Foundry.HW1.Triggerscript
         [YAXValueForClass()]
         [YAXErrorIfMissed(YAXExceptionTypes.Ignore, DefaultValue = "")]
         public string Value { get; set; }
+
+
+        public override string ToString()
+        {
+            if (Name == "") return "\"\"";
+            else return Name;
+        }
     }
 
 
@@ -1060,9 +1056,11 @@ namespace Foundry.HW1.Triggerscript
 
         [YAXValueForClass()]
         [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement, EachElementName = "Input")]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         public List<LogicParam> Inputs { get; set; }
         [YAXValueForClass()]
         [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement, EachElementName = "Output")]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         public List<LogicParam> Outputs { get; set; }
         [YAXDontSerialize]
 
@@ -1101,9 +1099,11 @@ namespace Foundry.HW1.Triggerscript
 
         [YAXValueForClass()]
         [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement, EachElementName = "Input")]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         public List<LogicParam> Inputs { get; set; }
         [YAXValueForClass()]
         [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement, EachElementName = "Output")]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         public List<LogicParam> Outputs { get; set; }
 
 
@@ -1124,21 +1124,6 @@ namespace Foundry.HW1.Triggerscript
             TriggerEffectsOnFalse = new List<Effect>();
             ConditionsAnd = new List<Condition>();
         }
-        public Trigger(Trigger copy) : this()
-        {
-            //this.ID = copy.ID;
-            //this.Name = copy.Name;
-            //this.Active = copy.Active;
-            //this.EvalLimit = copy.EvalLimit;
-            //this.EvaluateFrequency = copy.EvaluateFrequency;
-            //this.CommentOut = copy.CommentOut;
-            //this.X = copy.X;
-            //this.Y = copy.Y;
-            //this.GroupID = copy.GroupID;
-            //this.Conditions = copy.Conditions.ConvertAll(cnd => new Condition(cnd));
-            //this.TriggerEffectsOnTrue = copy.TriggerEffectsOnTrue.ConvertAll(eff => new Effect(eff));
-            //this.TriggerEffectsOnFalse = copy.TriggerEffectsOnFalse.ConvertAll(eff => new Effect(eff));
-        }
 
         [YAXAttributeForClass()]
         public int ID { get; set; }
@@ -1156,19 +1141,33 @@ namespace Foundry.HW1.Triggerscript
         public bool ConditionalTrigger { get; set; }
         [YAXAttributeForClass()]
         public int GroupID { get; set; }
-        [YAXAttributeForClass()]
-        [YAXErrorIfMissed(YAXLib.Enums.YAXExceptionTypes.Ignore)]
-        public float X { get; set; }
-        [YAXAttributeForClass()]
-        [YAXErrorIfMissed(YAXLib.Enums.YAXExceptionTypes.Ignore)]
-        public float Y { get; set; }
-        
 
-        [YAXCollection(YAXLib.Enums.YAXCollectionSerializationTypes.Recursive, EachElementName = "Condition")]
+        //[YAXAttributeForClass()]
+        //[YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
+        //public float X { get; set; }
+        //[YAXAttributeForClass()]
+        //[YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
+        //public float Y { get; set; }
+
+
+        [YAXAttributeForClass()]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
+        [YAXSerializeAs("X")]
+        private float pX { get; set; }
+        [YAXAttributeForClass()]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
+        [YAXSerializeAs("Y")]
+        private float pY { get; set; }
+        [YAXDontSerialize]
+        public float X { get { return pX * TriggerSpacingMultiplier; } set { pX = value / TriggerSpacingMultiplier; } }
+        [YAXDontSerialize]
+        public float Y { get { return pY * TriggerSpacingMultiplier; } set { pY = value / TriggerSpacingMultiplier; } }
+
+
+        [YAXCollection(YAXCollectionSerializationTypes.Recursive, EachElementName = "Condition")]
         [YAXElementFor("TriggerConditions")]
         [YAXSerializeAs("Or")]
-        [YAXDontSerializeIfNull()]
-        [YAXErrorIfMissed(YAXLib.Enums.YAXExceptionTypes.Ignore)]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         private List<Condition> ConditionsOr
         {
             get
@@ -1179,15 +1178,15 @@ namespace Foundry.HW1.Triggerscript
             set
             {
                 ConditionsAreAND = false;
-                Conditions = value;
+                if (value == null) Conditions = new List<Condition>();
+                else Conditions = value;
             }
         }
 
-        [YAXCollection(YAXLib.Enums.YAXCollectionSerializationTypes.Recursive, EachElementName = "Condition")]
+        [YAXCollection(YAXCollectionSerializationTypes.Recursive, EachElementName = "Condition")]
         [YAXElementFor("TriggerConditions")]
         [YAXSerializeAs("And")]
-        [YAXDontSerializeIfNull()]
-        [YAXErrorIfMissed(YAXLib.Enums.YAXExceptionTypes.Ignore)]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         private List<Condition> ConditionsAnd
         {
             get
@@ -1198,7 +1197,8 @@ namespace Foundry.HW1.Triggerscript
             set
             {
                 ConditionsAreAND = true;
-                Conditions = value;
+                if (value == null) Conditions = new List<Condition>();
+                else Conditions = value;
             }
         }
 
@@ -1209,10 +1209,12 @@ namespace Foundry.HW1.Triggerscript
 
         [YAXValueForClass()]
         [YAXCollection(YAXCollectionSerializationTypes.Recursive, EachElementName = "Effect")]
+        [YAXDontSerializeIfNull()]
         public List<Effect> TriggerEffectsOnTrue { get; set; }
 
         [YAXValueForClass()]
         [YAXCollection(YAXCollectionSerializationTypes.Recursive, EachElementName = "Effect")]
+        [YAXDontSerializeIfNull()]
         public List<Effect> TriggerEffectsOnFalse { get; set; }
     }
 

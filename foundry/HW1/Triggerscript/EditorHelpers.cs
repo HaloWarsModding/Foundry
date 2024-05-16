@@ -15,17 +15,20 @@ namespace Foundry.HW1.Triggerscript
             TriggerId = -1;
             LogicType = TriggerLogicSlot.Condition;
             LogicIndex = -1;
+            VarSigId = -1;
         }
 
         public int TriggerId { get; set; }
         public TriggerLogicSlot LogicType { get; set; }
         public int LogicIndex { get; set; }
+        public int VarSigId { get; set; }
 
         public static bool operator ==(Selection lhs, Selection rhs)
         {
             return (lhs.TriggerId == rhs.TriggerId
                 && lhs.LogicType == rhs.LogicType
-                && lhs.LogicIndex == rhs.LogicIndex);
+                && lhs.LogicIndex == rhs.LogicIndex
+                && lhs.VarSigId == rhs.VarSigId);
         }
         public static bool operator !=(Selection lhs, Selection rhs)
         {
@@ -81,14 +84,14 @@ namespace Foundry.HW1.Triggerscript
             return new Rectangle(
                 (int)trigger.X,
                 (int)trigger.Y,
-                55,
-                50);
+                DefaultWidth,
+                HeaderHeight * 3);
         }
         public static Size LogicSize(Logic logic)
         {
             int varCount = logic.StaticParamInfo.Count;
 
-            int width = 65;
+            int width = DefaultWidth;
 
             return new Size(
                 width, 
@@ -207,6 +210,15 @@ namespace Foundry.HW1.Triggerscript
                                 if (LogicBounds(trigger, type, i).Contains(point))
                                 {
                                     ret.LogicIndex = i;
+
+                                    for(int v = 0; v < Logics(trigger, type).ElementAt(i).StaticParamInfo.Count(); v++)
+                                    {
+                                        if (ParamValBounds(trigger, type, i, v).Contains(point))
+                                        {
+                                            ret.VarSigId = Logics(trigger, type).ElementAt(i).StaticParamInfo.ElementAt(v).Key;
+                                            return ret;
+                                        }
+                                    }
                                     return ret;
                                 }
                             }
@@ -226,6 +238,22 @@ namespace Foundry.HW1.Triggerscript
             }
             ret.TriggerId = -1;
             return ret;
+        }
+        public static Logic SelectedLogic(Triggerscript script, Selection selection)
+        {
+            if (selection.LogicType == TriggerLogicSlot.Condition)
+            {
+                return script.Triggers[selection.TriggerId].Conditions.ElementAt(selection.LogicIndex);
+            }
+            else if (selection.LogicType == TriggerLogicSlot.EffectTrue)
+            {
+                return script.Triggers[selection.TriggerId].TriggerEffectsOnTrue.ElementAt(selection.LogicIndex);
+            }
+            else if (selection.LogicType == TriggerLogicSlot.EffectFalse)
+            {
+                return script.Triggers[selection.TriggerId].TriggerEffectsOnFalse.ElementAt(selection.LogicIndex);
+            }
+            return null;
         }
         public static int NextVarId(Triggerscript script)
         {
@@ -263,14 +291,9 @@ namespace Foundry.HW1.Triggerscript
             else if (slot == TriggerLogicSlot.EffectTrue) return trigger.TriggerEffectsOnTrue;
             else return trigger.TriggerEffectsOnFalse;
         }
-        public static IEnumerable<LogicParam> Params(Logic logic)
+        public static IEnumerable<Var> Variables(Triggerscript script, VarType type)
         {
-            List<LogicParam> pars = new List<LogicParam>();
-            if (logic.Inputs != null)
-                pars.AddRange(logic.Inputs);
-            if (logic.Outputs != null)
-                pars.AddRange(logic.Outputs);
-            return pars;
+            return script.TriggerVars.Values.Where(v => v.Type == type);
         }
         /// <summary>
         /// Is var id used in any condition or effect?
