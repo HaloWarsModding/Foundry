@@ -20,12 +20,20 @@ using static Foundry.HW1.Triggerscript.EditorHelpers;
 using static Foundry.HW1.Triggerscript.EditorMenusWinForms;
 using static Foundry.HW1.Triggerscript.EditorRendererWinForms;
 using WeifenLuo.WinFormsUI.Docking;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Foundry.HW1.Triggerscript
 {
     public class Editor : DockContent
     {
-        public Triggerscript TriggerscriptFile { get; set; }
+        public EventHandler<Triggerscript> FileChanged;
+
+        public Triggerscript TriggerscriptFile
+        {
+            get { return _TriggerscriptFile; }
+            set { _TriggerscriptFile = value; FileChanged?.Invoke(this, value); }
+        }
+        private Triggerscript _TriggerscriptFile;
 
         private PointF ViewPos { get; set; } = new PointF(0, 0);
         private float ViewZoom { get; set; } = 1.0f;
@@ -47,23 +55,8 @@ namespace Foundry.HW1.Triggerscript
         public Selection Selection { get; private set; }
         public Selection Hover { get; private set; }
 
-
         public Editor(FoundryInstance i)
         {
-            ////debug save
-            //ViewTick += (sender, e) =>
-            //{
-            //    //if (e.KeyData == Keys.F5)
-            //    if (GetKeyIsDown(Keys.F5) && !GetKeyWasDown(Keys.F5))
-            //    {
-            //        SaveFileDialog sfd = new SaveFileDialog();
-            //        sfd.Filter = "Script(*.triggerscript)|*.triggerscript";
-            //        if (sfd.ShowDialog(Instance) == DialogResult.OK)
-            //        {
-            //            new YAXSerializer<Triggerscript>().SerializeToFile(TriggerscriptFile, sfd.FileName);
-            //        }
-            //    }
-            //};
             DoubleBuffered = true;
             Paint += OnPaint;
             MouseDown += OnMouseDown;
@@ -95,8 +88,13 @@ namespace Foundry.HW1.Triggerscript
                     };
                 }
             };
-        }
 
+            FileChanged += (s, e) =>
+            {
+                Selection = new Selection();
+                Hover = new Selection();
+            };
+        }
 
         private void OnMouseDown(object o, MouseEventArgs e)
         {
@@ -135,7 +133,7 @@ namespace Foundry.HW1.Triggerscript
             }
 
             if ((MouseButtons & MouseButtons.Left) > 0)
-                {
+            {
                 if (Selection.TriggerId != -1 && Selection.LogicIndex == -1)
                 {
                     Trigger selected = TriggerscriptFile.Triggers[Selection.TriggerId];
@@ -157,13 +155,13 @@ namespace Foundry.HW1.Triggerscript
         private void OnMouseScroll(object o, MouseEventArgs e)
         {
             if (TriggerscriptFile == null) return;
-            
+
             Point ViewMousePre = ViewMatrix.Inverted().TransformPoint(e.Location);
             ViewZoom += e.Delta * (ViewZoom / 1000);
             Point ViewMouse = ViewMatrix.Inverted().TransformPoint(e.Location);
 
             if ((MouseButtons & MouseButtons.Left) > 0
-                && Selection.TriggerId != -1 
+                && Selection.TriggerId != -1
                 && Selection.LogicIndex == -1)
             {
                 Trigger selected = TriggerscriptFile.Triggers[Selection.TriggerId];
@@ -187,7 +185,7 @@ namespace Foundry.HW1.Triggerscript
             Rectangle viewClip = new Rectangle(
                 ViewMatrix.Inverted().TransformPoint(e.ClipRectangle.Location).X,
                 ViewMatrix.Inverted().TransformPoint(e.ClipRectangle.Location).Y,
-                (int)(e.ClipRectangle.Size.Width * (1/ ViewZoom)),
+                (int)(e.ClipRectangle.Size.Width * (1 / ViewZoom)),
                 (int)(e.ClipRectangle.Size.Height * (1 / ViewZoom))
                 );
             e.Graphics.Transform = ViewMatrix;
@@ -196,7 +194,6 @@ namespace Foundry.HW1.Triggerscript
 
             DrawScript(e.Graphics, quality, viewClip, TriggerscriptFile, Selection, Selection);
         }
-
 
         private void TSDragDrop(Point ViewMouse)
         {

@@ -60,11 +60,13 @@ namespace Foundry
 			Browser.Show(this, DockState.DockLeft);
 
 			Editor view = new Editor(this);
-			//Triggerscript xml = new YAXSerializer<Triggerscript>(new YAXLib.Options.SerializerOptions() { ExceptionBehavior = YAXLib.Enums.YAXExceptionTypes.Ignore} )
-			//	.DeserializeFromFile("D:\\repos\\Foundry\\_resources\\workspace\\data\\triggerscripts\\skirmishai_raw_.triggerscript");
-			//new YAXSerializer<Triggerscript>().SerializeToFile(xml, "out.triggerscript");
-			//view.TriggerscriptFile = xml;
-			//view.NodeData = new ScriptData(Instance, xml);
+#if DEBUG
+            Triggerscript xml = new YAXSerializer<Triggerscript>(new YAXLib.Options.SerializerOptions() { ExceptionBehavior = YAXLib.Enums.YAXExceptionTypes.Ignore })
+				.DeserializeFromFile("D:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\Extract\\data\\triggerscripts\\accuracypowerup.triggerscript");
+			EditorHelpers.Validate(xml);
+			new YAXSerializer<Triggerscript>().SerializeToFile(xml, "out.triggerscript");
+			view.TriggerscriptFile = xml;
+#endif
 			view.Show(this.dockpanel, DockState.Document);
 
 			InitConfig();

@@ -27,7 +27,7 @@ namespace Foundry.HW1.Triggerscript
             for (int i = script.Triggers.Count - 1; i >= 0; i--)
             {
                 Trigger trigger = script.Triggers.Values.ElementAt(i);
-                if (!UnitBounds(trigger).IntersectsWith(clip)) continue;
+                //if (!UnitBounds(trigger).IntersectsWith(clip)) continue;
 
                 DrawTrigger(g, quality, trigger, sel);
                 DrawLogicBases(g, quality, script, trigger, TriggerLogicSlot.Condition, sel);
@@ -97,7 +97,7 @@ namespace Foundry.HW1.Triggerscript
                 g.FillRectangle(new SolidBrush(headerColor), bounds.X, bounds.Y, bounds.Width, HeaderHeight);
 
                 //Draw outline
-                if (trigger.ID == sel.TriggerId
+                if (sel.TriggerId == trigger.ID
                     && sel.LogicType == type
                     && sel.LogicIndex == i)
                 {
@@ -105,7 +105,7 @@ namespace Foundry.HW1.Triggerscript
                 }
                 else
                 {
-                    //draw outline when not selected (detail) only when quality is high.
+                    //draw outline when not selected only when quality is high.
                     if (quality == Quality.High)
                     {
                         g.DrawRectangle(new Pen(TrimColor, .25f), bounds);
@@ -132,7 +132,20 @@ namespace Foundry.HW1.Triggerscript
 
                         Rectangle varValBounds = ParamValBounds(trigger, type, i, paramIndex);
                         g.FillRectangle(new SolidBrush(TrimColor), varValBounds);
-                        if (!script.TriggerVars.ContainsKey(varId)) continue;
+                        if (!script.TriggerVars.ContainsKey(varId))
+                        {
+                            paramIndex++;
+                            continue;
+                        }
+
+                        //outline var value box when selected.
+                        if (sel.TriggerId == trigger.ID
+                            && sel.LogicType == type
+                            && sel.LogicIndex == i
+                            && sel.VarSigId == sigid)
+                        {
+                            g.DrawRectangle(new Pen(Color.White, .125f), varValBounds);
+                        }
 
                         string varValStr = script.TriggerVars[varId].Name;
                         if (varValStr == "") varValStr = "NO NAME";
@@ -151,13 +164,11 @@ namespace Foundry.HW1.Triggerscript
                 }
 
                 //Draw logic title
-                string title = logics.ElementAt(i).TypeName;
-                if (logics.ElementAt(i).Version != -1)
-                    title += " [v" + logics.ElementAt(i).Version + "]";
-
-
                 if (quality == Quality.High)
                 {
+                    string title = logics.ElementAt(i).TypeName;
+                    if (logics.ElementAt(i).Version != -1)
+                        title += " [v" + logics.ElementAt(i).Version + "]";
                     g.DrawString(
                     title,
                     TitleFont,
@@ -185,7 +196,7 @@ namespace Foundry.HW1.Triggerscript
                         bounds.Width,
                         FooterHeight);
 
-                    //detail (text & outline)
+                    //draw text and outline if high quality only
                     if (quality == Quality.High)
                     {
                         g.DrawRectangle(new Pen(TrimColor, .25f),

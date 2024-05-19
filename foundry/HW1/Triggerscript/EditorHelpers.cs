@@ -144,15 +144,7 @@ namespace Foundry.HW1.Triggerscript
         }
         public static Rectangle LogicBounds(Trigger trigger, TriggerLogicSlot type, int index)
         {
-            IEnumerable<Logic> logics;
-            if (type == TriggerLogicSlot.Condition)
-                logics = trigger.Conditions;
-            else if (type == TriggerLogicSlot.EffectTrue)
-                logics = trigger.TriggerEffectsOnTrue;
-            else if (type == TriggerLogicSlot.EffectFalse)
-                logics = trigger.TriggerEffectsOnFalse;
-            else
-                return Rectangle.Empty;
+            IEnumerable<Logic> logics = Logics(trigger, type);
 
             Point loc = LogicBounds(trigger, type).Location;
             for (int i = 0; i < index; i++)
@@ -323,29 +315,16 @@ namespace Foundry.HW1.Triggerscript
         public static bool VarUsedIn(int varid, Trigger trigger, TriggerLogicSlot slot, int index)
         {
             IEnumerable<Logic> logics = Logics(trigger, slot);
-            foreach(var p in logics.ElementAt(index).Inputs)
+
+            foreach(Logic logic in logics)
             {
-                if (p.Value == varid) return true;
+                foreach(var (sigid, _) in logic.StaticParamInfo)
+                {
+                    if (logic.GetValueOfParam(sigid) == varid) return true;
+                }
             }
-            foreach (var p in logics.ElementAt(index).Outputs)
-            {
-                if (p.Value == varid) return true;
-            }
+
             return false;
-        }
-        public static bool VarIsLocal(Triggerscript script, int varid)
-        {
-            int count = 0;
-            foreach(Trigger t in script.Triggers.Values) 
-            {
-                if (VarUsedIn(varid, t)) count++;
-            }
-            return count <= 1;
-        }
-        public static bool VarIsConst(Triggerscript script, int varid)
-        {
-            if (!script.TriggerVars.ContainsKey(varid)) return false;
-            return script.TriggerVars[varid].Value == "";
         }
 
         //Transformations
@@ -404,7 +383,7 @@ namespace Foundry.HW1.Triggerscript
                 };
                 script.TriggerVars.Add(ret.ID, ret);
             }
-
+            ret.Name = "Null" + type.ToString() + "Var";
             return ret.ID;
         }
 
@@ -417,6 +396,34 @@ namespace Foundry.HW1.Triggerscript
             return false;
         }
         public static void Validate(Triggerscript script)
+        {
+            FixupVarLocality(script);
+        }
+        public static void FixupVarLocality(Triggerscript script)
+        {
+            foreach(Var v in script.TriggerVars.Values)
+            {
+                int count = 0;
+                int triggerId = -1;
+                foreach (Trigger t in script.Triggers.Values)
+                {
+                    if (VarUsedIn(v.ID, t))
+                    {
+                        count++;
+                        triggerId = t.ID;
+                    }
+                }
+                if (count == 1)
+                {
+                    v.LocalTrigger = triggerId;
+                }
+                if (count > 1)
+                {
+                    v.LocalTrigger = -1;
+                }
+            }
+        }
+        public static void FixupTriggerVars(Triggerscript script)
         {
 
         }

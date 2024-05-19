@@ -956,6 +956,10 @@ namespace Foundry.HW1.Triggerscript
         [YAXErrorIfMissed(YAXExceptionTypes.Ignore, DefaultValue = "")]
         public string Value { get; set; }
 
+        [YAXAttributeForClass]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore, DefaultValue = -1)]
+        public int LocalTrigger { get; set; }
+
 
         public override string ToString()
         {
@@ -988,84 +992,120 @@ namespace Foundry.HW1.Triggerscript
         [YAXValueForClass()]
         public int Value { get; set; }
     }
-    public interface Logic
-    {
-        public List<LogicParam> Inputs { get; set; }
-        public List<LogicParam> Outputs { get; set; }
 
-        public string TypeName { get; }
-        public int Version { get; }
-        public int DBID { get; }
-        public string Comment { get; }
-        public Dictionary<int, LogicParamInfo> StaticParamInfo { get; }
+    [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
+    public abstract class Logic
+    {
+        public Logic()
+        {
+            ParamValues = new Dictionary<int, int>();
+        }
+
+        public abstract string TypeName { get; }
+
+        [YAXAttributeForClass()]
+        public int Version { get; set; }
+
+        [YAXAttributeForClass()]
+        public int DBID { get; set; }
+
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore, DefaultValue = "")]
+        [YAXAttributeForClass()]
+        public string Comment { get; set; }
+
+        public abstract Dictionary<int, LogicParamInfo> StaticParamInfo { get; }
+
+        [YAXDontSerialize]
+        private Dictionary<int, int> ParamValues { get; set; }
+
+        [YAXValueForClass()]
+        [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement, EachElementName = "Input")]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
+        public List<LogicParam> Inputs
+        {
+            get
+            {
+                List<LogicParam> ret = new List<LogicParam>();
+                foreach (var p in StaticParamInfo)
+                {
+                    if (p.Value.Output) continue;
+                    ret.Add(new LogicParam()
+                    {
+                        Name = p.Value.Name,
+                        Optional = p.Value.Optional,
+                        SigID = p.Key,
+                        Value = GetValueOfParam(p.Key)
+                    });
+                }
+                return ret;
+            }
+            set
+            {
+                if (value == null) return;
+                foreach (var v in value)
+                {
+                    SetValueOfParam(v.SigID, v.Value);
+                }
+            }
+        }
+        [YAXValueForClass()]
+        [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement, EachElementName = "Output")]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
+        public List<LogicParam> Outputs
+        {
+            get
+            {
+                List<LogicParam> ret = new List<LogicParam>();
+                foreach (var p in StaticParamInfo)
+                {
+                    if (!p.Value.Output) continue;
+                    ret.Add(new LogicParam()
+                    {
+                        Name = p.Value.Name,
+                        Optional = p.Value.Optional,
+                        SigID = p.Key,
+                        Value = GetValueOfParam(p.Key)
+                    });
+                }
+                return ret;
+            }
+            set
+            {
+                if (value == null) return;
+                foreach (var v in value)
+                {
+                    SetValueOfParam(v.SigID, v.Value);
+                }
+            }
+        }
 
         public int GetValueOfParam(int sigID)
         {
-            if (Inputs != null)
-            {
-                foreach (LogicParam param in Inputs)
-                {
-                    if (param.SigID == sigID) return param.Value;
-                }
-            }
-            if (Outputs != null)
-            {
-                foreach (LogicParam param in Outputs)
-                {
-                    if (param.SigID == sigID) return param.Value;
-                }
-            }
-            return -1;
+            if (!StaticParamInfo.ContainsKey(sigID)) return -1;
+
+            if (!ParamValues.ContainsKey(sigID)) ParamValues.Add(sigID, -1);
+            return ParamValues[sigID];
         }
         public void SetValueOfParam(int sigID, int value)
         {
-            if (Inputs != null)
-            {
-                foreach (LogicParam param in Inputs)
-                {
-                    if (param.SigID == sigID) param.Value = value;
-                }
-            }
-            if (Outputs != null)
-            {
-                foreach (LogicParam param in Outputs)
-                {
-                    if (param.SigID == sigID) param.Value = value;
-                }
-            }
+            if (!StaticParamInfo.ContainsKey(sigID)) return;
+            
+            if (!ParamValues.ContainsKey(sigID)) ParamValues.Add(sigID, value);
+            ParamValues[sigID] = value;
         }
     }
 
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     public class Effect : Logic
     {
+        public Effect() : base() { }
+
         [YAXAttributeForClass()]
         [YAXSerializeAs("Type")]
-        public string TypeName { get { return LogicName(LogicType.Effect, DBID); } }
+        public override string TypeName { get { return LogicName(LogicType.Effect, DBID); } }
 
-        [YAXAttributeForClass()]
-        public int DBID { get; set; }
-
-        [YAXAttributeForClass()]
-        public int Version { get; set; }
-
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore, DefaultValue = "")]
-        [YAXAttributeForClass()]
-        public string Comment { get; set; }
-
-
-        [YAXValueForClass()]
-        [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement, EachElementName = "Input")]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
-        public List<LogicParam> Inputs { get; set; }
-        [YAXValueForClass()]
-        [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement, EachElementName = "Output")]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
-        public List<LogicParam> Outputs { get; set; }
         [YAXDontSerialize]
-
-
-        public Dictionary<int, LogicParamInfo> StaticParamInfo 
+        public override Dictionary<int, LogicParamInfo> StaticParamInfo
         {
             get { return LogicParamInfos(LogicType.Effect, DBID, Version); }
         }
@@ -1074,15 +1114,11 @@ namespace Foundry.HW1.Triggerscript
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     public class Condition : Logic
     {
+        public Condition() : base() { }
+
         [YAXAttributeForClass()]
         [YAXSerializeAs("Type")]
-        public string TypeName { get { return LogicName(LogicType.Condition, DBID); } }
-
-        [YAXAttributeForClass()]
-        public int DBID { get; set; }
-
-        [YAXAttributeForClass()]
-        public int Version { get; set; }
+        public override string TypeName { get { return LogicName(LogicType.Condition, DBID); } }
 
         [YAXAttributeForClass()]
         public bool Invert { get; set; }
@@ -1093,22 +1129,8 @@ namespace Foundry.HW1.Triggerscript
         [YAXAttributeForClass()]
         public int AsyncParameterKey { get; set; }
 
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore, DefaultValue = "")]
-        [YAXAttributeForClass()]
-        public string Comment { get; set; }
-
-        [YAXValueForClass()]
-        [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement, EachElementName = "Input")]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
-        public List<LogicParam> Inputs { get; set; }
-        [YAXValueForClass()]
-        [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement, EachElementName = "Output")]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
-        public List<LogicParam> Outputs { get; set; }
-
-
         [YAXDontSerialize]
-        public Dictionary<int, LogicParamInfo> StaticParamInfo
+        public override Dictionary<int, LogicParamInfo> StaticParamInfo
         {
             get { return LogicParamInfos(LogicType.Condition, DBID, Version); }
         }

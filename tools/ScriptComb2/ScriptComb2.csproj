@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\foundry.triggerscript\Foundry.Triggerscript.csproj" />
     <ProjectReference Include="..\..\foundry\Foundry.csproj" />
   </ItemGroup>
 
