@@ -16,6 +16,9 @@ using IniParser.Model;
 using System.Runtime.Loader;
 using Foundry.Views;
 using Foundry.HW1.Triggerscript;
+using System.Text;
+using System.Xml.Serialization;
+using System.Xml;
 
 namespace Foundry
 {
@@ -61,14 +64,24 @@ namespace Foundry
 
 			Editor view = new Editor(this);
 #if DEBUG
-            Triggerscript xml = new YAXSerializer<Triggerscript>(new YAXLib.Options.SerializerOptions() { ExceptionBehavior = YAXLib.Enums.YAXExceptionTypes.Ignore })
-				.DeserializeFromFile("D:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\Extract\\data\\triggerscripts\\accuracypowerup.triggerscript");
+			string file = "D:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\Extract\\data\\triggerscripts\\skirmishai.triggerscript";
+			string fileout = "D:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\Extract\\data\\triggerscripts\\out.triggerscript";
+            var options = new YAXLib.Options.SerializerOptions()
+			{
+				ExceptionBehavior = YAXLib.Enums.YAXExceptionTypes.Ignore,
+				ExceptionHandlingPolicies = YAXLib.Enums.YAXExceptionHandlingPolicies.DoNotThrow,
+				MaxRecursion = int.MaxValue
+			};
+			Triggerscript xml = new YAXSerializer<Triggerscript>(options).DeserializeFromFile(file);
+
 			EditorHelpers.Validate(xml);
-			new YAXSerializer<Triggerscript>().SerializeToFile(xml, "out.triggerscript");
+			using (TextWriter writer = new StreamWriter(fileout))
+			{
+				new YAXSerializer<Triggerscript>(options).Serialize(xml, writer);
+			}
 			view.TriggerscriptFile = xml;
 #endif
-
-			view.Show(this.dockpanel, DockState.Document);
+			view.Show(MainDockPanel, DockState.Document);
 
 			InitConfig();
 			InitToolstrip();

@@ -151,7 +151,7 @@ namespace Foundry.HW1.Triggerscript
             List<Var> selectionSet = 
                 localTrigger == null ?
                 script.TriggerVars.Values.ToList() : 
-                script.TriggerVars.Values.Where(v => v.LocalTrigger == localTrigger.ID || v.LocalTrigger == -1).ToList();
+                script.TriggerVars.Values.Where(v => v.Refs.Contains(localTrigger.ID) || v.Refs.Count == 0).ToList();
             selectionSet.Sort((l, r) =>
             {
                 int ret = l.Type.ToString().CompareTo(r.Type.ToString());
@@ -163,7 +163,7 @@ namespace Foundry.HW1.Triggerscript
             {
                 ToolStripMenuItem varItem = new ToolStripMenuItem();
                 varItem.Text = v.Name == "" ? "\"\"" : v.Name;
-                varItem.Image = v.LocalTrigger == -1 ? Properties.Resources.world : null;
+                varItem.Image = v.Refs.Count() > 1 ? Properties.Resources.world : null;
                 varItem.Click += (s, e) => { varClicked?.Invoke(varItem, v.ID); };
 
                 if (types == null || types.Count() != 1)
@@ -242,7 +242,7 @@ namespace Foundry.HW1.Triggerscript
             IEnumerable<Var> selectionSet =
                 localTrigger == null ?
                 script.TriggerVars.Values :
-                script.TriggerVars.Values.Where(v => v.LocalTrigger == localTrigger.ID || v.LocalTrigger == -1);
+                script.TriggerVars.Values.Where(v => v.Refs.Contains(localTrigger.ID) || v.Refs.Count == 0).ToList();
 
             if (types != null)
             {

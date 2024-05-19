@@ -15,6 +15,14 @@
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Util\ERA\**" />
     <EmbeddedResource Remove="Util\ERA\**" />
@@ -28,13 +36,12 @@
   <ItemGroup>
     <PackageReference Include="DockPanelSuite" Version="3.1.0" />
     <PackageReference Include="DockPanelSuite.ThemeVS2015" Version="3.1.0" />
-    <PackageReference Include="HelixToolkit" Version="2.24.0" />
-    <PackageReference Include="HelixToolkit.SharpDX.Core" Version="2.24.0" />
+    <PackageReference Include="HelixToolkit" Version="2.25.0" />
+    <PackageReference Include="HelixToolkit.SharpDX.Core" Version="2.25.0" />
     <PackageReference Include="ini-parser" Version="2.5.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="ObjectListView.Official" Version="2.9.2-alpha2" />
     <PackageReference Include="TreeViewAdv" Version="1.7.0" />
-    <PackageReference Include="YAXLib" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +52,7 @@
     <ProjectReference Include="..\_extlib\Vita\KSoft\KSoft.Security\KSoft.Security.csproj" />
     <ProjectReference Include="..\_extlib\Vita\KSoft\KSoft.T4\KSoft.T4.csproj" />
     <ProjectReference Include="..\_extlib\Vita\KSoft\KSoft\KSoft.csproj" />
+    <ProjectReference Include="..\_extlib\YAXLib-4.1.0\YAXLib\YAXLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>

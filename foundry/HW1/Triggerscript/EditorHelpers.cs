@@ -401,28 +401,31 @@ namespace Foundry.HW1.Triggerscript
         }
         public static void FixupVarLocality(Triggerscript script)
         {
-            foreach(Var v in script.TriggerVars.Values)
+            foreach(Trigger t in script.Triggers.Values)
             {
-                int count = 0;
-                int triggerId = -1;
-                foreach (Trigger t in script.Triggers.Values)
+                FixupVarLocalityFor(script, t, Logics(t, TriggerLogicSlot.Condition));
+                FixupVarLocalityFor(script, t, Logics(t, TriggerLogicSlot.EffectTrue));
+                FixupVarLocalityFor(script, t, Logics(t, TriggerLogicSlot.EffectFalse));
+            }
+        }
+        private static void FixupVarLocalityFor(Triggerscript script, Trigger trigger, IEnumerable<Logic> logics)
+        {
+            foreach(Logic logic in logics)
+            {
+                foreach(int sigid in logic.StaticParamInfo.Keys)
                 {
-                    if (VarUsedIn(v.ID, t))
+                    int val = logic.GetValueOfParam(sigid);
+                    if (!script.TriggerVars.ContainsKey(val)) continue;
+                    Var v = script.TriggerVars[val];
+                    if (v.Refs == null) v.Refs = new List<int>();
+                    if (!v.Refs.Contains(trigger.ID))
                     {
-                        count++;
-                        triggerId = t.ID;
+                        v.Refs.Add(trigger.ID);
                     }
-                }
-                if (count == 1)
-                {
-                    v.LocalTrigger = triggerId;
-                }
-                if (count > 1)
-                {
-                    v.LocalTrigger = -1;
                 }
             }
         }
+
         public static void FixupTriggerVars(Triggerscript script)
         {
 

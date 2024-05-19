@@ -956,9 +956,9 @@ namespace Foundry.HW1.Triggerscript
         [YAXErrorIfMissed(YAXExceptionTypes.Ignore, DefaultValue = "")]
         public string Value { get; set; }
 
-        [YAXAttributeForClass]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore, DefaultValue = -1)]
-        public int LocalTrigger { get; set; }
+        [YAXAttributeForClass()]
+        [YAXCollection(YAXCollectionSerializationTypes.Serially, SeparateBy = ",")]
+        public List<int> Refs { get; set; }
 
 
         public override string ToString()
@@ -967,7 +967,6 @@ namespace Foundry.HW1.Triggerscript
             else return Name;
         }
     }
-
 
     public class LogicParam
     {
@@ -1089,7 +1088,7 @@ namespace Foundry.HW1.Triggerscript
         public void SetValueOfParam(int sigID, int value)
         {
             if (!StaticParamInfo.ContainsKey(sigID)) return;
-            
+
             if (!ParamValues.ContainsKey(sigID)) ParamValues.Add(sigID, value);
             ParamValues[sigID] = value;
         }
@@ -1271,11 +1270,11 @@ namespace Foundry.HW1.Triggerscript
         [YAXAttributeForClass()]
         public int NextEffectID { get; set; }
 
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore, DefaultValue=true)]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore, DefaultValue = true)]
         [YAXAttributeForClass()]
         public bool External { get; set; }
 
-        
+
         //YAX needs a list, we want to expose a dictionary for fast acces via id.
         [YAXCollection(YAXLib.Enums.YAXCollectionSerializationTypes.Recursive, EachElementName = "Group")]
         [YAXSerializeAs("TriggerGroups")]
@@ -1285,7 +1284,7 @@ namespace Foundry.HW1.Triggerscript
             set
             {
                 TriggerGroups.Clear();
-                foreach(var g in value)
+                foreach (var g in value)
                 {
                     TriggerGroups.Add(g.ID, g);
                 }
@@ -1324,7 +1323,7 @@ namespace Foundry.HW1.Triggerscript
             set
             {
                 Triggers.Clear();
-                foreach(var t in value)
+                foreach (var t in value)
                 {
                     Triggers.Add(t.ID, t);
                 }
