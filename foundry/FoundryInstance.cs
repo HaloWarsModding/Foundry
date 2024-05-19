@@ -67,6 +67,7 @@ namespace Foundry
 			new YAXSerializer<Triggerscript>().SerializeToFile(xml, "out.triggerscript");
 			view.TriggerscriptFile = xml;
 #endif
+
 			view.Show(this.dockpanel, DockState.Document);
 
 			InitConfig();
