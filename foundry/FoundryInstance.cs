@@ -63,8 +63,8 @@ namespace Foundry
 			Browser.Show(this, DockState.DockLeft);
 
 			Editor view = new Editor(this);
-#if DEBUG
-			string file = "D:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\Extract\\data\\triggerscripts\\skirmishai.triggerscript";
+//#if DEBUG
+			string file = "D:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\Extract\\data\\triggerscripts\\skirmishai_raw_.triggerscript";
 			string fileout = "D:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\Extract\\data\\triggerscripts\\out.triggerscript";
             var options = new YAXLib.Options.SerializerOptions()
 			{
@@ -80,7 +80,7 @@ namespace Foundry
 				new YAXSerializer<Triggerscript>(options).Serialize(xml, writer);
 			}
 			view.TriggerscriptFile = xml;
-#endif
+//#endif
 			view.Show(MainDockPanel, DockState.Document);
 
 			InitConfig();

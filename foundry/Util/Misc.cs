@@ -49,15 +49,20 @@ namespace Foundry.util
 			ret.Invert();
 			return ret;
         }
-
 		public static System.Drawing.Point TransformPoint(this System.Drawing.Drawing2D.Matrix m, System.Drawing.Point point)
 		{
 			System.Drawing.Point[] p = new System.Drawing.Point[1] { point };
 			m.TransformPoints(p);
 			return p[0];
 		}
+        public static System.Drawing.PointF TransformPoint(this System.Drawing.Drawing2D.Matrix m, System.Drawing.PointF point)
+        {
+            System.Drawing.PointF[] p = new System.Drawing.PointF[1] { point };
+            m.TransformPoints(p);
+            return p[0];
+        }
 
-		public static Vector3 FromString(string vec)
+        public static Vector3 FromString(string vec)
 		{
 			vec = vec.Trim();
 			string[] elements = vec.Split(",");

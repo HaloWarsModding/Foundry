@@ -25,9 +25,13 @@ namespace Foundry.HW1.Triggerscript
 
         public static int TriggerSpacingMultiplier { get; } = 3;
 
+        public static float ScaleViewMax { get; } = 4.5f;
+        public static float ScaleViewMin { get; } = .01f
+
         public static Font TitleFont { get; } = new Font("Consolas", 1.5f, FontStyle.Regular);
         public static Font SubtitleFont { get; } = new Font("Consolas", 1.25f, FontStyle.Regular);
         public static Font TextFont { get; } = new Font("Consolas", 1.0f, FontStyle.Regular);
+        public static Font HugeFont { get; } = new Font("Consolas", 20.0f, FontStyle.Regular);
 
         public static Color TextColor { get; } = Color.White;
         public static Color BodyColor { get; } = Color.FromArgb(90, 90, 90);

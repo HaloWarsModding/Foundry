@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using static Foundry.HW1.Triggerscript.EditorHelpers;
 using static Foundry.HW1.Triggerscript.EditorParams;
+using static Foundry.HW1.Triggerscript.EditorRendererWinForms;
 
 namespace Foundry.HW1.Triggerscript
 {
@@ -15,38 +16,53 @@ namespace Foundry.HW1.Triggerscript
     {
         public enum Quality
         {
-            High,
+            Full,
             Low,
-        }
+            Outline,
+        };
 
-        public static void DrawScript(Graphics g, Quality quality, Rectangle clip, Triggerscript script, Selection sel, Selection hover)
+        public static void DrawScript(Graphics g, Rectangle clip, Triggerscript script, Selection sel, Selection hover, bool drawDetail, bool drawLOD)
         {
-            DrawBackground(g, quality, clip, script);
-
-            //draw the triggers in a reverse order to match the top-down selection logic.
-            for (int i = script.Triggers.Count - 1; i >= 0; i--)
+            DrawBackground(g, clip, script);
+            foreach (Trigger trigger in script.Triggers.Values)
             {
-                Trigger trigger = script.Triggers.Values.ElementAt(i);
-                //if (!UnitBounds(trigger).IntersectsWith(clip)) continue;
+                Rectangle bounds = UnitBounds(trigger);
+                if (!bounds.IntersectsWith(clip)) continue;
 
-                DrawTrigger(g, quality, trigger, sel);
-                DrawLogicBases(g, quality, script, trigger, TriggerLogicSlot.Condition, sel);
-                DrawLogicBases(g, quality, script, trigger, TriggerLogicSlot.EffectTrue, sel);
-                DrawLogicBases(g, quality, script, trigger, TriggerLogicSlot.EffectFalse, sel);
-                DrawTriggerContainer(g, quality, trigger, sel);
-
-                //DrawTriggerDebug(g, trigger, sel);
+                if (!drawLOD)
+                    DrawUnit(g, script, trigger, sel, drawDetail);
+                else
+                    DrawUnitProxy(g, bounds, trigger.Name, drawDetail);
             }
         }
 
-        public static void DrawBackground(Graphics g, Quality quality, Rectangle clip, Triggerscript script)
+        private static void DrawBackground(Graphics g, Rectangle clip, Triggerscript script)
         {
             Rectangle bounds = ScriptBounds(script);
-            bounds.Inflate(100, 100);
             g.DrawRectangle(new Pen(Color.Red, 4), bounds);
         }
 
-        private static void DrawTrigger(Graphics g, Quality quality, Trigger trigger, Selection sel)
+        private static void DrawUnit(Graphics g, Triggerscript script, Trigger trigger, Selection sel, bool drawDetail)
+        {
+            DrawTrigger(g, trigger, sel, drawDetail);
+            DrawLogicBases(g, script, trigger, TriggerLogicSlot.Condition, sel, drawDetail);
+            DrawLogicBases(g, script, trigger, TriggerLogicSlot.EffectTrue, sel, drawDetail);
+            DrawLogicBases(g, script, trigger, TriggerLogicSlot.EffectFalse, sel, drawDetail);
+            DrawTriggerContainer(g, trigger, sel, drawDetail);
+        }
+        private static void DrawUnitProxy(Graphics g, Rectangle bounds, string text, bool drawDetail)
+        {
+            bounds.Width = Math.Max(bounds.Width, 200);
+            bounds.Height = Math.Max(bounds.Height, 65);
+
+            g.FillRectangle(new SolidBrush(BodyColor), bounds);
+            g.DrawRectangle(new Pen(TrimColor), bounds);
+
+            if (drawDetail)
+                g.DrawString(text, HugeFont, new SolidBrush(TextColor), bounds, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+        }
+
+        private static void DrawTrigger(Graphics g, Trigger trigger, Selection sel, bool drawDetail)
         {
             Rectangle bounds = TriggerBounds(trigger);
 
@@ -57,17 +73,13 @@ namespace Foundry.HW1.Triggerscript
             {
                 g.DrawRectangle(new Pen(Color.White, .5f), bounds);
             }
-            else
+            else if (drawDetail)
             {
-                //draw outline when not selected (detail) only when quality is high.
-                if (quality == Quality.High)
-                {
-                    g.DrawRectangle(new Pen(TrimColor, .25f), bounds);
-                }
+                g.DrawRectangle(new Pen(TrimColor, .25f), bounds);
             }
 
             //draw name title
-            if (quality == Quality.High)
+            if (drawDetail)
             {
                 g.DrawString(
                 trigger.Name,
@@ -81,8 +93,7 @@ namespace Foundry.HW1.Triggerscript
                 );
             }
         }
-
-        private static void DrawLogicBases(Graphics g, Quality quality, Triggerscript script, Trigger trigger, TriggerLogicSlot type, Selection sel)
+        private static void DrawLogicBases(Graphics g, Triggerscript script, Trigger trigger, TriggerLogicSlot type, Selection sel, bool drawDetail)
         {
             IEnumerable<Logic> logics = Logics(trigger, type);
             Color headerColor = type == TriggerLogicSlot.Condition ? ConditionHeaderColor : EffectHeaderColor;
@@ -106,14 +117,14 @@ namespace Foundry.HW1.Triggerscript
                 else
                 {
                     //draw outline when not selected only when quality is high.
-                    if (quality == Quality.High)
+                    if (drawDetail)
                     {
                         g.DrawRectangle(new Pen(TrimColor, .25f), bounds);
                     }
                 }
 
                 //Draw param slots, only if quality is set to high.
-                if (quality == Quality.High)
+                if (drawDetail)
                 {
                     int paramIndex = 0;
                     foreach (var (sigid, param) in cur.StaticParamInfo)
@@ -164,7 +175,7 @@ namespace Foundry.HW1.Triggerscript
                 }
 
                 //Draw logic title
-                if (quality == Quality.High)
+                if (drawDetail)
                 {
                     string title = logics.ElementAt(i).TypeName;
                     if (logics.ElementAt(i).Version != -1)
@@ -197,7 +208,7 @@ namespace Foundry.HW1.Triggerscript
                         FooterHeight);
 
                     //draw text and outline if high quality only
-                    if (quality == Quality.High)
+                    if (drawDetail)
                     {
                         g.DrawRectangle(new Pen(TrimColor, .25f),
                         bounds.X,
@@ -218,9 +229,10 @@ namespace Foundry.HW1.Triggerscript
             }
 
         }
-
-        private static void DrawTriggerContainer(Graphics g, Quality quality, Trigger trigger, Selection sel)
+        private static void DrawTriggerContainer(Graphics g, Trigger trigger, Selection sel, bool drawDetail)
         {
+            if (!drawDetail) return;
+
             Point[] triangle = new Point[3]
             {
                 new Point(1, 1),
@@ -267,7 +279,6 @@ namespace Foundry.HW1.Triggerscript
                 g.FillPolygon(new SolidBrush(Color.Black), feffTri);
             }
         }
-
         private static void DrawTriggerDebug(Graphics g, Quality quality, Trigger trigger, Selection sel)
         {
             g.DrawRectangle(new Pen(Color.YellowGreen, 1), LogicBounds(trigger, TriggerLogicSlot.Condition));

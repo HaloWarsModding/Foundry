@@ -16,19 +16,22 @@ namespace Foundry.HW1.Triggerscript
             LogicType = TriggerLogicSlot.Condition;
             LogicIndex = -1;
             VarSigId = -1;
+            UnitId = -1;
         }
 
         public int TriggerId { get; set; }
         public TriggerLogicSlot LogicType { get; set; }
         public int LogicIndex { get; set; }
         public int VarSigId { get; set; }
+        public int UnitId { get; set; }
 
         public static bool operator ==(Selection lhs, Selection rhs)
         {
             return (lhs.TriggerId == rhs.TriggerId
                 && lhs.LogicType == rhs.LogicType
                 && lhs.LogicIndex == rhs.LogicIndex
-                && lhs.VarSigId == rhs.VarSigId);
+                && lhs.VarSigId == rhs.VarSigId
+                && lhs.UnitId == rhs.UnitId);
         }
         public static bool operator !=(Selection lhs, Selection rhs)
         {
@@ -54,12 +57,14 @@ namespace Foundry.HW1.Triggerscript
                 if (t.Y > maxY.Y) maxY = t;
             }
 
-            return new Rectangle(
+            Rectangle ret = new Rectangle(
                 (int)minX.X,
                 (int)minY.Y,
                 (int)(maxX.X - minX.X + UnitBounds(maxX).Width),
                 (int)(maxY.Y - minY.Y + UnitBounds(maxY).Height)
                 );
+            ret.Inflate(100, 100);
+            return ret;
         }
         public static Rectangle UnitBounds(Trigger trigger)
         {
@@ -187,6 +192,7 @@ namespace Foundry.HW1.Triggerscript
             {
                 if (UnitBounds(trigger).Contains(point))
                 {
+                    ret.UnitId = trigger.ID;
                     ret.TriggerId = trigger.ID;
 
                     foreach (var type in Enum.GetValues<TriggerLogicSlot>())

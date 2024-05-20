@@ -36,7 +36,7 @@ namespace Foundry.HW1.Triggerscript
         private Triggerscript _TriggerscriptFile;
 
         private PointF ViewPos { get; set; } = new PointF(0, 0);
-        private float ViewZoom { get; set; } = 1.0f;
+        private float ViewScale { get; set; } = 1.0f;
         private Matrix ViewMatrix
         {
             get
@@ -44,7 +44,7 @@ namespace Foundry.HW1.Triggerscript
                 Matrix matrix = new Matrix();
                 matrix.Reset();
                 matrix.Translate(Width / 2, Height / 2);
-                matrix.Scale(ViewZoom, ViewZoom);
+                matrix.Scale(ViewScale, ViewScale);
                 matrix.Translate(ViewPos.X, ViewPos.Y);
                 return matrix;
             }
@@ -93,6 +93,14 @@ namespace Foundry.HW1.Triggerscript
             {
                 Selection = new Selection();
                 Hover = new Selection();
+
+                Rectangle bounds = ScriptBounds(e);
+                ViewPos = new PointF(
+                    bounds.X + (bounds.Width / 2),
+                    bounds.Y + (bounds.Height / 2)
+                );
+                ViewScale = 1.0f;
+                Invalidate();
             };
         }
 
@@ -127,8 +135,8 @@ namespace Foundry.HW1.Triggerscript
             if (MouseButtons == MouseButtons.Middle)
             {
                 ViewPos += new SizeF(
-                    (e.Location.X - MouseLast.X) * (1 / ViewZoom),
-                    (e.Location.Y - MouseLast.Y) * (1 / ViewZoom)
+                    (e.Location.X - MouseLast.X) * (1 / ViewScale),
+                    (e.Location.Y - MouseLast.Y) * (1 / ViewScale)
                     );
             }
 
@@ -139,8 +147,8 @@ namespace Foundry.HW1.Triggerscript
                     Trigger selected = TriggerscriptFile.Triggers[Selection.TriggerId];
                     if (selected != null)
                     {
-                        selected.X += (e.Location.X - MouseLast.X) * (1 / ViewZoom);
-                        selected.Y += (e.Location.Y - MouseLast.Y) * (1 / ViewZoom);
+                        selected.X += (e.Location.X - MouseLast.X) * (1 / ViewScale);
+                        selected.Y += (e.Location.Y - MouseLast.Y) * (1 / ViewScale);
                     }
                 }
                 if (Selection.TriggerId != -1 && Selection.LogicIndex != -1)
@@ -150,6 +158,8 @@ namespace Foundry.HW1.Triggerscript
             }
 
             MouseLast = e.Location;
+
+            ClampView();
             Invalidate();
         }
         private void OnMouseScroll(object o, MouseEventArgs e)
@@ -157,7 +167,7 @@ namespace Foundry.HW1.Triggerscript
             if (TriggerscriptFile == null) return;
 
             Point ViewMousePre = ViewMatrix.Inverted().TransformPoint(e.Location);
-            ViewZoom += e.Delta * (ViewZoom / 1000);
+            ViewScale += e.Delta * (ViewScale / 1000);
             Point ViewMouse = ViewMatrix.Inverted().TransformPoint(e.Location);
 
             if ((MouseButtons & MouseButtons.Left) > 0
@@ -176,6 +186,7 @@ namespace Foundry.HW1.Triggerscript
                 }
             }
 
+            ClampView();
             Invalidate();
         }
         private void OnPaint(object o, PaintEventArgs e)
@@ -185,16 +196,51 @@ namespace Foundry.HW1.Triggerscript
             Rectangle viewClip = new Rectangle(
                 ViewMatrix.Inverted().TransformPoint(e.ClipRectangle.Location).X,
                 ViewMatrix.Inverted().TransformPoint(e.ClipRectangle.Location).Y,
-                (int)(e.ClipRectangle.Size.Width * (1 / ViewZoom)),
-                (int)(e.ClipRectangle.Size.Height * (1 / ViewZoom))
+                (int)(e.ClipRectangle.Size.Width * (1 / ViewScale)),
+                (int)(e.ClipRectangle.Size.Height * (1 / ViewScale))
                 );
             e.Graphics.Transform = ViewMatrix;
 
-            Quality quality = ViewZoom > .75 ? Quality.High : Quality.Low;
-
-            DrawScript(e.Graphics, quality, viewClip, TriggerscriptFile, Selection, Selection);
+            bool detail, lod;
+            if (ViewScale > .75)
+            {
+                //regular
+                detail = false;
+                lod = false;
+                if (ViewScale > 2.5) detail = true;
+            }
+            else //ViewScale <= .75
+            {
+                //lod
+                detail = true;
+                lod = true;
+                if (ViewScale < .2) detail = false;
+            }
+            DrawScript(e.Graphics, viewClip, TriggerscriptFile, Selection, Selection, detail, lod);
         }
 
+        private void ClampView()
+        {
+            if (TriggerscriptFile == null) return;
+
+            ViewScale = Math.Clamp(ViewScale, ScaleViewMin, ScaleViewMax);
+
+            Rectangle bounds = ScriptBounds(TriggerscriptFile);
+            // min == bottom right corner
+            // max == top left corner
+            ViewPos = new PointF(
+               (int)Math.Clamp(
+                    ViewPos.X,
+                    bounds.X - bounds.Width,
+                    bounds.X
+                    ),
+               (int)Math.Clamp(
+                   ViewPos.Y,
+                   bounds.Y - bounds.Height,
+                   bounds.Y
+                   )
+                );
+        }
         private void TSDragDrop(Point ViewMouse)
         {
             Hover = SelectAt(TriggerscriptFile, ViewMouse);
