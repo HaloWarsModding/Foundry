@@ -11,7 +11,6 @@ using Timer = System.Windows.Forms.Timer;
 using File = System.IO.File;
 using YAXLib;
 using System.ComponentModel;
-using Foundry;
 using IniParser.Model;
 using System.Runtime.Loader;
 using Foundry.Views;
@@ -19,10 +18,11 @@ using Foundry.HW1.Triggerscript;
 using System.Text;
 using System.Xml.Serialization;
 using System.Xml;
+using Foundry.HW1;
 
 namespace Foundry
 {
-	public partial class FoundryInstance : Form
+    public partial class FoundryInstance : Form
 	{
 		//////////////////////////////////////////////////////////////////////////////////////
 		#region  foundry instance
@@ -56,11 +56,14 @@ namespace Foundry
 		}
 
 		//callbacks
+		public Workspace workspace;
 		private void OnLoad(object o, EventArgs e)
 		{
-			Browser = new BrowserView(this);
+			workspace = new Workspace();
+            Browser = new Browser(this);
 			Browser.Form.Text = "Browser";
 			Browser.Show(this, DockState.DockLeft);
+
 
 			Editor view = new Editor(this);
 //#if DEBUG
@@ -88,17 +91,20 @@ namespace Foundry
 			//InitModules();
 
 #if DEBUG
-			//OpenWorkspace("D:\\repos\\Foundry\\_resources\\workspace\\NewWorkspace1.fworkspace");
+			workspace.Open("D:\\repos\\Foundry\\_resources\\workspace\\");
+            Browser.RootItems.Add(WorkspaceBrowser.DataItem(workspace));
+            Browser.RootItems.Add(WorkspaceBrowser.ArtItem(workspace));
+            Browser.UpdateView();
 #endif
-		}
+        }
         private void OnClose(object o, EventArgs e)
 		{
 			SaveConfig();
-            if (IsWorkspaceOpen())
-			{
-				CloseWorkspace();
-			}
-			Controls.Clear();
+			//if (IsWorkspaceOpen())
+			//{
+			//	CloseWorkspace();
+			//}
+			//Controls.Clear();
 		}
 		private Timer memoryMonitorTicker;
 		private void ToolStrip_File_ImportAssetClicked(object sender, EventArgs e)
@@ -134,69 +140,69 @@ namespace Foundry
 			Operator_File = new Operator("File");
             Operators_MainForm.AddOperator(Operator_File);
 
-			Operator opNewWorkspace = new Operator("New Workspace");
-			opNewWorkspace.OperatorActivated += (sender, e) =>
-			{
-				CreateWorkspaceWizard cww = new CreateWorkspaceWizard();
-				if (cww.ShowDialog() == DialogResult.OK)
-				{
-					CreateWorkspace(cww.WorkspaceLocation, cww.WorkspaceName, cww.WorkspaceUnpackDefault);
-				}
-			};
-			opNewWorkspace.Parent = Operator_File;
+			//Operator opNewWorkspace = new Operator("New Workspace");
+			//opNewWorkspace.OperatorActivated += (sender, e) =>
+			//{
+			//	CreateWorkspaceWizard cww = new CreateWorkspaceWizard();
+			//	if (cww.ShowDialog() == DialogResult.OK)
+			//	{
+			//		CreateWorkspace(cww.WorkspaceLocation, cww.WorkspaceName, cww.WorkspaceUnpackDefault);
+			//	}
+			//};
+			//opNewWorkspace.Parent = Operator_File;
 
-            Operator opOpenWorkspace = new Operator("Open Workspace");
-			opOpenWorkspace.OperatorActivated += (sender, e) =>
-			{
-				OpenFileDialog ofd = new OpenFileDialog();
-				ofd.Filter = string.Format("Foundry Project (*{0})|*{0}", ProjectFileExt);
+   //         Operator opOpenWorkspace = new Operator("Open Workspace");
+			//opOpenWorkspace.OperatorActivated += (sender, e) =>
+			//{
+			//	OpenFileDialog ofd = new OpenFileDialog();
+			//	ofd.Filter = string.Format("Foundry Project (*{0})|*{0}", ProjectFileExt);
 
-				if (ofd.ShowDialog() == DialogResult.OK)
-				{
-					OpenWorkspace(ofd.FileName);
-				}
-			};
-            opOpenWorkspace.Parent = Operator_File;
+			//	if (ofd.ShowDialog() == DialogResult.OK)
+			//	{
+			//		OpenWorkspace(ofd.FileName);
+			//	}
+			//};
+   //         opOpenWorkspace.Parent = Operator_File;
 
-            Operator opImportArchive = new Operator("Import Archive");
-			opImportArchive.OperatorActivated += (sender, e) =>
-            {
-                OpenFileDialog ofd = new OpenFileDialog();
-                ofd.Filter = "Ensemble Resource Archive (*.era)|*.era";
-                ofd.Multiselect = true;
-                ofd.InitialDirectory = string.Format("{0}\\",
-                            Path.GetDirectoryName(OpenedConfig.GetParamData(Config.Param.GameExe).Value)
-                            );
+   //         Operator opImportArchive = new Operator("Import Archive");
+			//opImportArchive.OperatorActivated += (sender, e) =>
+   //         {
+   //             OpenFileDialog ofd = new OpenFileDialog();
+   //             ofd.Filter = "Ensemble Resource Archive (*.era)|*.era";
+   //             ofd.Multiselect = true;
+   //             ofd.InitialDirectory = string.Format("{0}\\",
+   //                         Path.GetDirectoryName(OpenedConfig.GetParamData(Config.Param.GameExe).Value)
+   //                         );
 
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    UnpackErasAsync(ofd.FileNames, GetNamedWorkspaceDir(NamedWorkspaceDirNames.WorkspaceFolder).FullPath);
-                }
-            };
-            opImportArchive.Parent = Operator_File;
-
-
-			Operator opSave = new Operator("Save");
-			opSave.OperatorActivated += (sender, e) =>
-			{
-				SaveCurrentPage();
-			};
-			opSave.Parent = Operator_File;
+   //             if (ofd.ShowDialog() == DialogResult.OK)
+   //             {
+   //                 UnpackErasAsync(ofd.FileNames, GetNamedWorkspaceDir(NamedWorkspaceDirNames.WorkspaceFolder).FullPath);
+   //             }
+   //         };
+   //         opImportArchive.Parent = Operator_File;
 
 
-            Operator_Tools = new Operator("Tools");
-            Operators_MainForm.AddOperator(Operator_Tools);
+			//Operator opSave = new Operator("Save");
+			//opSave.OperatorActivated += (sender, e) =>
+			//{
+			//	SaveCurrentPage();
+			//};
+			//opSave.Parent = Operator_File;
 
-			Operator opSettings = new Operator("Settings");
-            opSettings.OperatorActivated += (sender, e) =>
-            {
-                ConfigPrompt prompt = new ConfigPrompt(OpenedConfig, true);
-                if (prompt.ShowDialog() == DialogResult.OK)
-                {
-                    OpenedConfig = prompt.LocalConfig;
-                }
-            };
-            opSettings.Parent = Operator_Tools;
+
+   //         Operator_Tools = new Operator("Tools");
+   //         Operators_MainForm.AddOperator(Operator_Tools);
+
+			//Operator opSettings = new Operator("Settings");
+   //         opSettings.OperatorActivated += (sender, e) =>
+   //         {
+   //             ConfigPrompt prompt = new ConfigPrompt(OpenedConfig, true);
+   //             if (prompt.ShowDialog() == DialogResult.OK)
+   //             {
+   //                 OpenedConfig = prompt.LocalConfig;
+   //             }
+   //         };
+   //         opSettings.Parent = Operator_Tools;
 
 			RefreshToolstrip();
 		}
@@ -506,318 +512,7 @@ namespace Foundry
 
 		//////////////////////////////////////////////////////////////////////////////////////
 		#region workspace
-		/// <summary>
-		/// Fires when a workspace is opened.
-		/// </summary>
-		public event EventHandler WorkspaceOpened;
-		/// <summary>
-		/// Fires when the opened workspace is closed.
-		/// </summary>
-		public event EventHandler WorkspaceClosed;
-		/// <summary>
-		/// Fires when a directory or file in the current workspace is changed.
-		/// </summary>
-		public event EventHandler<WorkspaceItemChangedArgs> WorkspaceItemChanged;
-
-		public const string ProjectFileExt = ".fworkspace";
-		public static string[] DefaultEraFiles
-		{
-			get 
-			{ 
-				return new string[] {
-					"root.era",
-					"root_update.era",
-					"scenarioshared.era"
-				};
-			}
-		}
-		public static string[] AllEraFiles
-		{
-			get
-			{
-				return new string[] {
-					"baron_1_swe.era",
-					"beaconhill_2.era",
-					"beasleys_plateau.era",
-					"blood_gulch.era",
-					"campaignTutorial.era",
-					"campaignTutorialAdvanced.era",
-					"chasms.era",
-					"dlc01.era",
-					"dlc02.era",
-					"exile.era",
-					"fort_deen.era",
-					"frozen_valley.era",
-					"glacial_ravine_3.era",
-					"inGameUI.era",
-					"labyrinth.era",
-					"loadingUI.era",
-					"locale.era",
-					"miniloader.era",
-					"PHXscn01.era",
-					"PHXscn02.era",
-					"PHXscn03.era",
-					"PHXscn04.era",
-					"PHXscn05.era",
-					"PHXscn06.era",
-					"PHXscn07.era",
-					"PHXscn08.era",
-					"PHXscn09.era",
-					"PHXscn10.era",
-					"PHXscn11.era",
-					"PHXscn12.era",
-					"PHXscn13.era",
-					"PHXscn14.era",
-					"PHXscn15.era",
-					"pregameUI.era",
-					"redriver_1.era",
-					"release.era",
-					"repository.era",
-					"root.era",
-					"root_update.era",
-					"scenarioshared.era",
-					"shader.era",
-					"terminal_moraine.era",
-					"the_docks.era",
-					"tundra.era"
-				};
-			}
-		}
-
-		private FileSystemWatcher OpenedWorkspaceWatcher { get; set; }
-		private WorkspaceItem OpenedWorkspaceFile { get; set; }
-
-		public bool IsWorkspaceOpen()
-		{
-			return OpenedWorkspaceFile != null;
-		}
-		/// <summary>
-		/// Opens a workspace for editing.
-		/// </summary>
-		/// <param name="file">The workspace file to open.</param>
-		/// <returns>True if the operation was successful.</returns>
-		public bool OpenWorkspace(string file)
-		{
-			if (IsWorkspaceOpen())
-			{
-				if (!CloseWorkspace())
-				{
-					return false;
-				}
-			}
-
-			WorkspaceItem item = new WorkspaceItem(file);
-			if (!item.IsValid)
-            {
-				AppendLog(LogEntryType.Error, "Specified path was not valid.", true);
-				return false;
-			}
-			if (item.IsDirectory)
-			{
-				AppendLog(LogEntryType.Error, "Specified path was not a valid file.", true);
-				return false;
-			}
-			if (item.Extension != ProjectFileExt)
-			{
-				AppendLog(LogEntryType.Error, "Specified file was not a valid workspace file.", true);
-				return false;
-			}
-
-			OpenedWorkspaceFile = item;
-			//Directory.SetCurrentDirectory(OpenedWorkspaceFile.ParentDirectory.FullPath);
-			EnsureNamedWorkspaceDirsExist();
-
-			//alert all modules that a workspace has been opened.
-			//foreach (BaseModule m in Modules)
-			//{
-			//	m.WorkspaceOpened();
-			//}
-
-			WorkspaceOpened?.Invoke(this, new EventArgs());
-
-			//start the file watcher.
-			#region watcher
-			OpenedWorkspaceWatcher = new FileSystemWatcher();
-			OpenedWorkspaceWatcher.Filter = "*.*";
-			OpenedWorkspaceWatcher.NotifyFilter = NotifyFilters.Attributes
-								 | NotifyFilters.CreationTime
-								 | NotifyFilters.DirectoryName
-								 | NotifyFilters.FileName
-								 | NotifyFilters.LastAccess
-								 | NotifyFilters.LastWrite
-								 | NotifyFilters.Security
-								 | NotifyFilters.Size;
-			OpenedWorkspaceWatcher.Path = OpenedWorkspaceFile.ParentDirectory.FullPath;
-			OpenedWorkspaceWatcher.IncludeSubdirectories = true;
-			OpenedWorkspaceWatcher.Created += (s, e) =>
-			{
-				WorkspaceItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
-				{
-					Item = new WorkspaceItem(e.FullPath),
-					Type = WorkspaceItemChangedType.FileAdded
-				});
-			};
-			OpenedWorkspaceWatcher.Deleted += (s, e) =>
-			{
-				WorkspaceItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
-				{
-					Item = new WorkspaceItem(e.FullPath),
-					Type = WorkspaceItemChangedType.FileRemoved
-				});
-			};
-			OpenedWorkspaceWatcher.Changed += (s, e) =>
-			{
-				WorkspaceItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
-				{
-					Item = new WorkspaceItem(e.FullPath),
-					Type = WorkspaceItemChangedType.FileChanged
-				});
-			};
-
-			//fire an event for each currently present file.
-			foreach (WorkspaceItem child in OpenedWorkspaceFile.ParentDirectory.ChildItemsRecursive)
-            {
-				WorkspaceItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
-				{
-					Item = child,
-					Type = WorkspaceItemChangedType.FileAdded
-				});
-            }
-
-			OpenedWorkspaceWatcher.EnableRaisingEvents = true;
-			#endregion
-
-
-            return true;
-		}
-		/// <summary>
-		/// Closes the currently open workspace.
-		/// </summary>
-		/// <returns>True if the operation was successful.</returns>
-		public bool CloseWorkspace()
-		{
-			//TODO: check for edited editors.
-			foreach (BaseView p in OpenPages)
-			{
-				p.Close(true);
-				//if(p.IsEdited()))
-				//{
-				//    return false;
-				//}
-			}
-
-			//alert all modules that the workspace is being closed.
-            //foreach (BaseModule m in Modules)
-            //{
-            //    m.WorkspaceClosed();
-            //}
-
-			//fire an event for each currently present file.
-			foreach (WorkspaceItem child in OpenedWorkspaceFile.ParentDirectory.ChildItemsRecursive)
-			{
-				WorkspaceItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
-				{
-					Item = child,
-					Type = WorkspaceItemChangedType.FileRemoved
-				});
-			}
-
-			WorkspaceClosed?.Invoke(this, new EventArgs());
-
-			OpenedWorkspaceFile = null;
-			OpenedWorkspaceWatcher = null;
-			return true;
-		}
-		/// <summary>
-		/// Creates a new workspace at the given directory.
-		/// NOTE: does not open the newly created workspace.
-		/// </summary>
-		/// <param name="dir">The directory to create the workspace in</param>
-		/// <param name="name">The name of the new workspace.</param>
-		/// <param name="unpackDefaultEras"></param>
-		/// <returns>True if the operation was successful.</returns>
-		public bool CreateWorkspace(string dir, string name, bool unpackDefaultEras)
-		{
-			WorkspaceItem dirItem = new WorkspaceItem(dir);
-			if (!dirItem.IsValid)
-			{
-                AppendLog(LogEntryType.Error, "Could not find the specified path.", true);
-				return false;
-			}
-			if (!dirItem.IsDirectory)
-			{
-				AppendLog(LogEntryType.Error, "Specified path was not a directory.", true);
-				return false;
-			}
-			if ( dirItem.ChildItems.Count() != 0)
-			{
-				AppendLog(LogEntryType.Error, "Specified directory was not empty.", true);
-				return false;
-			}
-
-			WorkspaceItem fileItem = new WorkspaceItem(dirItem.FullPath + name + ProjectFileExt);
-			File.Create(fileItem.FullPath);
-
-			if (unpackDefaultEras)
-            {
-				List<string> fullEraPaths = new List<string>();
-				foreach (string era in DefaultEraFiles)
-                {
-					string fullEraPath = OpenedConfig.GetParamData(Config.Param.GameExe).Value + "/" + era;
-					if(File.Exists(fullEraPath))
-                    {
-						fullEraPaths.Add(fullEraPath);
-                    }
-					else
-                    {
-						AppendLog(LogEntryType.Warning, 
-							"Could not find the archive file \"" + era + "\". Check your game install path in settings.", true);
-					}
-				}
-				UnpackErasAsync(fullEraPaths.ToArray(), dir);				
-            }
-
-			return true;
-		}
-
-		public enum NamedWorkspaceDirNames
-		{
-			WorkspaceFolder,
-			Art,
-			Data,
-			UserTables,
-			Triggerscripts,
-			Scenarios,
-		}
-		public WorkspaceItem GetNamedWorkspaceDir(NamedWorkspaceDirNames name)
-		{
-			if (!IsWorkspaceOpen()) return null;
-
-			switch (name)
-			{
-				case NamedWorkspaceDirNames.WorkspaceFolder: return OpenedWorkspaceFile.ParentDirectory;
-				case NamedWorkspaceDirNames.Art: return new WorkspaceItem(OpenedWorkspaceFile.ParentDirectory.FullPath + "art/");
-				case NamedWorkspaceDirNames.Data: return new WorkspaceItem(OpenedWorkspaceFile.ParentDirectory.FullPath + "data/");
-				case NamedWorkspaceDirNames.UserTables: return new WorkspaceItem(OpenedWorkspaceFile.ParentDirectory.FullPath + "data/aidata/");
-				case NamedWorkspaceDirNames.Triggerscripts: return new WorkspaceItem(OpenedWorkspaceFile.ParentDirectory.FullPath + "data/triggerscripts/");
-				case NamedWorkspaceDirNames.Scenarios: return new WorkspaceItem(OpenedWorkspaceFile.ParentDirectory.FullPath + "scenario/");
-			}
-
-			return null;
-		}
-		private void EnsureNamedWorkspaceDirsExist()
-		{
-			if (!IsWorkspaceOpen()) return;
-
-			foreach (var name in Enum.GetValues<NamedWorkspaceDirNames>())
-			{
-				if (GetNamedWorkspaceDir(name).IsDirectory
-					&& !GetNamedWorkspaceDir(name).IsValid)
-				{
-					Directory.CreateDirectory(GetNamedWorkspaceDir(name).FullPath);
-				}
-			}
-		}
+		
 
 
 		public void UnpackErasAsync(string[] eras, string outdir)
@@ -855,7 +550,7 @@ namespace Foundry
 
 		//////////////////////////////////////////////////////////////////////////////////////
 		#region editors
-		public BrowserView Browser { get; private set; }
+		public Browser Browser { get; private set; }
 
 		private BaseView CurrentPage { get; set; }
 		private List<BaseView> OpenPages { get; set; }

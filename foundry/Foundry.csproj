@@ -16,11 +16,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <Optimize>True</Optimize>
+    <Optimize>False</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <Optimize>False</Optimize>
+    <Optimize>True</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
@@ -42,6 +42,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="ObjectListView.Official" Version="2.9.2-alpha2" />
     <PackageReference Include="TreeViewAdv" Version="1.7.0" />
+    <PackageReference Include="YAXLib" Version="4.2.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,7 +53,6 @@
     <ProjectReference Include="..\_extlib\Vita\KSoft\KSoft.Security\KSoft.Security.csproj" />
     <ProjectReference Include="..\_extlib\Vita\KSoft\KSoft.T4\KSoft.T4.csproj" />
     <ProjectReference Include="..\_extlib\Vita\KSoft\KSoft\KSoft.csproj" />
-    <ProjectReference Include="..\_extlib\YAXLib-4.1.0\YAXLib\YAXLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>

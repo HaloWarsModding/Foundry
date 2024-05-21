@@ -14,13 +14,6 @@ namespace Foundry.HW1.Triggerscript
 {
     public static class EditorRendererWinForms
     {
-        public enum Quality
-        {
-            Full,
-            Low,
-            Outline,
-        };
-
         public static void DrawScript(Graphics g, Rectangle clip, Triggerscript script, Selection sel, Selection hover, bool drawDetail, bool drawLOD)
         {
             DrawBackground(g, clip, script);
@@ -279,7 +272,7 @@ namespace Foundry.HW1.Triggerscript
                 g.FillPolygon(new SolidBrush(Color.Black), feffTri);
             }
         }
-        private static void DrawTriggerDebug(Graphics g, Quality quality, Trigger trigger, Selection sel)
+        private static void DrawTriggerDebug(Graphics g, Trigger trigger, Selection sel)
         {
             g.DrawRectangle(new Pen(Color.YellowGreen, 1), LogicBounds(trigger, TriggerLogicSlot.Condition));
             g.DrawRectangle(new Pen(Color.Yellow, 1), LogicBounds(trigger, TriggerLogicSlot.EffectTrue));
