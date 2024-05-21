@@ -16,7 +16,6 @@ _resources/workingProject/
 ###################
 *.com
 *.class
-*.dll
 *.exe
 *.pdb
 *.dll.config
