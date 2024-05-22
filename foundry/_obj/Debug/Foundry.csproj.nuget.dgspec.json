@@ -1,0 +1,289 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\repos\\Foundry\\foundry\\Foundry.csproj": {}
+  },
+  "projects": {
+    "D:\\repos\\Foundry\\foundry\\Foundry.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\repos\\Foundry\\foundry\\Foundry.csproj",
+        "projectName": "Foundry",
+        "projectPath": "D:\\repos\\Foundry\\foundry\\Foundry.csproj",
+        "packagesPath": "C:\\Users\\jaken\\.nuget\\packages\\",
+        "outputPath": "D:\\repos\\Foundry\\foundry\\_obj\\Debug\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\jaken\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0-windows7.0": {
+            "targetAlias": "net6.0-windows",
+            "projectReferences": {
+              "D:\\repos\\Foundry\\_extlib\\Vita\\Games\\Phoenix\\KSoft.Phoenix\\KSoft.Phoenix.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\Games\\Phoenix\\KSoft.Phoenix\\KSoft.Phoenix.csproj"
+              },
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Compression\\KSoft.Compression.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Compression\\KSoft.Compression.csproj"
+              },
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.IO.TagElementStreams\\KSoft.IO.TagElementStreams.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.IO.TagElementStreams\\KSoft.IO.TagElementStreams.csproj"
+              },
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Math\\KSoft.Math.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Math\\KSoft.Math.csproj"
+              },
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Security\\KSoft.Security.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Security\\KSoft.Security.csproj"
+              },
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.T4\\KSoft.T4.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.T4\\KSoft.T4.csproj"
+              },
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
+          "dependencies": {
+            "DockPanelSuite": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "DockPanelSuite.ThemeVS2015": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "HelixToolkit": {
+              "target": "Package",
+              "version": "[2.25.0, )"
+            },
+            "HelixToolkit.SharpDX.Core": {
+              "target": "Package",
+              "version": "[2.25.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "ObjectListView.Official": {
+              "target": "Package",
+              "version": "[2.9.2-alpha2, )"
+            },
+            "TreeViewAdv": {
+              "target": "Package",
+              "version": "[1.7.0, )"
+            },
+            "YAXLib": {
+              "target": "Package",
+              "version": "[4.2.2, )"
+            },
+            "ini-parser": {
+              "target": "Package",
+              "version": "[2.5.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WindowsForms": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\repos\\Foundry\\_extlib\\Vita\\Games\\Phoenix\\KSoft.Phoenix\\KSoft.Phoenix.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\repos\\Foundry\\_extlib\\Vita\\Games\\Phoenix\\KSoft.Phoenix\\KSoft.Phoenix.csproj",
+        "projectName": "KSoft.Phoenix",
+        "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\Games\\Phoenix\\KSoft.Phoenix\\KSoft.Phoenix.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\repos\\Foundry\\_extlib\\Vita\\Games\\Wwise\\KSoft.Wwise\\KSoft.Wwise.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\Games\\Wwise\\KSoft.Wwise\\KSoft.Wwise.csproj"
+              },
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Compression\\KSoft.Compression.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Compression\\KSoft.Compression.csproj"
+              },
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.IO.TagElementStreams\\KSoft.IO.TagElementStreams.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.IO.TagElementStreams\\KSoft.IO.TagElementStreams.csproj"
+              },
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Math\\KSoft.Math.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Math\\KSoft.Math.csproj"
+              },
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Security\\KSoft.Security.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Security\\KSoft.Security.csproj"
+              },
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\repos\\Foundry\\_extlib\\Vita\\Games\\Wwise\\KSoft.Wwise\\KSoft.Wwise.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\repos\\Foundry\\_extlib\\Vita\\Games\\Wwise\\KSoft.Wwise\\KSoft.Wwise.csproj",
+        "projectName": "KSoft.Wwise",
+        "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\Games\\Wwise\\KSoft.Wwise\\KSoft.Wwise.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Compression\\KSoft.Compression.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Compression\\KSoft.Compression.csproj",
+        "projectName": "KSoft.Compression",
+        "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Compression\\KSoft.Compression.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.IO.TagElementStreams\\KSoft.IO.TagElementStreams.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.IO.TagElementStreams\\KSoft.IO.TagElementStreams.csproj",
+        "projectName": "KSoft.IO.TagElementStreams",
+        "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.IO.TagElementStreams\\KSoft.IO.TagElementStreams.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Math\\KSoft.Math.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Math\\KSoft.Math.csproj",
+        "projectName": "KSoft.Math",
+        "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Math\\KSoft.Math.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Security\\KSoft.Security.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Security\\KSoft.Security.csproj",
+        "projectName": "KSoft.Security",
+        "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.Security\\KSoft.Security.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.T4\\KSoft.T4.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.T4\\KSoft.T4.csproj",
+        "projectName": "KSoft.T4",
+        "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.T4\\KSoft.T4.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj",
+        "projectName": "KSoft",
+        "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft\\KSoft.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.T4\\KSoft.T4.csproj": {
+                "projectPath": "D:\\repos\\Foundry\\_extlib\\Vita\\KSoft\\KSoft.T4\\KSoft.T4.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    }
+  }
+}
