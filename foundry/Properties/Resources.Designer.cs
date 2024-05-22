@@ -343,6 +343,16 @@ namespace Foundry.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap brick_damage {
+            get {
+                object obj = ResourceManager.GetObject("brick_damage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap brick_delete {
             get {
                 object obj = ResourceManager.GetObject("brick_delete", resourceCulture);
@@ -383,9 +393,49 @@ namespace Foundry.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap brick_green {
+            get {
+                object obj = ResourceManager.GetObject("brick_green", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap brick_green_s {
+            get {
+                object obj = ResourceManager.GetObject("brick_green_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap brick_link {
             get {
                 object obj = ResourceManager.GetObject("brick_link", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap brick_orange {
+            get {
+                object obj = ResourceManager.GetObject("brick_orange", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap brick_orange_s {
+            get {
+                object obj = ResourceManager.GetObject("brick_orange_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -631,6 +681,16 @@ namespace Foundry.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        public static System.Drawing.Icon chef {
+            get {
+                object obj = ResourceManager.GetObject("chef", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;LogicDatabase&gt;
         ///  &lt;Logic dbid=&quot;2&quot;&gt;
@@ -645,6 +705,16 @@ namespace Foundry.Properties {
         public static string conditions {
             get {
                 return ResourceManager.GetString("conditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap damage {
+            get {
+                object obj = ResourceManager.GetObject("damage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -1641,6 +1711,46 @@ namespace Foundry.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap map_s {
+            get {
+                object obj = ResourceManager.GetObject("map_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap map_script {
+            get {
+                object obj = ResourceManager.GetObject("map_script", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap map_terrain {
+            get {
+                object obj = ResourceManager.GetObject("map_terrain", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap map_texture {
+            get {
+                object obj = ResourceManager.GetObject("map_texture", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap note {
             get {
                 object obj = ResourceManager.GetObject("note", resourceCulture);
@@ -1754,6 +1864,256 @@ namespace Foundry.Properties {
         public static System.Drawing.Bitmap package_link {
             get {
                 object obj = ResourceManager.GetObject("package_link", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white {
+            get {
+                object obj = ResourceManager.GetObject("page_white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_add {
+            get {
+                object obj = ResourceManager.GetObject("page_white_add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_code {
+            get {
+                object obj = ResourceManager.GetObject("page_white_code", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_code_red {
+            get {
+                object obj = ResourceManager.GetObject("page_white_code_red", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_copy {
+            get {
+                object obj = ResourceManager.GetObject("page_white_copy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_database {
+            get {
+                object obj = ResourceManager.GetObject("page_white_database", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_delete {
+            get {
+                object obj = ResourceManager.GetObject("page_white_delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_edit {
+            get {
+                object obj = ResourceManager.GetObject("page_white_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_error {
+            get {
+                object obj = ResourceManager.GetObject("page_white_error", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_gear {
+            get {
+                object obj = ResourceManager.GetObject("page_white_gear", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_get {
+            get {
+                object obj = ResourceManager.GetObject("page_white_get", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_go {
+            get {
+                object obj = ResourceManager.GetObject("page_white_go", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_lightning {
+            get {
+                object obj = ResourceManager.GetObject("page_white_lightning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_link {
+            get {
+                object obj = ResourceManager.GetObject("page_white_link", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_magnify {
+            get {
+                object obj = ResourceManager.GetObject("page_white_magnify", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_paint {
+            get {
+                object obj = ResourceManager.GetObject("page_white_paint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_paintbrush {
+            get {
+                object obj = ResourceManager.GetObject("page_white_paintbrush", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_paste {
+            get {
+                object obj = ResourceManager.GetObject("page_white_paste", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_picture {
+            get {
+                object obj = ResourceManager.GetObject("page_white_picture", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_put {
+            get {
+                object obj = ResourceManager.GetObject("page_white_put", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_stack {
+            get {
+                object obj = ResourceManager.GetObject("page_white_stack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_text {
+            get {
+                object obj = ResourceManager.GetObject("page_white_text", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_world {
+            get {
+                object obj = ResourceManager.GetObject("page_white_world", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_wrench {
+            get {
+                object obj = ResourceManager.GetObject("page_white_wrench", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_zip {
+            get {
+                object obj = ResourceManager.GetObject("page_white_zip", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2074,6 +2434,16 @@ namespace Foundry.Properties {
         public static System.Drawing.Bitmap script_palette {
             get {
                 object obj = ResourceManager.GetObject("script_palette", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap script_s {
+            get {
+                object obj = ResourceManager.GetObject("script_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2624,6 +2994,16 @@ namespace Foundry.Properties {
         public static System.Drawing.Bitmap tag_yellow {
             get {
                 object obj = ResourceManager.GetObject("tag_yellow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap terrain {
+            get {
+                object obj = ResourceManager.GetObject("terrain", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

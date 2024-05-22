@@ -10,7 +10,7 @@ namespace Foundry.HW1
     public class WorkspaceBrowserGroup : IBrowserViewable
     {
         public IEnumerable<IBrowserViewable> BrowserChildren { get; set; } = new List<IBrowserViewable>();
-        public Image Icon { get { return Properties.Resources.folder; } }
+        public Image Icon { get; set; } = Properties.Resources.folder;
         public string Name { get; set; } = "";
     }
     public class WorkspaceBrowserPath : IBrowserViewable
@@ -20,12 +20,18 @@ namespace Foundry.HW1
         {
             get
             {
-                foreach (WorkspaceItem i in Item.ChildItems)
+                if (Item == null) yield break;
+
+                foreach (WorkspaceItem i in Item.ChildDirectories
+                    .OrderBy(i => i.Extension + i.Name))
                 {
-                    yield return new WorkspaceBrowserPath()
-                    {
-                        Item = i
-                    };
+                    yield return new WorkspaceBrowserPath() { Item = i };
+                }
+                foreach (WorkspaceItem i in Item.ChildFiles
+                    .Where(i => i.Extension != ".xmb")
+                    .OrderBy(i => i.Extension + i.Name)) //sort by extension first, then name
+                {
+                    yield return new WorkspaceBrowserPath() { Item = i };
                 }
             }
         }
@@ -33,42 +39,68 @@ namespace Foundry.HW1
         {
             get
             {
-                if (_Icon != null) return _Icon;
+                if (Item == null) return null;
+
+                //folder
                 if (Item.IsDirectory) return Properties.Resources.folder;
-                else switch (Item.Extension)
-                    {
-                        case ".triggerscript":
-                            return Properties.Resources.script;
-                        case ".vis":
-                            return Properties.Resources.bricks;
-                        case ".ugx":
-                            return Properties.Resources.brick;
-                        case ".uax":
-                            return Properties.Resources.chart_line;
-                        default:
-                            return Properties.Resources.folder_page_white;
-                    }
-            }
-            set
-            {
-                _Icon = value;
+
+                switch (Item.Extension)
+                {
+                    //data
+                    case ".triggerscript":
+                        return Properties.Resources.script_s;
+                    case ".ai":
+                    case ".table":
+                        return Properties.Resources.table;
+
+                    //art
+                    case ".ddx":
+                    case ".dds":
+                        return Properties.Resources.picture;
+                    case ".vis":
+                        return Properties.Resources.bricks;
+                    case ".ugx":
+                        return Properties.Resources.brick_green_s;
+                    case ".uax":
+                        return Properties.Resources.chart_line;
+                    case ".dmg":
+                        return Properties.Resources.damage;
+
+                    //scenario
+                    case ".scn":
+                        return Properties.Resources.script_s;
+
+                    //misc
+                    case ".xml":
+                        return Properties.Resources.page_white_code_red;
+                    default:
+                        return Properties.Resources.page_white;
+                }
             }
         }
         public string Name
         {
             get
             {
+                if (Item == null) return "";
                 if (ShowExt) return Item.Name;
                 else return Item.NameNoExt;
             }
         }
 
-        private Image _Icon { get; set; }
         public bool ShowExt { get; set; } = true;
     }
 
     public static class WorkspaceBrowser
     {
+        public static IBrowserViewable ArtItem(Workspace workspace)
+        {
+            return new WorkspaceBrowserPath()
+            {
+                Item = workspace.Art
+            };
+        }
+
         public static IBrowserViewable DataItem(Workspace workspace)
         {
             return new WorkspaceBrowserGroup()
@@ -96,11 +128,7 @@ namespace Foundry.HW1
             return new WorkspaceBrowserGroup()
             {
                 Name = "tables",
-                BrowserChildren = workspace.UserTableFiles.Where(i => i.Extension != ".xmb").Select(t => new WorkspaceBrowserPath()
-                {
-                    Item = t,
-                    Icon = Properties.Resources.table,
-                })
+                BrowserChildren = workspace.UserTableFiles.Select(t => new WorkspaceBrowserPath() { Item = t })
             };
         }
         public static IBrowserViewable ObjectsItem(Workspace workspace)
@@ -118,12 +146,24 @@ namespace Foundry.HW1
             };
         }
 
-        public static IBrowserViewable ArtItem(Workspace workspace)
+        public static IBrowserViewable ScenarioItem(Workspace workspace)
         {
             return new WorkspaceBrowserGroup()
             {
-                Name = "art",
-                BrowserChildren = workspace.Art.ChildItems.Select(i => new WorkspaceBrowserPath() { Item = i })
+                Name = "scenario",
+                BrowserChildren = workspace.TerrainFolders.Select(v =>
+                {
+                    return new WorkspaceBrowserGroup()
+                    {
+                        Name = v.NameNoExt,
+                        Icon = Properties.Resources.map_s,
+                        BrowserChildren = v.ChildFiles.Where(f => f.Extension == ".scn").Select(scn => new WorkspaceBrowserPath()
+                        {
+                            Item = scn,
+                            ShowExt = false
+                        })
+                    };
+                })
             };
         }
     }

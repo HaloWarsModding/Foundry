@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "Foundry.Data.Triggerscript": {
-      "commandName": "Project",
-      "nativeDebugging": true
-    }
-  }
-}

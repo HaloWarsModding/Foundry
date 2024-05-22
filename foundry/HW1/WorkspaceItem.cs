@@ -26,23 +26,17 @@ namespace Foundry.HW1
         }
 
         public string FullPath { get; private set; }
-        public bool IsValid
+        public bool Exists
         {
             get
             {
-                if (File.Exists(FullPath) ||
-                    Directory.Exists(FullPath))
-                {
-                    return true;
-                }
-                return false;
+                return Directory.Exists(FullPath) || File.Exists(FullPath);
             }
         }
         public bool IsDirectory
         {
             get
             {
-                if (!IsValid) return false;
                 return Directory.Exists(FullPath);
             }
         }
@@ -52,7 +46,7 @@ namespace Foundry.HW1
         {
             get
             {
-                if (!IsValid) return "";
+                if (!Exists) return "";
 
                 FileAttributes attrs = File.GetAttributes(FullPath);
                 if (attrs == FileAttributes.Directory)
@@ -69,7 +63,7 @@ namespace Foundry.HW1
         {
             get
             {
-                if (!IsValid) return "";
+                if (!Exists) return "";
 
                 return new DirectoryInfo(FullPath).Name;
             }
@@ -88,7 +82,7 @@ namespace Foundry.HW1
         {
             get
             {
-                if (!IsValid) return null;
+                if (!Exists) return null;
 
                 // C# does it again!
                 string fullPathNoTrailingSlash = FullPath.EndsWith("/") ? FullPath.Substring(0, FullPath.Length - 1) : FullPath;
@@ -106,7 +100,7 @@ namespace Foundry.HW1
         {
             get
             {
-                if (!IsValid || !IsDirectory)
+                if (!IsDirectory)
                 {
                     return new List<WorkspaceItem>();
                 }
@@ -140,7 +134,7 @@ namespace Foundry.HW1
         {
             get
             {
-                if (!IsValid || !IsDirectory)
+                if (!IsDirectory)
                 {
                     return new List<WorkspaceItem>();
                 }
@@ -198,15 +192,6 @@ namespace Foundry.HW1
 
         public bool IsRelativeTo(WorkspaceItem item)
         {
-            if (item is null)
-            {
-                return false;
-            }
-            if (!item.IsValid)
-            {
-                return false;
-            }
-
             return FullPath.Contains(item.FullPath);
         }
 

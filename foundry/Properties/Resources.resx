@@ -202,6 +202,9 @@
   <data name="brick_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\brick_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="brick_damage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\damage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="brick_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\brick_delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -214,8 +217,20 @@
   <data name="brick_go" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\brick_go.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="brick_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\brick_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="brick_green_s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\brick_green_s.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="brick_link" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\brick_link.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="brick_orange" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\brick_orange.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="brick_orange_s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\brick_orange_s.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="bullet_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bullet_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -286,8 +301,14 @@
   <data name="chart_line_link" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\chart_line_link.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="chef" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\chef.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="conditions" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\conditions.tsdef;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="damage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\damage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -586,6 +607,18 @@
   <data name="map_magnify" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\map_magnify.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="map_s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\map_s.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_script" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\map_script.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_terrain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\map_terrain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_texture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\map_texture.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="note" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\note.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -621,6 +654,81 @@
   </data>
   <data name="package_link" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\package_link.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_code" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_code.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_code_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_code_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_copy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_database" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_database.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_edit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_error" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_gear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_gear.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_get" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_get.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_go" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_go.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_lightning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_lightning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_link" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_link.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_magnify" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_magnify.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_paint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_paint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_paintbrush" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_paintbrush.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_paste" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_paste.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_picture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_picture.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_put" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_put.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_stack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_stack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_text.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_world" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_world.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_wrench" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_wrench.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="page_white_zip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\page_white_zip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="picture" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\picture.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -717,6 +825,9 @@
   </data>
   <data name="script_palette" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\script_palette.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="script_s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\script_s.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="script_save" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\script_save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -882,6 +993,9 @@
   </data>
   <data name="tag_yellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tag_yellow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="terrain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\terrain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tick" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

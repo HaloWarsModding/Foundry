@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Foundry.HW1.WorkspaceMenus;
 using Foundry.HW1.Unit;
 using Foundry.HW1.Triggerscript;
+using YAXLib;
+using YAXLib.Enums;
+using YAXLib.Options;
 
 namespace Foundry.HW1
 {
@@ -23,9 +25,9 @@ namespace Foundry.HW1
 
     public class Workspace
     {
-        public event EventHandler WorkspaceOpened;
-        public event EventHandler WorkspaceClosed;
-        public event EventHandler<WorkspaceItemChangedArgs> WorkspaceItemChanged;
+        public event EventHandler Opened;
+        public event EventHandler Closed;
+        public event EventHandler<WorkspaceItemChangedArgs> ItemChanged;
 
         public bool IsOpen { get { return Root != null; } }
 
@@ -95,7 +97,7 @@ namespace Foundry.HW1
             get
             {
                 if (Scenario == null) return new List<WorkspaceItem>();
-                return Scenario.ChildDirectories.Where(
+                return Scenario.ChildDirectoriesRecursive.Where(
                         d => d.ChildFiles.Any(
                             f => f.Extension == ".xtd"));
             }
@@ -113,7 +115,7 @@ namespace Foundry.HW1
             get
             {
                 if (DataUserTables == null) return new List<WorkspaceItem>();
-                return DataUserTables.ChildFiles;
+                return DataUserTables.ChildFiles.Where(f => f.Extension == ".ai" || f.Extension == ".table");
             }
         }
         public IEnumerable<WorkspaceItem> ObjectFiles
@@ -154,7 +156,7 @@ namespace Foundry.HW1
             //fire an event for each currently present file.
             foreach (WorkspaceItem child in Root.ChildItemsRecursive)
             {
-                WorkspaceItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
+                ItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
                 {
                     Item = child,
                     Type = WorkspaceItemChangedType.FileAdded
@@ -162,7 +164,7 @@ namespace Foundry.HW1
             }
             StartFileSystemWatcher();
 
-            WorkspaceOpened?.Invoke(this, EventArgs.Empty);
+            Opened?.Invoke(this, EventArgs.Empty);
 
             return true;
         }
@@ -175,7 +177,7 @@ namespace Foundry.HW1
             //fire an event for each currently present file.
             foreach (WorkspaceItem child in Root.ChildItemsRecursive)
             {
-                WorkspaceItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
+                ItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
                 {
                     Item = child,
                     Type = WorkspaceItemChangedType.FileRemoved
@@ -184,9 +186,31 @@ namespace Foundry.HW1
 
             Root = null;
 
-            WorkspaceClosed?.Invoke(this, EventArgs.Empty);
+            Closed?.Invoke(this, EventArgs.Empty);
 
             return true;
+        }
+
+
+        private Dictionary<WorkspaceItem, WeakReference<Triggerscript.Triggerscript>> LoadedTriggerscripts { get; set; }
+        public WeakReference<Triggerscript.Triggerscript> GetTriggerscriptRef(WorkspaceItem item)
+        {
+            if (item.IsDirectory || !item.Exists) return null;
+
+            //if we dont have it, load it.
+            if (!LoadedTriggerscripts.ContainsKey(item))
+            {
+                var options = new SerializerOptions()
+                {
+                    ExceptionBehavior = YAXExceptionTypes.Ignore,
+                    MaxRecursion = int.MaxValue
+                };
+                var ser = new YAXSerializer<Triggerscript.Triggerscript>(options);
+                var script = ser.DeserializeFromFile(item.FullPath);
+                LoadedTriggerscripts.Add(item, new WeakReference<Triggerscript.Triggerscript>(script, false));
+            }
+
+            return LoadedTriggerscripts[item];
         }
 
         private void StartFileSystemWatcher()
@@ -206,7 +230,7 @@ namespace Foundry.HW1
             WorkspaceWatcher.IncludeSubdirectories = true;
             WorkspaceWatcher.Created += (s, e) =>
             {
-                WorkspaceItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
+                ItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
                 {
                     Item = new WorkspaceItem(e.FullPath),
                     Type = WorkspaceItemChangedType.FileAdded
@@ -214,7 +238,7 @@ namespace Foundry.HW1
             };
             WorkspaceWatcher.Deleted += (s, e) =>
             {
-                WorkspaceItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
+                ItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
                 {
                     Item = new WorkspaceItem(e.FullPath),
                     Type = WorkspaceItemChangedType.FileRemoved
@@ -222,7 +246,7 @@ namespace Foundry.HW1
             };
             WorkspaceWatcher.Changed += (s, e) =>
             {
-                WorkspaceItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
+                ItemChanged?.Invoke(this, new WorkspaceItemChangedArgs()
                 {
                     Item = new WorkspaceItem(e.FullPath),
                     Type = WorkspaceItemChangedType.FileChanged

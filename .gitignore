@@ -1,6 +1,7 @@
 extender/
 tools/ScriptComb2/*.cpp
 tools/ScriptComb2/*.h
+_old/
 _bin/
 _out/
 .vs/
