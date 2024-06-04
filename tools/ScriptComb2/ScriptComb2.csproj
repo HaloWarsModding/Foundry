@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>disable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -19,11 +19,11 @@
     <PackageReference Include="Antlr" Version="3.5.0.2" />
     <PackageReference Include="LLVMSharp" Version="16.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="YAXLib" Version="4.2.0" />
+    <PackageReference Include="YAXLib" Version="4.2.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\foundry\Foundry.csproj" />
+    <ProjectReference Include="..\..\Foundry.Core\Foundry.Core.csproj" />
   </ItemGroup>
 
 </Project>

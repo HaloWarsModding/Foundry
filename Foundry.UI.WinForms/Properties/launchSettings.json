@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Foundry.UI.WinForms": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

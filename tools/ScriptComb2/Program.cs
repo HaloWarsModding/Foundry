@@ -3,8 +3,7 @@ using YAXLib;
 using YAXLib.Attributes;
 using static Program;
 using Foundry.HW1.Triggerscript;
-using static Foundry.HW1.Triggerscript.EditorHelpers;
-using SharpDX.Direct2D1;
+using static Foundry.HW1.Triggerscript.Helpers;
 using Foundry.HW1.Triggerscript;
 
 class Program

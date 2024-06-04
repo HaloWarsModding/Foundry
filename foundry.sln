@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foundry", "foundry\Foundry.csproj", "{FE9BDE09-102E-41DD-8762-74FC6D505CDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foundry.Core", "Foundry.Core\Foundry.Core.csproj", "{FE9BDE09-102E-41DD-8762-74FC6D505CDE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Tool", "_Tool", "{F582DA9A-1EB9-4C22-A23E-89F2FDAACE40}"
 EndProject
@@ -27,6 +27,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_ExtLib", "_ExtLib", "{27091FB5-7476-4A83-B075-B368BD1B282F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScriptComb2", "tools\ScriptComb2\ScriptComb2.csproj", "{675160B4-496B-4896-8F4F-4952C93CBF9F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foundry.UI.WinForms", "Foundry.UI.WinForms\Foundry.UI.WinForms.csproj", "{EE39C52C-23CB-4052-AD94-8EC36F6F532E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -158,6 +160,18 @@ Global
 		{675160B4-496B-4896-8F4F-4952C93CBF9F}.Release|x64.Build.0 = Release|Any CPU
 		{675160B4-496B-4896-8F4F-4952C93CBF9F}.Release|x86.ActiveCfg = Release|Any CPU
 		{675160B4-496B-4896-8F4F-4952C93CBF9F}.Release|x86.Build.0 = Release|Any CPU
+		{EE39C52C-23CB-4052-AD94-8EC36F6F532E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE39C52C-23CB-4052-AD94-8EC36F6F532E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE39C52C-23CB-4052-AD94-8EC36F6F532E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EE39C52C-23CB-4052-AD94-8EC36F6F532E}.Debug|x64.Build.0 = Debug|Any CPU
+		{EE39C52C-23CB-4052-AD94-8EC36F6F532E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EE39C52C-23CB-4052-AD94-8EC36F6F532E}.Debug|x86.Build.0 = Debug|Any CPU
+		{EE39C52C-23CB-4052-AD94-8EC36F6F532E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE39C52C-23CB-4052-AD94-8EC36F6F532E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE39C52C-23CB-4052-AD94-8EC36F6F532E}.Release|x64.ActiveCfg = Release|Any CPU
+		{EE39C52C-23CB-4052-AD94-8EC36F6F532E}.Release|x64.Build.0 = Release|Any CPU
+		{EE39C52C-23CB-4052-AD94-8EC36F6F532E}.Release|x86.ActiveCfg = Release|Any CPU
+		{EE39C52C-23CB-4052-AD94-8EC36F6F532E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
