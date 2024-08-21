@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using YAXLib.Attributes;
 using YAXLib.Enums;
 
-namespace Foundry.HW1.Unit
+namespace Chef.HW1.Unit
 {
     public class ProtoObject
     {

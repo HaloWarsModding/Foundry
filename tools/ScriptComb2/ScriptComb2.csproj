@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Foundry.Core\Foundry.Core.csproj" />
+    <ProjectReference Include="..\..\Foundry.Core\Chef.csproj" />
   </ItemGroup>
 
 </Project>

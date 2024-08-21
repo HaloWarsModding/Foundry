@@ -1,5 +1,4 @@
-﻿using Foundry.HW1.Serialization;
-using SharpDX.Direct3D11;
+﻿using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using System;
 using System.Collections.Generic;
@@ -7,8 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Device = SharpDX.Direct3D11.Device;
+using Device1 = SharpDX.Direct3D11.Device1;
+using Device2 = SharpDX.Direct3D11.Device2;
+using Device3 = SharpDX.Direct3D11.Device3;
 
-namespace Foundry.UI.WinForms
+namespace Chef.Win
 {
     /// <summary>
     /// Takes care of a lot of boilerplate code for setting up a winforms d3d11 swapchain and rtv.
@@ -18,18 +20,30 @@ namespace Foundry.UI.WinForms
     {
         static D3DViewport()
         {
-            Device = new Device(SharpDX.Direct3D.DriverType.Hardware, DeviceCreationFlags.Debug);
+#if DEBUG
+            DeviceCreationFlags flags = DeviceCreationFlags.None; //debug makes the perf tank.
+#else
+            DeviceCreationFlags flags = DeviceCreationFlags.None;
+#endif
+
+            Device = new Device(SharpDX.Direct3D.DriverType.Hardware, flags);
+            Device1 = Device.QueryInterface<Device1>();
+            Device2 = Device.QueryInterface<Device2>();
+            Device3 = Device.QueryInterface<Device3>();
         }
         /// <summary>
         /// The device.
         /// </summary>
         public static Device Device { get; set; }
+        public static Device1 Device1 { get; private set; }
+        public static Device2 Device2 { get; private set; }
+        public static Device3 Device3 { get; private set; }
 
         public SwapChain1 SwapChain { get; private set; }
         private Texture2D TargetTex { get; set; }
         public RenderTargetView Target { get; private set; }
         private Texture2D DepthTex { get; set; }
-        public DepthStencilView Depth { get;private set; }
+        public DepthStencilView Depth { get; private set; }
         public D3DViewport()
         {
             var desc = new SwapChainDescription1()
@@ -43,7 +57,7 @@ namespace Foundry.UI.WinForms
                 Height = Height,
                 SwapEffect = SwapEffect.FlipDiscard,
                 SampleDescription = new SampleDescription() { Count = 1, Quality = 0 },
-                
+
             };
             SwapChain = new SwapChain1(new Factory2(), Device, Handle, ref desc);
 
@@ -70,9 +84,11 @@ namespace Foundry.UI.WinForms
                 Dimension = DepthStencilViewDimension.Texture2D,
                 Format = Format.D24_UNorm_S8_UInt
             });
+
+            Resize += ResizeBackBuffer;
         }
 
-        public void ResizeBackBuffer(int width, int height)
+        public void ResizeBackBuffer(object o, EventArgs e)
         {
             Target.Dispose();
             TargetTex.Dispose();
@@ -80,7 +96,26 @@ namespace Foundry.UI.WinForms
             Depth.Dispose();
             DepthTex.Dispose();
 
-            SwapChain.ResizeBuffers(0, width, height, Format.R8G8B8A8_UNorm, SwapChainFlags.None);
+            SwapChain.Dispose();
+
+            //dont do anything if the size is 0 (invalid)
+            //or if the handle is gone
+            if (Width == 0 || Height == 0) return;
+            if (!IsHandleCreated) return;
+
+            var desc = new SwapChainDescription1()
+            {
+                BufferCount = 2,
+                Flags = SwapChainFlags.None,
+                Usage = Usage.RenderTargetOutput,
+                AlphaMode = AlphaMode.Ignore,
+                Format = Format.R8G8B8A8_UNorm,
+                Width = Width,
+                Height = Height,
+                SwapEffect = SwapEffect.FlipDiscard,
+                SampleDescription = new SampleDescription() { Count = 1, Quality = 0 },
+            };
+            SwapChain = new SwapChain1(new Factory2(), Device, Handle, ref desc);
 
             var depthDesc = new Texture2DDescription()
             {

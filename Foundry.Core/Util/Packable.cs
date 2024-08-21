@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Foundry.Util
+namespace Chef.Util
 {
     public class PackedElement
     {

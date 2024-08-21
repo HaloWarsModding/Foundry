@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Foundry.Util
+namespace Chef.Util
 {
     public static class DXT
     {
@@ -19,8 +19,8 @@ namespace Foundry.Util
         /// and MSDN: https://learn.microsoft.com/en-us/windows/win32/direct3d10/d3d10-graphics-programming-guide-resources-block-compression#bc2
         private static byte[] Unpack_DXT5A_R8UNORM(ulong pixel)
         {
-            uint alpha0 = (byte)((pixel >> 56) & 0xFF);
-            uint alpha1 = (byte)((pixel >> 48) & 0xFF);
+            uint alpha0 = (byte)(pixel >> 56 & 0xFF);
+            uint alpha1 = (byte)(pixel >> 48 & 0xFF);
 
             uint[] alphas = new uint[8];
 
@@ -52,9 +52,9 @@ namespace Foundry.Util
             {
                 for (int y = 0; y < 4; y++)
                 {
-                    int offs = ((x * 4 + y) * 3);
+                    int offs = (x * 4 + y) * 3;
                     int a = (int)(pixel >> offs) & 0x7;
-                    ret[(x * 4) + y] = (byte)alphas[a];
+                    ret[x * 4 + y] = (byte)alphas[a];
                 }
             }
             return ret;
@@ -70,10 +70,10 @@ namespace Foundry.Util
             if (byteOfs != 5)
                 word |= (uint)(selectors[byteOfs + 1] << 8);
 
-            return (word >> (int)(bitOfs & 7)) & 7;
+            return word >> (int)(bitOfs & 7) & 7;
         }
 
-        private static byte[] Convert_DXT5A_DXT5(byte[] dxt5a)
+        public static byte[] Convert_DXT5A_DXT5(byte[] dxt5a)
         {
             byte[] bc3 = new byte[dxt5a.Length * 2];
             //convert from DXT5A to DXT5 (aka BC3)

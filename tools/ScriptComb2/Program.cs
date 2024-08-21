@@ -2,9 +2,8 @@
 using YAXLib;
 using YAXLib.Attributes;
 using static Program;
-using Foundry.HW1.Triggerscript;
-using static Foundry.HW1.Triggerscript.Helpers;
-using Foundry.HW1.Triggerscript;
+using static Chef.HW1.Script.Helpers;
+using Chef.HW1.Script;
 
 class Program
 {
@@ -180,7 +179,7 @@ class Program
                             Name = pname,
                             Optional = poptional,
                             Output = poutput,
-                            Type = Foundry.HW1.Triggerscript.Database.TypeFromString(ptypestr),
+                            Type = Database.TypeFromString(ptypestr),
                         });
                     }
                     catch (Exception ex) { Console.WriteLine(ex.Message); }

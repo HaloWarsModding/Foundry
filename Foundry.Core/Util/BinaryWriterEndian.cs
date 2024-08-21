@@ -1,12 +1,11 @@
-﻿using Foundry.util;
-using System;
+﻿using System;
 using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Foundry.Util
+namespace Chef.Util
 {
     public class BinaryWriterEndian : BinaryWriter
     {

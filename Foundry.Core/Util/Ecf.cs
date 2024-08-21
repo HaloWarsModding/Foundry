@@ -1,14 +1,13 @@
-﻿using Foundry.util;
-using KSoft.IO;
+﻿using KSoft.IO;
 using System;
 using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Endianness = Foundry.util.Endianness;
+using Endianness = Chef.Util.Endianness;
 
-namespace Foundry.Util
+namespace Chef.Util
 {
     public class EcfChunk
     {

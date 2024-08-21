@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Foundry.Util
+namespace Chef.Util
 {
     public struct Vertex
     {

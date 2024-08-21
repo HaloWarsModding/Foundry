@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Foundry.Util
+namespace Chef.Util
 {
-	public static class ERA
-	{
-		public static void ExpandERA(string eraPath, string outputDir)
-		{
+    public static class ERA
+    {
+        public static void ExpandERA(string eraPath, string outputDir)
+        {
             using (KSoft.Phoenix.Resource.EraFileExpander expander = new KSoft.Phoenix.Resource.EraFileExpander(eraPath))
             {
                 expander.Options = new KSoft.Collections.BitVector32();
@@ -34,5 +34,5 @@ namespace Foundry.Util
 
             GC.Collect();
         }
-	}
+    }
 }

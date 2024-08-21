@@ -4,8 +4,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Chef.HW1;
+using Chef.Win.UI;
 
-namespace Foundry.UI.WinForms
+namespace Chef.Win
 {
     internal static class Program
     {
@@ -30,7 +32,7 @@ namespace Foundry.UI.WinForms
         public static extern bool SetWindowText(nint hwnd, string lpString);
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool IsWindowVisible(IntPtr hWnd);
+        static extern bool IsWindowVisible(nint hWnd);
 
         [STAThread]
         static void Main()
@@ -42,9 +44,18 @@ namespace Foundry.UI.WinForms
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             MainWindow window = new MainWindow();
-            ScenarioWindow scn = new ScenarioWindow();
+            ScenarioWindow scn = new ScenarioWindow(window.Assets, window.GpuAssets);
             scn.Show(window.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
+            scn.ScenarioName = "phxscn01";
+            AssetDatabase.Index("D:\\Repos\\Foundry\\_resources\\workspace\\", window.Assets);
+            scn.RefreshAssets();
             Application.Run(window);
+
+            //when were all done lets just clean this up here.
+            D3DViewport.Device3.Dispose();
+            D3DViewport.Device2.Dispose();
+            D3DViewport.Device1.Dispose();
+            D3DViewport.Device.Dispose();
         }
     }
 }

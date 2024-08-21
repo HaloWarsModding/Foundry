@@ -1,4 +1,4 @@
-﻿using Foundry.util;
+﻿using Chef.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Vector3 = System.Numerics.Vector3;
 using Vector4 = System.Numerics.Vector4;
 
-namespace Foundry.Util
+namespace Chef.Util
 {
     public class StreamableVector3
     {

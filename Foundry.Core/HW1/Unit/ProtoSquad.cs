@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YAXLib.Attributes;
 
-namespace Foundry.HW1.Unit
+namespace Chef.HW1.Unit
 {
     public class ProtoSquad
     {
