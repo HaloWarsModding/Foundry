@@ -88,7 +88,7 @@ namespace Chef.HW1
                         //cache.TerrainSims.Add(name, new Asset<TerrainSim>(null, f));
                         //break;
 
-                    // terrain sims
+                    // scenarios
                     case ".scn":
                         if (cache.Scenarios.ContainsKey(name)) continue;
                         Scenario scn;
@@ -110,6 +110,17 @@ namespace Chef.HW1
                                 foreach (var o in sc3.Objects) scn.Objects.Add(o);
                         }
                         cache.Scenarios.Add(name, new Asset<Scenario>(scn, f));
+                        break;
+
+                    // scripts
+                    case ".triggerscript":
+                        if (cache.Scenarios.ContainsKey(name)) continue;
+                        Triggerscript ts;
+                        using (Stream s = File.OpenRead(f))
+                        {
+                            ts = TriggerscriptIO.ReadXml(s);
+                        }
+                        cache.Triggerscripts.Add(name, new Asset<Triggerscript>(ts, f));
                         break;
                 }
 
@@ -258,6 +269,19 @@ namespace Chef.HW1
             }
 
             return asset.Value;
+        }
+        /// <summary>
+        /// </summary>
+        /// <returns>null if name is not available.</returns>
+        public static Triggerscript GetOrLoadTriggerscript(string name, AssetCache cache)
+        {
+            name = name.ToLower();
+            if (!cache.Triggerscripts.ContainsKey(name))
+            {
+                return null;
+            }
+            //xml is always immediately loaded when indexing, so just return what we have.
+            return cache.Triggerscripts[name].Value;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

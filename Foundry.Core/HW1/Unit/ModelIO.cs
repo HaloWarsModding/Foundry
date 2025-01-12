@@ -293,14 +293,14 @@ namespace Chef.HW1.Unit
                     case (char)ModelVertexElemUsage.BASIS:
                     case (char)ModelVertexElemUsage.TANGENT:
                         spec.NumBasis++;
-                        i++;
+                        i++; //skip index char.
                         break;
                     case (char)ModelVertexElemUsage.NORMAL:
                         spec.HasNormals = true;
                         break;
                     case (char)ModelVertexElemUsage.UV:
                         spec.NumUVs++;
-                        i++;
+                        i++; //skip index char.
                         break;
                     case (char)ModelVertexElemUsage.SKIN:
                         spec.HasSkin = true;
@@ -318,7 +318,10 @@ namespace Chef.HW1.Unit
         {
             using (BinaryReader reader = new BinaryReaderEndian(cached, Encoding.ASCII, true, Endianness.Little))
             {
-                reader.ReadInt32();
+                const uint ver4 = 0xC2340004; 
+                const uint ver6 = 0xC2340006;
+                uint version = reader.ReadUInt32();
+
                 int rigidBoneIndex = reader.ReadInt32();
                 Vector3 boundingSphereCenter = new Vector3(
                     reader.ReadSingle(),
@@ -342,11 +345,14 @@ namespace Chef.HW1.Unit
                 bool rigidOnly = reader.ReadBoolean();
                 /*PAD0*/
                 reader.ReadBytes(2);
+                /*PAD1 for v6 only*/
+                if (version == ver6) reader.ReadBytes(4);
 
-                reader.ReadBytes(4);
+                if (version == ver4) reader.ReadUInt32();
                 uint sectionsCount = reader.ReadUInt32();
-                reader.ReadBytes(4);
+                reader.ReadUInt32();
                 uint sectionsOffset = reader.ReadUInt32();
+                if (version == ver6) reader.ReadUInt32();
 
                 sectionMaterialIndices = new int[sectionsCount];
 
@@ -354,12 +360,11 @@ namespace Chef.HW1.Unit
                 List<ModelSection> sections = new List<ModelSection>();
                 long _pos_headerEnd = cached.Position;
                 cached.Position = sectionsOffset;
-                for (int i = 0; i < sectionsCount; i++)
+                for (uint i = 0; i < sectionsCount; i++)
                 {
                     ModelSection section = new ModelSection();
 
                     sectionMaterialIndices[i] = reader.ReadInt32();
-
                     int accessoryIndex = reader.ReadInt32();
                     int maxBones = reader.ReadInt32();
                     int secRigidBoneIndex = reader.ReadInt32();
@@ -369,30 +374,46 @@ namespace Chef.HW1.Unit
                     int vertexBufferSize = reader.ReadInt32();
                     int vertexSize = reader.ReadInt32();
                     int vertexCount = reader.ReadInt32();
+
+                    bool secRigidOnly;
+
+                    if (version == ver6)
+                    {
+                        secRigidOnly = reader.ReadBoolean();
+                        /*PAD0*/
+                        reader.ReadBytes(3);
+                        float lodMinDistance = reader.ReadSingle();
+                        float lodMaxDistance = reader.ReadSingle();
+                        float sortingBias = reader.ReadSingle();
+                    }
+
                     /*pad for unused array header*/
                     reader.ReadBytes(16);
                     ulong packOrderOffset = reader.ReadUInt32();
-                    /*PAD0*/
-                    reader.ReadBytes(4);
-                    /*Pack types*/
-                    reader.ReadBytes(80);
-                    bool secRigidOnly = reader.ReadBoolean();
-                    /*PAD1*/
-                    reader.ReadBytes(7);
 
-
-                    //read pack order string.
-                    long _pos_curSection = cached.Position;
-                    cached.Position = (long)packOrderOffset;
-                    string packOrder = "";
-                    char c = reader.ReadChar();
-                    while (c != '\0')
+                    if (version == ver4)
                     {
-                        packOrder += c;
-                        c = reader.ReadChar();
+                        /*PAD0*/
+                        reader.ReadBytes(4);
+                        /*Pack types*/
+                        reader.ReadBytes(80);
+                        secRigidOnly = reader.ReadBoolean();
+                        /*PAD1*/
+                        reader.ReadBytes(7);
+
+                        //read pack order string.
+                        long _pos_curSection = cached.Position;
+                        cached.Position = (long)packOrderOffset;
+                        string packOrder = "";
+                        char c = reader.ReadChar();
+                        while (c != '\0')
+                        {
+                            packOrder += c;
+                            c = reader.ReadChar();
+                        }
+                        cached.Position = _pos_curSection; //seek back to the end of the section.
+                        section.VertexSpec = SpecFromString(packOrder);
                     }
-                    cached.Position = _pos_curSection; //seek back to the end of the section.
-                    section.VertexSpec = SpecFromString(packOrder);
 
                     //read vertices
                     vb.Position = vertexBufferOffset;
@@ -401,9 +422,6 @@ namespace Chef.HW1.Unit
                     //read indices
                     ib.Position = indexBufferOffset;
                     section.Indices = ReadIndices(ib, indexCount);
-
-                    //reset stream to end of section.
-                    cached.Position = _pos_curSection;
 
                     sections.Add(section);
                 }
