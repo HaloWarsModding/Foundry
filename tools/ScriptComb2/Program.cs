@@ -2,7 +2,7 @@
 using YAXLib;
 using YAXLib.Attributes;
 using static Program;
-using static Chef.HW1.Script.Helpers;
+using static Chef.HW1.Script.TriggerscriptHelpers;
 using Chef.HW1.Script;
 
 class Program

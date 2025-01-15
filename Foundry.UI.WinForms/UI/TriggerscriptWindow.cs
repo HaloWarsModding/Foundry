@@ -4,12 +4,15 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
-using static Chef.HW1.Script.Params;
-using static Chef.HW1.Script.Helpers;
+using static Chef.HW1.Script.TriggerscriptParams;
+using static Chef.HW1.Script.TriggerscriptHelpers;
 using static Chef.Win.UI.TriggerscriptMenus;
 using static Chef.Win.Render.TriggerscriptRenderer;
 using WeifenLuo.WinFormsUI.Docking;
 using Chef.HW1.Script;
+using Chef.HW1;
+using Chef.Win.Render;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Chef.Win.UI
 {
@@ -39,30 +42,11 @@ namespace Chef.Win.UI
     public class TriggerscriptWindow : DockContent
     {
         public EventHandler RefChanged;
-
-        public WeakReference<Triggerscript> TriggerscriptRef
-        {
-            get
-            {
-                return _TriggerscriptRef;
-            }
-            set
-            {
-                _TriggerscriptRef = value;
-                RefChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-        private WeakReference<Triggerscript> _TriggerscriptRef;
-        private Triggerscript Data
-        {
-            get
-            {
-                if (_TriggerscriptRef == null) return null;
-                Triggerscript script;
-                if (!_TriggerscriptRef.TryGetTarget(out script)) return null;
-                return script;
-            }
-        }
+        
+        public string ScriptName { get; set; }
+        private AssetCache Assets { get; set; }
+        private GpuCache GpuAssets { get; set; }
+        private Triggerscript Triggerscript { get; set; }
 
         private PointF ViewPos { get; set; } = new PointF(0, 0);
         private float ViewScale { get; set; } = 1.0f;
@@ -81,11 +65,16 @@ namespace Chef.Win.UI
 
         private Point MouseLast { get; set; }
 
-        public Selection Selection { get; private set; }
-        public Selection Hover { get; private set; }
+        private int selTrigger, selLogic, selVar;
+        private TriggerLogicSlot selSlot;
+        private int dropTrigger, dropLogic;
+        private TriggerLogicSlot dropSlot;
 
-        public TriggerscriptWindow()
+        public TriggerscriptWindow(AssetCache assets, GpuCache gassets)
         {
+            Assets = assets;
+            GpuAssets = gassets;
+
             DoubleBuffered = true;
             Paint += OnPaint;
             MouseDown += OnMouseDown;
@@ -95,10 +84,7 @@ namespace Chef.Win.UI
 
             RefChanged += (s, e) =>
             {
-                Selection = new Selection();
-                Hover = new Selection();
-
-                Rectangle bounds = ScriptBounds(Data);
+                Rectangle bounds = ScriptBounds(Triggerscript);
                 ViewPos = new PointF(
                     bounds.X + bounds.Width / 2,
                     bounds.Y + bounds.Height / 2
@@ -110,14 +96,33 @@ namespace Chef.Win.UI
 
         private void OnMouseDown(object o, MouseEventArgs e)
         {
-            if (Data == null) return;
+            Triggerscript = AssetDatabase.GetOrLoadTriggerscript(ScriptName, Assets);
+            if (Triggerscript == null) return;
 
             Point ViewMouse = ViewMatrix.Inverted().TransformPoint(e.Location);
-            Selection = SelectAt(Data, ViewMouse);
 
-            if (e.Button == MouseButtons.Right)
+            BodyBoundsAtPoint(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic);
+            DropBoundsAtPoint(Triggerscript, ViewMouse, out dropTrigger, out dropSlot, out dropLogic);
+            VarBoundsAtPoint(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic, out selVar);
+
+            if (e.Button == MouseButtons.Right && selTrigger != -1)
             {
-                ShowOptionsForSelection(Data, Selection, PointToScreen(e.Location));
+                Trigger t = Triggerscript.Triggers[selTrigger];
+                if (selVar != -1)
+                {
+                    ShowSetVarMenu(Triggerscript, t, selSlot, selLogic, selVar, PointToScreen(e.Location));
+                }
+                else if (selLogic != -1)
+                {
+                    if (selSlot == TriggerLogicSlot.Condition)
+                        ShowConditionOptionsMenu((Condition)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location));
+                    else
+                        ShowEffectOptionsMenu((Effect)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location));
+                }
+            }
+            else if (e.Button == MouseButtons.Right && dropTrigger != -1 && dropLogic != -1)
+            {
+                ShowLogicAddMenu(Triggerscript, dropTrigger, dropSlot, dropLogic, PointToScreen(e.Location));
             }
 
             MouseLast = e.Location;
@@ -125,16 +130,22 @@ namespace Chef.Win.UI
         }
         private void OnMouseUp(object o, MouseEventArgs e)
         {
-            if (Data == null) return;
+            Triggerscript = AssetDatabase.GetOrLoadTriggerscript(ScriptName, Assets);
+            if (Triggerscript == null) return;
 
-            Point ViewMouse = ViewMatrix.Inverted().TransformPoint(e.Location);
-            Selection = SelectAt(Data, ViewMouse);
-
+            //Point ViewMouse = ViewMatrix.Inverted().TransformPoint(e.Location);
+            //BodyBoundsAtPoint(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic);
+            
+            //MouseLast = e.Location;
+            //Invalidate();
         }
         private void OnMouseMove(object o, MouseEventArgs e)
         {
-            if (Data == null) return;
+            Triggerscript = AssetDatabase.GetOrLoadTriggerscript(ScriptName, Assets);
+            if (Triggerscript == null) return;
+
             Point ViewMouse = ViewMatrix.Inverted().TransformPoint(e.Location);
+            DropBoundsAtPoint(Triggerscript, ViewMouse, out dropTrigger, out dropSlot, out dropLogic);
 
             if (MouseButtons == MouseButtons.Middle)
             {
@@ -146,39 +157,52 @@ namespace Chef.Win.UI
 
             if ((MouseButtons & MouseButtons.Left) > 0)
             {
-                if (Selection.TriggerId != -1 && Selection.LogicIndex == -1)
+                if (selTrigger != -1 && selLogic == -1)
                 {
-                    Trigger selected = Data.Triggers[Selection.TriggerId];
+                    Trigger selected = Triggerscript.Triggers[selTrigger];
                     if (selected != null)
                     {
                         selected.X += (e.Location.X - MouseLast.X) * (1 / ViewScale);
                         selected.Y += (e.Location.Y - MouseLast.Y) * (1 / ViewScale);
                     }
                 }
-                if (Selection.TriggerId != -1 && Selection.LogicIndex != -1)
+                if (selTrigger != -1 && selLogic != -1 && dropLogic != -1 && CanTransfer(selSlot, dropSlot))
                 {
-                    TSDragDrop(ViewMouse);
+                    Trigger from = Triggerscript.Triggers[selTrigger];
+                    Trigger to = Triggerscript.Triggers[dropTrigger];
+
+                    if (from == to && selSlot == dropSlot)
+                    {
+                        if (dropLogic > selLogic)
+                        {
+                            dropLogic--;
+                        }
+                    }
+
+                    TransferLogic(from, selSlot, selLogic, to, dropSlot, dropLogic);
+                    selTrigger = dropTrigger;
+                    selSlot = dropSlot;
+                    selLogic = dropLogic;
                 }
             }
 
             MouseLast = e.Location;
-
-            ClampView();
             Invalidate();
         }
         private void OnMouseScroll(object o, MouseEventArgs e)
         {
-            if (Data == null) return;
+            Triggerscript = AssetDatabase.GetOrLoadTriggerscript(ScriptName, Assets);
+            if (Triggerscript == null) return;
 
             Point ViewMousePre = ViewMatrix.Inverted().TransformPoint(e.Location);
             ViewScale += e.Delta * (ViewScale / 1000);
             Point ViewMouse = ViewMatrix.Inverted().TransformPoint(e.Location);
 
             if ((MouseButtons & MouseButtons.Left) > 0
-                && Selection.TriggerId != -1
-                && Selection.LogicIndex == -1)
+                && selTrigger != -1
+                && selLogic == -1)
             {
-                Trigger selected = Data.Triggers[Selection.TriggerId];
+                Trigger selected = Triggerscript.Triggers[selTrigger];
                 SizeF offset = new SizeF(
                     selected.X - ViewMousePre.X,
                     selected.Y - ViewMousePre.Y
@@ -195,7 +219,17 @@ namespace Chef.Win.UI
         }
         private void OnPaint(object o, PaintEventArgs e)
         {
-            if (Data == null) return;
+            Triggerscript = AssetDatabase.GetOrLoadTriggerscript(ScriptName, Assets);
+            if (Triggerscript == null) return;
+
+            ClampView();
+
+            //e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
+            //e.Graphics.InterpolationMode = InterpolationMode.High;
+            //e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            //e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+
+            e.Graphics.Clear(BackgroundColor);
 
             Rectangle viewClip = new Rectangle(
                 ViewMatrix.Inverted().TransformPoint(e.ClipRectangle.Location).X,
@@ -211,7 +245,7 @@ namespace Chef.Win.UI
                 //regular
                 detail = false;
                 lod = false;
-                if (ViewScale > 2.5) detail = true;
+                if (ViewScale > 1.0) detail = true;
             }
             else //ViewScale <= .75
             {
@@ -220,92 +254,28 @@ namespace Chef.Win.UI
                 lod = true;
                 if (ViewScale < .2) detail = false;
             }
-            DrawScript(e.Graphics, viewClip, Data, Selection, Selection, detail, lod);
+
+            DrawScript(e.Graphics, viewClip, Triggerscript,
+                new Selection() { TriggerId = selTrigger, LogicType = selSlot, LogicIndex = selLogic },
+                new Selection() { TriggerId = dropTrigger, LogicType = dropSlot, LogicIndex = dropLogic, InsertIndex = dropLogic },
+                detail, lod);
         }
 
-        //TODO: causes weirdness on small scripts.
+        //TODO:
         private void ClampView()
         {
-            if (Data == null) return;
+            Triggerscript = AssetDatabase.GetOrLoadTriggerscript(ScriptName, Assets);
+            if (Triggerscript == null) return;
 
             ViewScale = Math.Clamp(ViewScale, ScaleViewMin, ScaleViewMax);
 
-            Rectangle bounds = ScriptBounds(Data);
-            // min == bottom right corner
-            // max == top left corner
-            ViewPos = new PointF(
-               (int)Math.Clamp(
-                    ViewPos.X,
-                    bounds.X - bounds.Width,
-                    bounds.X
-                    ),
-               (int)Math.Clamp(
-                   ViewPos.Y,
-                   bounds.Y - bounds.Height,
-                   bounds.Y
-                   )
-                );
-        }
-        //TODO: break this down and put most of it in the helpers class. Most of this is not specific to the editor ui.
-        private void TSDragDrop(Point ViewMouse)
-        {
-            Hover = SelectAt(Data, ViewMouse);
-            if (Hover != Selection)
-            {
-                if (Hover.LogicIndex != -1 && CanTransfer(Selection.LogicType, Hover.LogicType))
-                {
-                    Trigger from = Data.Triggers[Selection.TriggerId];
-                    Trigger to = Data.Triggers[Hover.TriggerId];
+            Rectangle bounds = ScriptBounds(Triggerscript);
+            bounds.Location = ViewMatrix.Inverted().TransformPoint(bounds.Location);
+            bounds.Size = ((SizeF)bounds.Size * ViewScale).ToSize();
 
-                    if (Logics(to, Hover.LogicType).Count() > 0)
-                    {
-                        Rectangle toBounds = LogicBounds(to, Hover.LogicType, Hover.LogicIndex);
-                        int toIndex = Hover.LogicIndex;
+            float dx = 0, dy = 0;
 
-                        if (Hover != Selection)
-                        {
-                            if (Hover.LogicIndex == Selection.LogicIndex + 1)
-                            {
-                                if (ViewMouse.X <= toBounds.X + toBounds.Width / 2) return;
-                            }
-                            if (Hover.LogicIndex == Selection.LogicIndex - 1)
-                            {
-                                if (ViewMouse.X > toBounds.X + toBounds.Width / 2) return;
-                            }
-                        }
-                        if (from != to || Hover.LogicType != Selection.LogicType)
-                        {
-                            if (ViewMouse.X > toBounds.X + toBounds.Width / 2) toIndex += 1;
-                        }
-
-                        if (TransferLogic(from, Selection.LogicType, Selection.LogicIndex, to, Hover.LogicType, toIndex))
-                        {
-                            Selection = new Selection()
-                            {
-                                LogicIndex = toIndex,
-                                LogicType = Hover.LogicType,
-                                TriggerId = Hover.TriggerId
-                            };
-                        }
-                    }
-                    else
-                    {
-                        Rectangle toBounds = LogicBounds(to, Hover.LogicType);
-                        int toIndex = 0;
-                        if (!toBounds.Contains(ViewMouse)) return;
-
-                        if (TransferLogic(from, Selection.LogicType, Selection.LogicIndex, to, Hover.LogicType, toIndex))
-                        {
-                            Selection = new Selection()
-                            {
-                                LogicIndex = toIndex,
-                                LogicType = Hover.LogicType,
-                                TriggerId = Hover.TriggerId
-                            };
-                        }
-                    }
-                }
-            }
+            ViewPos = ViewPos + new SizeF(dx, dy);
         }
     }
 }

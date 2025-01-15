@@ -73,6 +73,11 @@ namespace Chef.HW1.Script
 
         }
 
+        public static IEnumerable<int> LogicIds(LogicType type)
+        {
+            LogicDatabase db = TableForType(type);
+            return db.Types.Keys;
+        }
         public static IEnumerable<int> LogicVersions(LogicType type, int dbid)
         {
             LogicDatabase db = TableForType(type);
@@ -80,7 +85,7 @@ namespace Chef.HW1.Script
             if (!db.Types.ContainsKey(dbid)) return new List<int>() { 0 }; //0 == default, only one version.
             if (db.Types[dbid].Versions == null) return new List<int>() { 0 };
 
-            return db.Types[dbid].Versions.Keys.ToList();
+            return db.Types[dbid].Versions.Keys;
         }
         public static Dictionary<int, LogicParamInfo> LogicParamInfos(LogicType type, int dbid, int version)
         {
@@ -358,12 +363,52 @@ namespace Chef.HW1.Script
             return varTypeEnum;
         }
 
+        public static Logic LogicFromId(LogicType type, int dbid, int version)
+        {
+            if (LogicIds(type).Contains(dbid)
+                &&
+                LogicVersions(type, dbid).Contains(version))
+            {
+                Logic l;
+
+                if (type == LogicType.Effect) l = new Effect();
+                else if (type == LogicType.Condition) l = new Condition();
+                else return null;
+
+                foreach (var info in LogicParamInfos(type, dbid, version))
+                {
+                    var param = new LogicParam()
+                    {
+                        Name = info.Value.Name,
+                        Optional = info.Value.Optional,
+                        SigID = info.Key,
+                        Value = -1
+                    };
+
+                    if (info.Value.Output)
+                    {
+                        l.Outputs.Add(param);
+                    }
+                    else
+                    {
+                        l.Inputs.Add(param);
+                    }
+                }
+
+                l.DBID = dbid;
+                l.Version = version;
+                l.Comment = "";
+                return l;
+            }
+            return null;
+        }
+
         private static LogicDatabase TableForType(LogicType type)
         {
             if (type == LogicType.Condition) return ConditionItems;
             else return EffectItems;
         }
-        private static LogicDatabase EffectItems { get; set; } = new YAXSerializer<LogicDatabase>().DeserializeFromFile("HW1/Triggerscript/effects.tsdef");
-        private static LogicDatabase ConditionItems { get; set; } = new YAXSerializer<LogicDatabase>().DeserializeFromFile("HW1/Triggerscript/conditions.tsdef");
+        private static LogicDatabase EffectItems { get; set; } = new YAXSerializer<LogicDatabase>().DeserializeFromFile("effects.tsdef");
+        private static LogicDatabase ConditionItems { get; set; } = new YAXSerializer<LogicDatabase>().DeserializeFromFile("conditions.tsdef");
     }
 }

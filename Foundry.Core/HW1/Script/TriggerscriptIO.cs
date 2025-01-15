@@ -20,7 +20,14 @@ namespace Chef.HW1.Script
 
             using (TextReader reader = new StreamReader(stream))
             {
-                return ser.Deserialize(reader);
+                var script = ser.Deserialize(reader);
+                TriggerscriptHelpers.Validate(script);
+
+#if DEBUG
+                ser.SerializeToFile(script, "C:\\users\\jaken\\desktop\\out.triggerscript");
+#endif
+
+                return script;
             }
         }
     }

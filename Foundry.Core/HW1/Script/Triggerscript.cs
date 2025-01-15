@@ -8,7 +8,7 @@ using YAXLib;
 using YAXLib.Attributes;
 using YAXLib.Enums;
 using static Chef.HW1.Script.Database;
-using static Chef.HW1.Script.Params;
+using static Chef.HW1.Script.TriggerscriptParams;
 
 namespace Chef.HW1.Script
 {
@@ -925,6 +925,7 @@ namespace Chef.HW1.Script
 
         [YAXValueForClass()]
         [YAXCollection(YAXCollectionSerializationTypes.Serially, SeparateBy = ",")]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         public List<int> Values { get; set; }
     }
 
@@ -937,6 +938,7 @@ namespace Chef.HW1.Script
 
         [YAXDontSerialize()]
         public VarType Type { get; set; }
+
         [YAXAttributeForClass()]
         [YAXSerializeAs("Type")]
         private string TypeSer
@@ -952,13 +954,13 @@ namespace Chef.HW1.Script
         public bool IsNull { get; set; }
 
         [YAXValueForClass()]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore, DefaultValue = "")]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         public string Value { get; set; }
 
         [YAXAttributeForClass()]
         [YAXCollection(YAXCollectionSerializationTypes.Serially, SeparateBy = ",")]
+        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         public List<int> Refs { get; set; }
-
 
         public override string ToString()
         {
@@ -981,12 +983,15 @@ namespace Chef.HW1.Script
             Value = copy.Value;
         }
 
-        [YAXAttributeForClass()]
+        [YAXDontSerialize()]
         public string Name { get; set; }
+
         [YAXAttributeForClass()]
         public int SigID { get; set; }
-        [YAXAttributeForClass()]
+
+        [YAXDontSerialize()]
         public bool Optional { get; set; }
+
         [YAXValueForClass()]
         public int Value { get; set; }
     }
@@ -1105,8 +1110,25 @@ namespace Chef.HW1.Script
         [YAXDontSerialize]
         public override Dictionary<int, LogicParamInfo> StaticParamInfo
         {
-            get { return LogicParamInfos(LogicType.Effect, DBID, Version); }
+            get
+            {
+                if ((cachedDBID == -1 && cachedVersion == -1)
+                    ||
+                    (cachedDBID != DBID && cachedVersion != Version))
+                {
+                    cachedDBID = DBID;
+                    cachedVersion = Version;
+                    cachedParams = LogicParamInfos(LogicType.Effect, DBID, Version);
+                }
+                return cachedParams;
+            }
         }
+        [YAXDontSerialize]
+        private int cachedDBID = -1;
+        [YAXDontSerialize]
+        private int cachedVersion = -1;
+        [YAXDontSerialize]
+        private Dictionary<int, LogicParamInfo> cachedParams;
     }
 
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
@@ -1130,12 +1152,29 @@ namespace Chef.HW1.Script
         [YAXDontSerialize]
         public override Dictionary<int, LogicParamInfo> StaticParamInfo
         {
-            get { return LogicParamInfos(LogicType.Condition, DBID, Version); }
+            get
+            {
+                if ((cachedDBID == -1 && cachedVersion == -1)
+                    ||
+                    (cachedDBID != DBID && cachedVersion != Version))
+                {
+                    cachedDBID = DBID;
+                    cachedVersion = Version;
+                    cachedParams = LogicParamInfos(LogicType.Condition, DBID, Version);
+                }
+                return cachedParams;
+            }
         }
+        [YAXDontSerialize]
+        private int cachedDBID = -1;
+        [YAXDontSerialize]
+        private int cachedVersion = -1;
+        [YAXDontSerialize]
+        private Dictionary<int, LogicParamInfo> cachedParams;
     }
 
 
-    [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
+    [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields, Options = YAXSerializationOptions.DisplayLineInfoInExceptions)]
     public class Trigger
     {
         public Trigger()
@@ -1239,7 +1278,7 @@ namespace Chef.HW1.Script
     }
 
 
-    [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
+    [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields, Options = YAXSerializationOptions.DisplayLineInfoInExceptions)]
     public class Triggerscript
     {
         public Triggerscript()

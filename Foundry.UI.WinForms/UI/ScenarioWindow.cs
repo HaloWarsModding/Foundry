@@ -167,6 +167,8 @@ namespace Chef.Win.UI
         {
             Viewport.Clear(Color.Tan);
 
+            if (ScenarioName == null) return;
+
             var scn = AssetDatabase.GetOrLoadScenario(ScenarioName, Assets);
             ScenarioRenderer.DrawObjects(Viewport.Target, Viewport.Depth, Camera, scn, Assets, GpuAssets);
 

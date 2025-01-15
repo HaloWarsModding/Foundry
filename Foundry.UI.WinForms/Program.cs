@@ -29,7 +29,7 @@ namespace Chef.Win
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool AllocConsole();
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern bool SetWindowText(nint hwnd, string lpString);
+        public static extern bool SetWindowText(nint hWnd, string lpString);
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool IsWindowVisible(nint hWnd);
@@ -44,11 +44,20 @@ namespace Chef.Win
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             MainWindow window = new MainWindow();
-            ScenarioWindow scn = new ScenarioWindow(window.Assets, window.GpuAssets);
-            scn.Show(window.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
-            scn.ScenarioName = "phxscn01";
-            AssetDatabase.Index("D:\\Repos\\Foundry\\_resources\\workspace\\", window.Assets);
-            scn.RefreshAssets();
+
+            AssetDatabase.Index("E:\\Repos\\emod", window.Assets);
+            
+            //AssetDatabase.GetOrLoadModel("art\\gorgon_01", window.Assets);
+
+            //ScenarioWindow scn = new ScenarioWindow(window.Assets, window.GpuAssets);
+            //scn.Show(window.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
+            //scn.ScenarioName = "phxscn01";
+            //scn.RefreshAssets();
+
+            TriggerscriptWindow ts = new TriggerscriptWindow(window.Assets, window.GpuAssets);
+            ts.ScriptName = "ammo";
+            ts.Show(window.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
+
             Application.Run(window);
 
             //when were all done lets just clean this up here.

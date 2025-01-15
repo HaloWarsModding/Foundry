@@ -2,11 +2,13 @@
 using Microsoft.VisualBasic.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using static Chef.HW1.Script.Helpers;
+using static Chef.HW1.Script.TriggerscriptHelpers;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Chef.Win.UI
@@ -14,28 +16,41 @@ namespace Chef.Win.UI
     public static class TriggerscriptMenus
     {
         //Show menu based on selection
-        public static void ShowOptionsForSelection(Triggerscript script, Selection selection, Point point)
+        public static void ShowOptionsForSelection(Triggerscript script, int triggerId, TriggerLogicSlot slot, int logicIndex, int varId, Point point)
         {
-            if (selection.TriggerId != -1)
+            if (triggerId != -1)
             {
-                Trigger trigger = script.Triggers[selection.TriggerId];
-                if (selection.LogicIndex == -1) //no logic selected
+                Trigger trigger = script.Triggers[triggerId];
+                if (logicIndex == -1) //no logic selected
                 {
-                    ShowTriggerOptionsMenu(trigger, point);
+                    //if (selection.InContainer)
+                    //{
+                    //    ShowLogicAddMenu(trigger, selection.LogicType, Logics(trigger, selection.LogicType).Count(), point);
+                    //}
+                    //else
+                    //{
+                        ShowTriggerOptionsMenu(trigger, point);
+                    //}
                 }
                 else
                 {
-                    Logic logic = SelectedLogic(script, selection);
-                    if (logic != null)
+                    Logic logic = Logics(trigger, slot).ElementAt(logicIndex);
+                    if (logicIndex != -1)
                     {
-                        if (selection.VarSigId == -1)
+                        if (varId == -1)
                         {
-                            if (selection.LogicType == TriggerLogicSlot.Condition) ShowConditionOptionsMenu((Condition)logic, point);
-                            else ShowEffectOptionsMenu((Effect)logic, point);
+                            if (slot == TriggerLogicSlot.Condition)
+                            {
+                                ShowConditionOptionsMenu((Condition)logic, point);
+                            }
+                            else
+                            {
+                                ShowEffectOptionsMenu((Effect)logic, point);
+                            }
                         }
                         else
                         {
-                            ShowSetVarMenu(script, trigger, logic, selection.VarSigId, point);
+                            //ShowSetVarMenu(script, trigger, logic, varId, point);
                         }
                     }
                 }
@@ -55,7 +70,7 @@ namespace Chef.Win.UI
                 //keep the menu open if something was clicked.
                 if (e.CloseReason == ToolStripDropDownCloseReason.ItemClicked)
                 {
-                    e.Cancel = true;
+                    //e.Cancel = true;
                 }
             };
             menu.MouseHover += (s, e) => { menu.Focus(); };
@@ -70,7 +85,7 @@ namespace Chef.Win.UI
                 //keep the menu open if something was clicked.
                 if (e.CloseReason == ToolStripDropDownCloseReason.ItemClicked)
                 {
-                    e.Cancel = true;
+                    //e.Cancel = true;
                 }
             };
             menu.MouseHover += (s, e) => { menu.Focus(); };
@@ -85,7 +100,7 @@ namespace Chef.Win.UI
                 //keep the menu open if something was clicked.
                 if (e.CloseReason == ToolStripDropDownCloseReason.ItemClicked)
                 {
-                    e.Cancel = true;
+                    //e.Cancel = true;
                 }
             };
             menu.MouseHover += (s, e) => { menu.Focus(); };
@@ -100,31 +115,34 @@ namespace Chef.Win.UI
                 //keep the menu open if something was clicked.
                 if (e.CloseReason == ToolStripDropDownCloseReason.ItemClicked)
                 {
-                    e.Cancel = true;
+                    //e.Cancel = true;
                 }
             };
             menu.Items.AddRange(VarOptionItems(var).ToArray());
             menu.Show(point);
         }
-
-        public static void ShowSetVarMenu(Triggerscript script, Trigger trigger, Logic logic, int sigid, Point point)
+        public static void ShowSetVarMenu(Triggerscript script, Trigger trigger, TriggerLogicSlot slot, int logic, int sigid, Point point)
         {
-            if (!logic.StaticParamInfo.ContainsKey(sigid)) return;
+            Validate(script);
+
+            Logic l = Logics(trigger, slot).ElementAt(logic);
+
+            if (!l.StaticParamInfo.ContainsKey(sigid)) return;
 
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.MouseHover += (s, e) => { menu.Focus(); };
-            var paramInfo = logic.StaticParamInfo[sigid];
-            int currentId = logic.GetValueOfParam(sigid);
+            var paramInfo = l.StaticParamInfo[sigid];
+            int currentId = l.GetValueOfParam(sigid);
 
             //Info
             menu.Items.Add(new ToolStripLabel(paramInfo.Name + " [" + paramInfo.Type + "]"));
             menu.Items.Add(new ToolStripSeparator());
-            menu.Items.Add(VarNewItem(script, paramInfo.Type));
-            menu.Items.Add(VarNullItem(script, logic, sigid));
+            menu.Items.Add(VarNewItem(script, paramInfo.Type, trigger.ID, slot, logic, sigid));
+            menu.Items.Add(VarNullItem(script, l, sigid));
             menu.Items.Add(VarListItem(script, "Set...", trigger, new List<VarType>() { paramInfo.Type },
                 (s, e) =>
                 {
-                    logic.SetValueOfParam(sigid, e);
+                    l.SetValueOfParam(sigid, e);
                 }));
 
             menu.Show(point);
@@ -140,6 +158,22 @@ namespace Chef.Win.UI
 
             menu.Show(point);
         }
+        public static void ShowLogicAddMenu(Triggerscript script, int triggerId, TriggerLogicSlot slot, int logicIndex, Point point)
+        {
+            Trigger trigger = script.Triggers[triggerId];
+            ContextMenuStrip menu = new ContextMenuStrip();
+            menu.Closing += (s, e) =>
+            {
+                //keep the menu open if something was clicked.
+                if (e.CloseReason == ToolStripDropDownCloseReason.ItemClicked)
+                {
+                    //e.Cancel = true;
+                }
+            };
+            menu.MouseHover += (s, e) => { menu.Focus(); };
+            menu.Items.Add(LogicAddItem(trigger, slot, logicIndex));
+            menu.Show(point);
+        }
 
         //Items
         public static ToolStripItem VarListItem(Triggerscript script, string text, Trigger localTrigger = null, IEnumerable<VarType> types = null, EventHandler<int> varClicked = null)
@@ -151,7 +185,7 @@ namespace Chef.Win.UI
             List<Var> selectionSet =
                 localTrigger == null ?
                 script.TriggerVars.Values.ToList() :
-                script.TriggerVars.Values.Where(v => v.Refs.Contains(localTrigger.ID) || v.Refs.Count == 0).ToList();
+                script.TriggerVars.Values.Where(v => (v.Refs.Contains(localTrigger.ID) || v.Refs.Count == 0)).ToList();
             selectionSet.Sort((l, r) =>
             {
                 int ret = l.Type.ToString().CompareTo(r.Type.ToString());
@@ -195,7 +229,7 @@ namespace Chef.Win.UI
 
             return root;
         }
-        public static ToolStripItem VarNewItem(Triggerscript script, VarType type)
+        public static ToolStripItem VarNewItem(Triggerscript script, VarType type, int setTrigger = -1, TriggerLogicSlot setSlot = TriggerLogicSlot.Condition, int setLogic = -1, int setVar = -1)
         {
             ToolStripMenuItem add = new ToolStripMenuItem();
 
@@ -208,10 +242,16 @@ namespace Chef.Win.UI
                     ID = NextVarId(script),
                     IsNull = false,
                     Type = type,
-                    Value = ""
+                    Value = "",
+                    Refs = new List<int>()
                 };
                 script.TriggerVars.Add(var.ID, var);
                 ShowVarOptionsMenu(var, add.Owner.Location);
+
+                if (setTrigger != -1 && setLogic != -1)
+                {
+                    Logics(script.Triggers[setTrigger], setSlot).ElementAt(setLogic).SetValueOfParam(setVar, var.ID);
+                }
             };
 
             return add;
@@ -291,6 +331,27 @@ namespace Chef.Win.UI
         {
             ToolStripComboBox item = new ToolStripComboBox();
             return item;
+        }
+        public static ToolStripItem LogicAddItem(Trigger trigger, TriggerLogicSlot slot, int index)
+        {
+            ToolStripMenuItem root = new ToolStripMenuItem("Add...");
+            LogicType t = slot == TriggerLogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
+            foreach (var i in Database.LogicIds(t))
+            {
+                ToolStripMenuItem b = new ToolStripMenuItem(Database.LogicName(t, i));
+                b.Click += (s, e) =>
+                {
+                    var logic = Database.LogicFromId(t, i, Database.LogicVersions(t, i).First());
+                    if (slot == TriggerLogicSlot.Condition)
+                        trigger.Conditions.Insert(index, (Condition)logic);
+                    if (slot == TriggerLogicSlot.EffectTrue)
+                        trigger.TriggerEffectsOnTrue.Insert(index, (Effect)logic);
+                    if (slot == TriggerLogicSlot.EffectFalse)
+                        trigger.TriggerEffectsOnFalse.Insert(index, (Effect)logic);
+                };
+                root.DropDownItems.Add(b);
+            }
+            return root;
         }
 
         //Item collections
@@ -380,7 +441,7 @@ namespace Chef.Win.UI
             val.BorderStyle = BorderStyle.FixedSingle;
             val.TextChanged += (s, e) =>
             {
-                var.Value = name.Text;
+                var.Value = val.Text;
             };
             items.Add(val);
 
@@ -463,6 +524,7 @@ namespace Chef.Win.UI
                 effect.Comment = comment.Text;
             };
             items.Add(comment);
+            items.Add(commentSeparator);
 
             return items;
         }
