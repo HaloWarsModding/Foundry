@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using YAXLib;
 using YAXLib.Attributes;
 using YAXLib.Enums;
-using static Chef.HW1.Script.Database;
+using static Chef.HW1.Script.TriggerscriptHelpers;
 using static Chef.HW1.Script.TriggerscriptParams;
 
 //TODO: Get rid of YAXLib!!!! I hate it!!!!
@@ -914,6 +914,7 @@ namespace Chef.HW1.Script
     //    UnitLocationDistance = 9,
     //    UnitUnitDistance = 8,
     //};
+
 
 
     [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]

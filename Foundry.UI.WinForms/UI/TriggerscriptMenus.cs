@@ -23,14 +23,7 @@ namespace Chef.Win.UI
                 Trigger trigger = script.Triggers[triggerId];
                 if (logicIndex == -1) //no logic selected
                 {
-                    //if (selection.InContainer)
-                    //{
-                    //    ShowLogicAddMenu(trigger, selection.LogicType, Logics(trigger, selection.LogicType).Count(), point);
-                    //}
-                    //else
-                    //{
-                        ShowTriggerOptionsMenu(trigger, point);
-                    //}
+                    ShowTriggerOptionsMenu(trigger, point);
                 }
                 else
                 {
@@ -340,12 +333,12 @@ namespace Chef.Win.UI
 
             Dictionary<string, ToolStripMenuItem> categories = new Dictionary<string, ToolStripMenuItem>();
 
-            foreach (var i in Database.LogicIds(t))
+            foreach (var i in LogicIds(t))
             {
-                ToolStripMenuItem b = new ToolStripMenuItem(Database.LogicName(t, i));
+                ToolStripMenuItem b = new ToolStripMenuItem(LogicName(t, i));
                 b.Click += (s, e) =>
                 {
-                    var logic = Database.LogicFromId(t, i, Database.LogicVersions(t, i).First());
+                    var logic = LogicFromId(t, i, LogicVersions(t, i).First());
                     if (slot == TriggerLogicSlot.Condition)
                         trigger.Conditions.Insert(index, (Condition)logic);
                     if (slot == TriggerLogicSlot.EffectTrue)
@@ -357,7 +350,7 @@ namespace Chef.Win.UI
                 //category menu items
                 string cat = "";
                 ToolStripMenuItem last = root;
-                foreach (string c in Database.LogicCategory(t, i).Split("|"))
+                foreach (string c in LogicCategory(t, i).Split("|"))
                 {
                     if (c == "") break;
 
