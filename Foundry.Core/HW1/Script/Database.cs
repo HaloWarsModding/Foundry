@@ -43,6 +43,10 @@ namespace Chef.HW1.Script
         [YAXAttributeFor("..")]
         public string Name { get; set; } = "";
 
+        [YAXAttributeFor("..")]
+        [YAXErrorIfMissed(YAXLib.Enums.YAXExceptionTypes.Ignore, DefaultValue = "")]
+        public string Category { get; set; }
+
         [YAXDictionary(
             EachPairName = "Version",
             KeyName = "v",
@@ -51,6 +55,7 @@ namespace Chef.HW1.Script
             SerializeValueAs = YAXLib.Enums.YAXNodeTypes.Attribute)]
         [YAXCollection(YAXLib.Enums.YAXCollectionSerializationTypes.RecursiveWithNoContainingElement)]
         public Dictionary<int, LogicVersionInfo> Versions { get; set; } = new Dictionary<int, LogicVersionInfo>();
+
     }
     public struct LogicDatabase
     {
@@ -100,21 +105,26 @@ namespace Chef.HW1.Script
 
             if (validVersions.Count() == 1)
             {
-                int defaultVersion = validVersions.First();
-                vinfo = db.Types[dbid].Versions[defaultVersion];
+                vinfo = db.Types[dbid].Versions.First().Value;
             }
             else if (db.Types[dbid].Versions.ContainsKey(version))
             {
                 vinfo = db.Types[dbid].Versions[version];
             }
 
+            if (vinfo.Params == null) return ret; //I hate YAXLib...
+
             return vinfo.Params;
         }
         public static string LogicName(LogicType type, int dbid)
         {
             LogicDatabase db = TableForType(type);
-            if (!db.Types.ContainsKey(dbid)) return "INVALID";
             return db.Types[dbid].Name;
+        }
+        public static string LogicCategory(LogicType type, int dbid)
+        {
+            LogicDatabase db = TableForType(type);
+            return db.Types[dbid].Category;
         }
         public static VarType TypeFromString(string varTypeName)
         {

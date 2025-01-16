@@ -10,6 +10,8 @@ using YAXLib.Enums;
 using static Chef.HW1.Script.Database;
 using static Chef.HW1.Script.TriggerscriptParams;
 
+//TODO: Get rid of YAXLib!!!! I hate it!!!!
+
 namespace Chef.HW1.Script
 {
     public enum TriggerLogicSlot
@@ -1112,15 +1114,17 @@ namespace Chef.HW1.Script
         {
             get
             {
-                if ((cachedDBID == -1 && cachedVersion == -1)
-                    ||
-                    (cachedDBID != DBID && cachedVersion != Version))
-                {
-                    cachedDBID = DBID;
-                    cachedVersion = Version;
-                    cachedParams = LogicParamInfos(LogicType.Effect, DBID, Version);
-                }
-                return cachedParams;
+                //why was this here?
+                //if ((cachedDBID == -1 && cachedVersion == -1)
+                //    ||
+                //    (cachedDBID != DBID && cachedVersion != Version))
+                //{
+                //    cachedDBID = DBID;
+                //    cachedVersion = Version;
+                //    cachedParams = LogicParamInfos(LogicType.Effect, DBID, Version);
+                //}
+                //return cachedParams;
+                return LogicParamInfos(LogicType.Effect, DBID, Version);
             }
         }
         [YAXDontSerialize]
@@ -1154,15 +1158,17 @@ namespace Chef.HW1.Script
         {
             get
             {
-                if ((cachedDBID == -1 && cachedVersion == -1)
-                    ||
-                    (cachedDBID != DBID && cachedVersion != Version))
-                {
-                    cachedDBID = DBID;
-                    cachedVersion = Version;
-                    cachedParams = LogicParamInfos(LogicType.Condition, DBID, Version);
-                }
-                return cachedParams;
+                //why was this here?
+                //if ((cachedDBID == -1 && cachedVersion == -1)
+                //    ||
+                //    (cachedDBID != DBID && cachedVersion != Version))
+                //{
+                //    cachedDBID = DBID;
+                //    cachedVersion = Version;
+                //    cachedParams = LogicParamInfos(LogicType.Condition, DBID, Version);
+                //}
+                //return cachedParams;
+                return LogicParamInfos(LogicType.Condition, DBID, Version);
             }
         }
         [YAXDontSerialize]

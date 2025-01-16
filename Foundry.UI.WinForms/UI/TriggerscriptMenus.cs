@@ -170,6 +170,7 @@ namespace Chef.Win.UI
                     //e.Cancel = true;
                 }
             };
+
             menu.MouseHover += (s, e) => { menu.Focus(); };
             menu.Items.Add(LogicAddItem(trigger, slot, logicIndex));
             menu.Show(point);
@@ -336,6 +337,9 @@ namespace Chef.Win.UI
         {
             ToolStripMenuItem root = new ToolStripMenuItem("Add...");
             LogicType t = slot == TriggerLogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
+
+            Dictionary<string, ToolStripMenuItem> categories = new Dictionary<string, ToolStripMenuItem>();
+
             foreach (var i in Database.LogicIds(t))
             {
                 ToolStripMenuItem b = new ToolStripMenuItem(Database.LogicName(t, i));
@@ -349,7 +353,25 @@ namespace Chef.Win.UI
                     if (slot == TriggerLogicSlot.EffectFalse)
                         trigger.TriggerEffectsOnFalse.Insert(index, (Effect)logic);
                 };
-                root.DropDownItems.Add(b);
+
+                //category menu items
+                string cat = "";
+                ToolStripMenuItem last = root;
+                foreach (string c in Database.LogicCategory(t, i).Split("|"))
+                {
+                    if (c == "") break;
+
+                    cat += c;
+                    if (!categories.ContainsKey(cat))
+                    {
+                        categories.Add(cat, new ToolStripMenuItem(c));
+                        last.DropDownItems.Add(categories[cat]);
+                    }
+
+                    last = categories[cat];
+                }
+
+                last.DropDownItems.Add(b);
             }
             return root;
         }
