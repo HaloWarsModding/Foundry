@@ -956,26 +956,6 @@ namespace Chef.HW1.Script
         }
     }
 
-    public class LogicParam
-    {
-        public LogicParam()
-        {
-
-        }
-        public LogicParam(LogicParam copy) : this()
-        {
-            Name = copy.Name;
-            SigID = copy.SigID;
-            Optional = copy.Optional;
-            Value = copy.Value;
-        }
-
-        public string Name { get; set; }
-        public int SigID { get; set; }
-        public bool Optional { get; set; }
-        public int Value { get; set; }
-    }
-
     public abstract class Logic
     {
         public Logic()
@@ -992,62 +972,8 @@ namespace Chef.HW1.Script
         public string Comment { get; set; }
 
         public abstract Dictionary<int, LogicParamInfo> StaticParamInfo { get; }
-        private Dictionary<int, int> ParamValues { get; set; }
-        public List<LogicParam> Inputs
-        {
-            get
-            {
-                List<LogicParam> ret = new List<LogicParam>();
-                foreach (var p in StaticParamInfo)
-                {
-                    if (p.Value.Output) continue;
-                    ret.Add(new LogicParam()
-                    {
-                        Name = p.Value.Name,
-                        Optional = p.Value.Optional,
-                        SigID = p.Key,
-                        Value = GetValueOfParam(p.Key)
-                    });
-                }
-                return ret;
-            }
-            set
-            {
-                if (value == null) return;
-                foreach (var v in value)
-                {
-                    SetValueOfParam(v.SigID, v.Value);
-                }
-            }
-        }
-        public List<LogicParam> Outputs
-        {
-            get
-            {
-                List<LogicParam> ret = new List<LogicParam>();
-                foreach (var p in StaticParamInfo)
-                {
-                    if (!p.Value.Output) continue;
-                    ret.Add(new LogicParam()
-                    {
-                        Name = p.Value.Name,
-                        Optional = p.Value.Optional,
-                        SigID = p.Key,
-                        Value = GetValueOfParam(p.Key)
-                    });
-                }
-                return ret;
-            }
-            set
-            {
-                if (value == null) return;
-                foreach (var v in value)
-                {
-                    SetValueOfParam(v.SigID, v.Value);
-                }
-            }
-        }
 
+        private Dictionary<int, int> ParamValues;
         public int GetValueOfParam(int sigID)
         {
             if (!StaticParamInfo.ContainsKey(sigID)) return -1;
@@ -1068,24 +994,20 @@ namespace Chef.HW1.Script
     {
         public Effect() : base() { }
         public override string TypeName { get { return LogicName(LogicType.Effect, DBID); } }
+        
         public override Dictionary<int, LogicParamInfo> StaticParamInfo
         {
             get
             {
-                //why was this here?
-                //if ((cachedDBID == -1 && cachedVersion == -1)
-                //    ||
-                //    (cachedDBID != DBID && cachedVersion != Version))
-                //{
-                //    cachedDBID = DBID;
-                //    cachedVersion = Version;
-                //    cachedParams = LogicParamInfos(LogicType.Effect, DBID, Version);
-                //}
-                //return cachedParams;
-                return LogicParamInfos(LogicType.Effect, DBID, Version);
+                if (cachedDBID != DBID || cachedVersion != Version)
+                {
+                    cachedDBID = DBID;
+                    cachedVersion = Version;
+                    cachedParams = LogicParamInfos(LogicType.Effect, DBID, Version);
+                }
+                return cachedParams;
             }
         }
-        
         private int cachedDBID = -1;
         private int cachedVersion = -1;
         private Dictionary<int, LogicParamInfo> cachedParams;
@@ -1098,24 +1020,20 @@ namespace Chef.HW1.Script
         public bool Invert { get; set; }
         public bool Async { get; set; }
         public int AsyncParameterKey { get; set; }
+
         public override Dictionary<int, LogicParamInfo> StaticParamInfo
         {
             get
             {
-                //why was this here?
-                //if ((cachedDBID == -1 && cachedVersion == -1)
-                //    ||
-                //    (cachedDBID != DBID && cachedVersion != Version))
-                //{
-                //    cachedDBID = DBID;
-                //    cachedVersion = Version;
-                //    cachedParams = LogicParamInfos(LogicType.Condition, DBID, Version);
-                //}
-                //return cachedParams;
-                return LogicParamInfos(LogicType.Condition, DBID, Version);
+                if (cachedDBID != DBID || cachedVersion != Version)
+                {
+                    cachedDBID = DBID;
+                    cachedVersion = Version;
+                    cachedParams = LogicParamInfos(LogicType.Condition, DBID, Version);
+                }
+                return cachedParams;
             }
         }
-        
         private int cachedDBID = -1;
         private int cachedVersion = -1;
         private Dictionary<int, LogicParamInfo> cachedParams;

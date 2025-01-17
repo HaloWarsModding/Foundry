@@ -103,6 +103,8 @@ namespace Chef.HW1.Script
             {
                 Condition cnd = new Condition();
                 cnd.Invert = bool.Parse(cndNode.Attribute("Invert").Value);
+                cnd.Async = bool.Parse(cndNode.Attribute("Async").Value);
+                cnd.AsyncParameterKey = int.Parse(cndNode.Attribute("AsyncParameterKey").Value);
                 ReadTriggerLogicBase(cndNode, script, cnd);
                 t.Conditions.Add(cnd);
             }
