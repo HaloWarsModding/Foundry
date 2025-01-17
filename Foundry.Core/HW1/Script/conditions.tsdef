@@ -165,7 +165,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="5" Name="TechStatus" Category="Game">
+  <Logic dbid="5" Name="TechStatus" Category="Game|Player">
     <Type>
       <Version v="1">
         <Params>
@@ -212,7 +212,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="8" Name="UnitUnitDistance" Category="Game|World">
+  <Logic dbid="8" Name="UnitUnitDistance" Category="Game|Location">
     <Type>
       <Version v="2">
         <Params>
@@ -232,7 +232,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="9" Name="UnitLocationDistance" Category="Game|World">
+  <Logic dbid="9" Name="UnitLocationDistance" Category="Game|Location">
     <Type>
       <Version v="2">
         <Params>
@@ -292,7 +292,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="16" Name="UILocationOK" Category="Game|UI/Input">
+  <Logic dbid="16" Name="UILocationOK" Category="UI|UILocation">
     <Type>
       <Version v="0">
         <Params>
@@ -306,7 +306,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="17" Name="UILocationCancel" Category="Game|UI/Input">
+  <Logic dbid="17" Name="UILocationCancel" Category="UI|UILocation">
     <Type>
       <Version v="0">
         <Params>
@@ -334,7 +334,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="15" Name="CanPayCost" Category="Game|Player|Cost">
+  <Logic dbid="15" Name="CanPayCost" Category="Game|Player">
     <Type>
       <Version v="0">
         <Params>
@@ -348,7 +348,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="82" Name="CheckPlacement" Category="Game|World">
+  <Logic dbid="82" Name="CheckPlacement" Category="Game|Location">
     <Type>
       <Version v="5">
         <Params>
@@ -445,7 +445,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="29" Name="IsOwnedBy" Category="Game">
+  <Logic dbid="29" Name="IsOwnedBy" Category="Game|Units">
     <Type>
       <Version v="3">
         <Params>
@@ -490,7 +490,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="30" Name="IsProtoObject" Category="Game">
+  <Logic dbid="30" Name="IsProtoObject" Category="Game|Units">
     <Type>
       <Version v="2">
         <Params>
@@ -532,7 +532,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="128" Name="UnitListLocationDistance" Category="Game|World">
+  <Logic dbid="128" Name="UnitListLocationDistance" Category="Game|Location">
     <Type>
       <Version v="2">
         <Params>
@@ -555,7 +555,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="131" Name="PlayerInState" Category="Game">
+  <Logic dbid="131" Name="PlayerInState" Category="Game|Player">
     <Type>
       <Version v="2">
         <Params>
@@ -631,7 +631,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="155" Name="UIUnitOK" Category="UI">
+  <Logic dbid="155" Name="UIUnitOK" Category="UI|UIUnit">
     <Type>
       <Version v="0">
         <Params>
@@ -645,7 +645,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="156" Name="UIUnitCancel" Category="UI">
+  <Logic dbid="156" Name="UIUnitCancel" Category="UI|UIUnit">
     <Type>
       <Version v="0">
         <Params>
@@ -656,7 +656,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="157" Name="UISquadOK" Category="Game|UI/Input">
+  <Logic dbid="157" Name="UISquadOK" Category="UI|UISquad">
     <Type>
       <Version v="0">
         <Params>
@@ -670,7 +670,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="158" Name="UISquadCancel" Category="Game|UI/Input">
+  <Logic dbid="158" Name="UISquadCancel" Category="UI|UISquad">
     <Type>
       <Version v="0">
         <Params>
@@ -814,7 +814,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="494" Name="NextProtoObject" Category="Lists|ProtoObject">
+  <Logic dbid="494" Name="NextProtoObject" Category="Iterator">
     <Type>
       <Version v="0">
         <Params>
@@ -842,7 +842,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="496" Name="NextObjectType" Category="Lists|Object">
+  <Logic dbid="496" Name="NextObjectType" Category="Iterator">
     <Type>
       <Version v="0">
         <Params>
@@ -856,7 +856,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="497" Name="NextTech" Category="Lists|Tech">
+  <Logic dbid="497" Name="NextTech" Category="Iterator">
     <Type>
       <Version v="0">
         <Params>
@@ -898,7 +898,14 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="22" Name="PlayerLookingAtLocation" Category="Game|Player" />
+  <Logic dbid="22" Name="PlayerLookingAtLocation" Category="Game|Player">
+    <Type>
+      <Version v="0">
+        <Params>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
   <Logic dbid="170" Name="CompareTime" Category="Compare">
     <Type>
       <Version v="0">
@@ -950,7 +957,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="182" Name="CompareHitpoints" Category="Compare">
+  <Logic dbid="182" Name="CompareHitpoints" Category="Compare|Unit">
     <Type>
       <Version v="0">
         <Params>
@@ -967,7 +974,14 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="191" Name="IsMultiplayerActive" Category="Game|World" />
+  <Logic dbid="191" Name="IsMultiplayerActive" Category="Setup">
+    <Type>
+      <Version v="0">
+        <Params>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
   <Logic dbid="192" Name="CanRetrieveExternals" Category="Setup">
     <Type>
       <Version v="2">
@@ -1025,7 +1039,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="238" Name="SquadLocationDistance" Category="Game|World">
+  <Logic dbid="238" Name="SquadLocationDistance" Category="Game|Location">
     <Type>
       <Version v="0">
         <Params>
@@ -1045,7 +1059,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="240" Name="CompareCiv" Category="Compare">
+  <Logic dbid="240" Name="CompareCiv" Category="Compare|Player">
     <Type>
       <Version v="0">
         <Params>
@@ -1076,7 +1090,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="256" Name="CompareAmmoPercent" Category="Game|Unit">
+  <Logic dbid="256" Name="CompareAmmoPercent" Category="Compare|Unit">
     <Type>
       <Version v="2">
         <Params>
@@ -1141,7 +1155,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="269" Name="TriggerActiveTimeReached" Category="Trigger">
+  <Logic dbid="269" Name="TriggerActiveTimeReached" Category="Setup|Trigger">
     <Type>
       <Version v="0">
         <Params>
@@ -1169,7 +1183,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="282" Name="NextObject" Category="Lists|Object">
+  <Logic dbid="282" Name="NextObject" Category="Iterator">
     <Type>
       <Version v="0">
         <Params>
@@ -1197,7 +1211,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="293" Name="RandomListLocation" Category="Lists">
+  <Logic dbid="293" Name="RandomListLocation" Category="Misc">
     <Type>
       <Version v="0">
         <Params>
@@ -1269,7 +1283,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="320" Name="UnitFlag" Category="Game|Unit">
+  <Logic dbid="320" Name="UnitFlag" Category="Game|Units">
     <Type>
       <Version v="0">
         <Params>
@@ -1298,7 +1312,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="327" Name="UILocationUILockError" Category="Game|UI/Input">
+  <Logic dbid="327" Name="UILocationUILockError" Category="UI|UILocation">
     <Type>
       <Version v="0">
         <Params>
@@ -1309,7 +1323,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="328" Name="UIUnitUILockError" Category="UI">
+  <Logic dbid="328" Name="UIUnitUILockError" Category="UI|UIUnit">
     <Type>
       <Version v="0">
         <Params>
@@ -1320,7 +1334,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="329" Name="UISquadUILockError" Category="Game|UI/Input">
+  <Logic dbid="329" Name="UISquadUILockError" Category="UI|UISquad">
     <Type>
       <Version v="0">
         <Params>
@@ -1331,7 +1345,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="331" Name="UILocationWaiting" Category="Game|UI/Input">
+  <Logic dbid="331" Name="UILocationWaiting" Category="UI|UILocation">
     <Type>
       <Version v="0">
         <Params>
@@ -1342,7 +1356,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="332" Name="UIUnitWaiting" Category="UI">
+  <Logic dbid="332" Name="UIUnitWaiting" Category="UI|UIUnit">
     <Type>
       <Version v="0">
         <Params>
@@ -1353,7 +1367,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="333" Name="UISquadWaiting" Category="Game|UI/Input">
+  <Logic dbid="333" Name="UISquadWaiting" Category="UI|UISquad">
     <Type>
       <Version v="0">
         <Params>
@@ -1514,7 +1528,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="428" Name="ComparePlayers" Category="Compare">
+  <Logic dbid="428" Name="ComparePlayers" Category="Compare|Player">
     <Type>
       <Version v="0">
         <Params>
@@ -1621,7 +1635,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="438" Name="IsSquadAtMaxSize" Category="Game|Unit">
+  <Logic dbid="438" Name="IsSquadAtMaxSize" Category="Game|Units">
     <Type>
       <Version v="0">
         <Params>
@@ -1643,7 +1657,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="441" Name="CanRetrieveExternalLocationList" Category="Setup">
+  <Logic dbid="441" Name="CanRetrieveExternalLocationList" Category="Setup|Trigger">
     <Type>
       <Version v="0">
         <Params>
@@ -1712,7 +1726,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="508" Name="HasAttached" Category="Game|Unit">
+  <Logic dbid="508" Name="HasAttached" Category="Game|Units">
     <Type>
       <Version v="0">
         <Params>
@@ -1723,7 +1737,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="509" Name="IsMobile" Category="Game|Unit">
+  <Logic dbid="509" Name="IsMobile" Category="Game|Units">
     <Type>
       <Version v="0">
         <Params>
@@ -1754,7 +1768,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="518" Name="HasCinematicTagFired" Category="Game|Cinematic">
+  <Logic dbid="518" Name="HasCinematicTagFired" Category="Misc">
     <Type>
       <Version v="0">
         <Params>
@@ -1785,7 +1799,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="527" Name="UIButtonPressed" Category="Game|UI/Input">
+  <Logic dbid="527" Name="UIButtonPressed" Category="UI">
     <Type>
       <Version v="0">
         <Params>
@@ -1822,7 +1836,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="546" Name="CompareAIMissionType" Category="Compare">
+  <Logic dbid="546" Name="CompareAIMissionType" Category="AI">
     <Type>
       <Version v="0">
         <Params>
@@ -1836,7 +1850,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="547" Name="CompareAIMissionState" Category="Compare">
+  <Logic dbid="547" Name="CompareAIMissionState" Category="AI">
     <Type>
       <Version v="0">
         <Params>
@@ -1926,7 +1940,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="563" Name="CanRemoveOneInteger" Category="Lists|Int">
+  <Logic dbid="563" Name="CanRemoveOneInteger" Category="CanRemove">
     <Type>
       <Version v="0">
         <Params>
@@ -1960,7 +1974,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="566" Name="CanRemoveOneLocation" Category="Lists|Location">
+  <Logic dbid="566" Name="CanRemoveOneLocation" Category="CanRemove">
     <Type>
       <Version v="0">
         <Params>
@@ -2011,7 +2025,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="577" Name="ProtoObjectListContains" Category="Lists|Proto">
+  <Logic dbid="577" Name="ProtoObjectListContains" Category="Contains">
     <Type>
       <Version v="0">
         <Params>
@@ -2025,7 +2039,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="578" Name="ProtoSquadListContains" Category="Lists|Proto">
+  <Logic dbid="578" Name="ProtoSquadListContains" Category="Contains">
     <Type>
       <Version v="0">
         <Params>
@@ -2039,7 +2053,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="579" Name="TechListContains" Category="Lists|Tech">
+  <Logic dbid="579" Name="TechListContains" Category="Contains">
     <Type>
       <Version v="0">
         <Params>
@@ -2053,7 +2067,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="583" Name="CanRemoveOneProtoObject" Category="Lists|Proto">
+  <Logic dbid="583" Name="CanRemoveOneProtoObject" Category="CanRemove">
     <Type>
       <Version v="0">
         <Params>
@@ -2070,7 +2084,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="584" Name="CanRemoveOneProtoSquad" Category="Lists|Proto">
+  <Logic dbid="584" Name="CanRemoveOneProtoSquad" Category="CanRemove">
     <Type>
       <Version v="0">
         <Params>
@@ -2087,7 +2101,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="585" Name="CanRemoveOneTech" Category="Lists|Tech">
+  <Logic dbid="585" Name="CanRemoveOneTech" Category="CanRemove">
     <Type>
       <Version v="0">
         <Params>
@@ -2104,7 +2118,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="586" Name="BidState" Category="Misc|Bid">
+  <Logic dbid="586" Name="BidState" Category="AI">
     <Type>
       <Version v="0">
         <Params>
@@ -2118,7 +2132,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="596" Name="BuildingCommandDone" Category="Game|Create">
+  <Logic dbid="596" Name="BuildingCommandDone" Category="Game">
     <Type>
       <Version v="0">
         <Params>
@@ -2160,7 +2174,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="602" Name="HasGarrisoned" Category="Game">
+  <Logic dbid="602" Name="HasGarrisoned" Category="Game|Units">
     <Type>
       <Version v="1">
         <Params>
@@ -2213,7 +2227,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="606" Name="ComparePlayerSquadCount" Category="Compare">
+  <Logic dbid="606" Name="ComparePlayerSquadCount" Category="Compare|Player">
     <Type>
       <Version v="0">
         <Params>
@@ -2236,7 +2250,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="611" Name="IsPassable" Category="Game|World">
+  <Logic dbid="611" Name="IsPassable" Category="Game|Units">
     <Type>
       <Version v="0">
         <Params>
@@ -2289,7 +2303,14 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="627" Name="IsCoop" Category="Game" />
+  <Logic dbid="627" Name="IsCoop" Category="Game">
+    <Type>
+      <Version v="0">
+        <Params>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
   <Logic dbid="635" Name="CustomCommandCheck" Category="Game|Units">
     <Type>
       <Version v="0">
@@ -2304,7 +2325,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="649" Name="IsObjectType" Category="Game">
+  <Logic dbid="649" Name="IsObjectType" Category="Game|Units">
     <Type>
       <Version v="1">
         <Params>
@@ -2337,7 +2358,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="640" Name="UISquadListOK" Category="Game|UI/Input">
+  <Logic dbid="640" Name="UISquadListOK" Category="UI|UISquadList">
     <Type>
       <Version v="0">
         <Params>
@@ -2351,7 +2372,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="641" Name="UISquadListCancel" Category="Game|UI/Input">
+  <Logic dbid="641" Name="UISquadListCancel" Category="UI|UISquadList">
     <Type>
       <Version v="0">
         <Params>
@@ -2362,7 +2383,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="642" Name="UISquadListUILockError" Category="Game|UI/Input">
+  <Logic dbid="642" Name="UISquadListUILockError" Category="UI|UISquadList">
     <Type>
       <Version v="0">
         <Params>
@@ -2373,7 +2394,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="643" Name="UISquadListWaiting" Category="Game|UI/Input">
+  <Logic dbid="643" Name="UISquadListWaiting" Category="UI|UISquadList">
     <Type>
       <Version v="0">
         <Params>
@@ -2398,7 +2419,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="662" Name="NextKBSquad" Category="Lists|KBSquad">
+  <Logic dbid="662" Name="NextKBSquad" Category="Iterator">
     <Type>
       <Version v="0">
         <Params>
@@ -2518,7 +2539,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="744" Name="CanGetTargetedSquad" Category="Game|Player">
+  <Logic dbid="744" Name="CanGetTargetedSquad" Category="CanGet">
     <Type>
       <Version v="0">
         <Params>
@@ -2532,7 +2553,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="746" Name="IsObjectiveComplete" Category="Game|Scenario">
+  <Logic dbid="746" Name="IsObjectiveComplete" Category="Misc">
     <Type>
       <Version v="0">
         <Params>
@@ -2560,7 +2581,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="762" Name="GetTableRow" Category="CustomData">
+  <Logic dbid="762" Name="GetTableRow" Category="Tables">
     <Type>
       <Version v="0">
         <Params>
@@ -2628,7 +2649,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="801" Name="HasHitched" Category="Game|Unit">
+  <Logic dbid="801" Name="HasHitched" Category="Game|Units">
     <Type>
       <Version v="0">
         <Params>
@@ -2642,7 +2663,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="807" Name="SquadSquadDistance" Category="Game|Unit">
+  <Logic dbid="807" Name="SquadSquadDistance" Category="Game|Units">
     <Type>
       <Version v="0">
         <Params>
@@ -2662,7 +2683,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="814" Name="IsInQueue" Category="IDK">
+  <Logic dbid="814" Name="IsInQueue" Category="AI">
     <Type>
       <Version v="0">
         <Params>
@@ -2784,7 +2805,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="860" Name="CanGetOneTime" Category="Lists|Time">
+  <Logic dbid="860" Name="CanGetOneTime" Category="CanGet">
     <Type>
       <Version v="1">
         <Params>
@@ -2848,7 +2869,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="877" Name="CanRetrieveExternalFlag" Category="Trigger">
+  <Logic dbid="877" Name="CanRetrieveExternalFlag" Category="Setup|Trigger">
     <Type>
       <Version v="0">
         <Params>
@@ -2910,7 +2931,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="893" Name="UILocationMinigameWaiting" Category="Game|UI/Input">
+  <Logic dbid="893" Name="UILocationMinigameWaiting" Category="UI|UILocationMinigame">
     <Type>
       <Version v="0">
         <Params>
@@ -2921,7 +2942,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="894" Name="UILocationMinigameOK" Category="Game|UI/Input">
+  <Logic dbid="894" Name="UILocationMinigameOK" Category="UI|UILocationMinigame">
     <Type>
       <Version v="0">
         <Params>
@@ -2938,7 +2959,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="895" Name="UILocationMinigameCancel" Category="Game|UI/Input">
+  <Logic dbid="895" Name="UILocationMinigameCancel" Category="UI|UILocationMinigame">
     <Type>
       <Version v="0">
         <Params>
@@ -2949,7 +2970,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="896" Name="UILocationMinigameUILockError" Category="Game|UI/Input">
+  <Logic dbid="896" Name="UILocationMinigameUILockError" Category="UI|UILocationMinigame">
     <Type>
       <Version v="0">
         <Params>
@@ -2986,7 +3007,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="905" Name="ChatCompleted" Category="Game|UI/Input">
+  <Logic dbid="905" Name="ChatCompleted" Category="Misc">
     <Type>
       <Version v="2">
         <Params>
@@ -2997,8 +3018,15 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="906" Name="CinematicCompleted" Category="Game|UI/Input" />
-  <Logic dbid="911" Name="SquadFlag" Category="Game|Unit">
+  <Logic dbid="906" Name="CinematicCompleted" Category="Misc">
+    <Type>
+      <Version v="0">
+        <Params>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="911" Name="SquadFlag" Category="Game|Units">
     <Type>
       <Version v="0">
         <Params>
@@ -3077,8 +3105,15 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="913" Name="FadeCompleted" Category="Game|UI/Input" />
-  <Logic dbid="916" Name="IsAutoAttackable" Category="Game|Unit">
+  <Logic dbid="913" Name="FadeCompleted" Category="Misc">
+    <Type>
+      <Version v="0">
+        <Params>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
+  <Logic dbid="916" Name="IsAutoAttackable" Category="Game|Units">
     <Type>
       <Version v="0">
         <Params>
@@ -3101,7 +3136,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="918" Name="IsBeingGatheredFrom" Category="Game|Unit">
+  <Logic dbid="918" Name="IsBeingGatheredFrom" Category="Game|Units">
     <Type>
       <Version v="0">
         <Params>
@@ -3135,7 +3170,14 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="929" Name="ConceptGetParent" Category="Concept" />
+  <Logic dbid="929" Name="ConceptGetParent" Category="Concept">
+    <Type>
+      <Version v="0">
+        <Params>
+        </Params>
+      </Version>
+    </Type>
+  </Logic>
   <Logic dbid="930" Name="ConceptGetCommand" Category="Misc|Concept">
     <Type>
       <Version v="0">
@@ -3311,7 +3353,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="975" Name="CanRemoveOneFloat" Category="Lists|Float">
+  <Logic dbid="975" Name="CanRemoveOneFloat" Category="CanRemove">
     <Type>
       <Version v="0">
         <Params>
@@ -3328,7 +3370,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="977" Name="CanRetrieveExternalFloat" Category="Setup">
+  <Logic dbid="977" Name="CanRetrieveExternalFloat" Category="Setup|Trigger">
     <Type>
       <Version v="0">
         <Params>
@@ -3401,7 +3443,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="1028" Name="CompareUnit" Category="Compare">
+  <Logic dbid="1028" Name="CompareUnit" Category="Compare|Unit">
     <Type>
       <Version v="0">
         <Params>
@@ -3418,7 +3460,7 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="1053" Name="ASYNCUnitsOnScreenSelected" Category="Game|Units">
+  <Logic dbid="1053" Name="ASYNCUnitsOnScreenSelected" Category="Game">
     <Type>
       <Version v="0">
         <Params>

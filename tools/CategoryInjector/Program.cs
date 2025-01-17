@@ -694,7 +694,20 @@ Dictionary<string, string> categories = new Dictionary<string, string>()
 
 foreach (string file in new string[] { "E:\\Repos\\Foundry\\Foundry.Core\\HW1\\Script\\conditions.tsdef", "E:\\Repos\\Foundry\\Foundry.Core\\HW1\\Script\\effects.tsdef" })
 {
+    string type = file.Contains("conditions") ? "c" : "e";
     XDocument doc = XDocument.Load(file);
+
+    categories = new Dictionary<string, string>();
+    string input = File.ReadAllText("E:\\Repos\\Foundry\\_resources\\" + type + "categories.txt");
+    foreach(string line in input.Split("\n"))
+    {
+        string name = line.Split(" ")[0];
+        string value = line.Split(" ")[1];
+
+        categories.Add(name, value);
+    }
+
+    //string forOthers = "";
 
     foreach (var n in doc.Root.Elements())
     {
@@ -711,8 +724,12 @@ foreach (string file in new string[] { "E:\\Repos\\Foundry\\Foundry.Core\\HW1\\S
                 val = Console.ReadLine();
             }
             n.SetAttributeValue("Category", val);
+
+            //forOthers += n.Attribute("Name").Value + " " + n.Attribute("Category").Value + "\n";
         }
     }
+
+    //File.WriteAllText("E:\\Repos\\Foundry\\_resources\\" + type + "categories.txt", forOthers);
 
     doc.Save(file);
 }

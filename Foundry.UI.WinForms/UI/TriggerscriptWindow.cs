@@ -227,7 +227,7 @@ namespace Chef.Win.UI
             //e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
             //e.Graphics.InterpolationMode = InterpolationMode.High;
             //e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            //e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
             e.Graphics.Clear(BackgroundColor);
 
