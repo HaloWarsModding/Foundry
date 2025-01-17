@@ -74,6 +74,7 @@ namespace Chef.HW1.Script
                     EvaluateFrequency = float.Parse(triggerNode.Attribute("EvaluateFrequency").Value),
                     X = float.Parse(triggerNode.Attribute("X").Value),
                     Y = float.Parse(triggerNode.Attribute("Y").Value),
+                    GroupID = int.Parse(triggerNode.Attribute("GroupID").Value)
                 };
 
                 ReadTriggerConditions(triggerNode, script, trigger);
@@ -146,6 +147,128 @@ namespace Chef.HW1.Script
                     int sigid = int.Parse(c.Attribute("SigID").Value);
                     l.SetValueOfParam(sigid, int.Parse(c.Value));
                 }
+            }
+        }
+    
+
+        public static void WriteXml(Stream stream, Triggerscript script)
+        {
+            XDocument doc = new XDocument();
+            XElement root = new XElement("TriggerSystem");
+            
+            XElement groups = new XElement("TriggerGroups");
+            
+            XElement vars = new XElement("TriggerVars");
+            WriteVars(vars, script);
+            
+            XElement triggers = new XElement("Triggers");
+            WriteTriggers(triggers, script);
+
+            root.Add(groups);
+            root.Add(vars);
+            root.Add(triggers);
+            doc.Add(root);
+
+            doc.Save(stream);
+        }
+
+        private static void WriteVars(XElement varsNode, Triggerscript script)
+        {
+            foreach(var var in script.TriggerVars)
+            {
+                XElement varNode = new XElement("TriggerVar");
+                varNode.SetAttributeValue("ID", var.Key);
+                varNode.SetAttributeValue("Name", var.Value.Name);
+                varNode.SetAttributeValue("Type", var.Value.Type);
+                varNode.SetAttributeValue("IsNull", var.Value.IsNull);
+                
+                if (var.Value.IsConst)
+                {
+                    varNode.Value = var.Value.Value;
+                }
+                else
+                {
+                    varNode.Value = "";
+                }
+
+                varsNode.Add(varNode);
+            }
+        }
+        private static void WriteTriggers(XElement triggersNode, Triggerscript script)
+        {
+            foreach(var trigger in script.Triggers)
+            {
+                XElement triggerNode = new XElement("Trigger");
+                triggerNode.SetAttributeValue("ID", trigger.Key);
+                triggerNode.SetAttributeValue("Name", trigger.Value.Name);
+                triggerNode.SetAttributeValue("Active", trigger.Value.Active);
+                triggerNode.SetAttributeValue("EvaluateFrequency", trigger.Value.EvaluateFrequency);
+                triggerNode.SetAttributeValue("EvalLimit", trigger.Value.EvalLimit);
+                triggerNode.SetAttributeValue("ConditionalTrigger", trigger.Value.ConditionalTrigger);
+                triggerNode.SetAttributeValue("X", trigger.Value.X);
+                triggerNode.SetAttributeValue("Y", trigger.Value.Y);
+                triggerNode.SetAttributeValue("GroupID", trigger.Value.GroupID);
+
+                WriteTriggerConditions(triggerNode, trigger.Value);
+                WriteTriggerEffectsTrue(triggerNode, trigger.Value);
+                WriteTriggerEffectsFalse(triggerNode, trigger.Value);
+
+                triggersNode.Add(triggerNode);
+            }
+        }
+        
+        private static void WriteTriggerConditions(XElement triggerNode, Trigger trigger)
+        {
+            XElement andOr = new XElement(trigger.ConditionsAreAND ? "And" : "Or");
+            triggerNode.Add(andOr);
+
+            foreach (var cnd in trigger.Conditions)
+            {
+                XElement cndNode = new XElement("Condition");
+                WriteTriggerLogicBase(cndNode, cnd);
+                cndNode.SetAttributeValue("Async", cnd.Async);
+                cndNode.SetAttributeValue("AsyncParameterKey", cnd.AsyncParameterKey);
+                cndNode.SetAttributeValue("Invert", cnd.Invert);
+                andOr.Add(cndNode);
+            }
+        }
+        private static void WriteTriggerEffectsTrue(XElement triggerNode, Trigger trigger)
+        {
+            XElement effTrue = new XElement("TriggerEffectsOnTrue");
+            triggerNode.Add(effTrue);
+
+            foreach (var eff in trigger.TriggerEffectsOnTrue)
+            {
+                XElement effNode = new XElement("Effect");
+                WriteTriggerLogicBase(effNode, eff);
+                effTrue.Add(effNode);
+            }
+        }
+        private static void WriteTriggerEffectsFalse(XElement triggerNode, Trigger trigger)
+        {
+            XElement effTrue = new XElement("TriggerEffectsOnFalse");
+            triggerNode.Add(effTrue);
+
+            foreach (var eff in trigger.TriggerEffectsOnFalse)
+            {
+                XElement effNode = new XElement("Effect");
+                WriteTriggerLogicBase(effNode, eff);
+                effTrue.Add(effNode);
+            }
+        }
+
+        private static void WriteTriggerLogicBase(XElement logicNode, Logic logic)
+        {
+            logicNode.SetAttributeValue("DBID", logic.DBID);
+            logicNode.SetAttributeValue("Version", logic.Version);
+
+            foreach (var param in logic.StaticParamInfo)
+            {
+                XElement paramNode = new XElement(param.Value.Output ? "Output" : "Input");
+                paramNode.SetAttributeValue("SigID", param.Key);
+                paramNode.Value = logic.GetValueOfParam(param.Key).ToString();
+                
+                logicNode.Add(paramNode);
             }
         }
     }

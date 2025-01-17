@@ -920,25 +920,25 @@ namespace Chef.HW1.Script
                 else if (type == LogicType.Condition) l = new Condition();
                 else return null;
 
-                foreach (var info in LogicParamInfos(type, dbid, version))
-                {
-                    var param = new LogicParam()
-                    {
-                        Name = info.Value.Name,
-                        Optional = info.Value.Optional,
-                        SigID = info.Key,
-                        Value = -1
-                    };
+                //foreach (var info in LogicParamInfos(type, dbid, version))
+                //{
+                //    var param = new LogicParam()
+                //    {
+                //        Name = info.Value.Name,
+                //        Optional = info.Value.Optional,
+                //        SigID = info.Key,
+                //        Value = -1
+                //    };
 
-                    if (info.Value.Output)
-                    {
-                        l.Outputs.Add(param);
-                    }
-                    else
-                    {
-                        l.Inputs.Add(param);
-                    }
-                }
+                //    if (info.Value.Output)
+                //    {
+                //        l.Outputs.Add(param);
+                //    }
+                //    else
+                //    {
+                //        l.Inputs.Add(param);
+                //    }
+                //}
 
                 l.DBID = dbid;
                 l.Version = version;

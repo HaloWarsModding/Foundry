@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Chef.HW1;
+using Chef.HW1.Script;
 using Chef.Win.UI;
 
 namespace Chef.Win
@@ -45,8 +46,18 @@ namespace Chef.Win
             Application.SetCompatibleTextRenderingDefault(false);
             MainWindow window = new MainWindow();
 
-            AssetDatabase.Index("E:\\Repos\\emod", window.Assets);
-            
+            AssetDatabase.Index("E:\\Repos\\Foundry\\_resources\\workspace", window.Assets);
+
+            Triggerscript t = new Triggerscript();
+            using (FileStream fs = new FileStream("E:\\Repos\\emod\\data\\triggerscripts\\ammo.triggerscript", FileMode.Open))
+            {
+                TriggerscriptIO.ReadXml(fs, t);
+            }
+            using (FileStream fs = new FileStream("E:\\Repos\\emod\\data\\triggerscripts\\ammo_temp.triggerscript", FileMode.OpenOrCreate))
+            {
+                TriggerscriptIO.WriteXml(fs, t);
+            }
+
             //AssetDatabase.GetOrLoadModel("art\\gorgon_01", window.Assets);
 
             //ScenarioWindow scn = new ScenarioWindow(window.Assets, window.GpuAssets);
