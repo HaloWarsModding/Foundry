@@ -50,6 +50,7 @@
     <Compile Remove="FoundryInstance.cs" />
     <Compile Remove="FoundryInstance.Designer.cs" />
     <Compile Remove="GlobalSuppressions.cs" />
+    <Compile Remove="HW1\Script\Triggerscript.old.cs" />
     <Compile Remove="OperatorRegistrant.cs" />
     <Compile Remove="OperatorRegistrantToolstrip.cs" />
     <Compile Remove="PropertyEditor.cs" />

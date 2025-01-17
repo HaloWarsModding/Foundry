@@ -917,53 +917,37 @@ namespace Chef.HW1.Script
 
 
 
-    [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     public class Group
     {
-        [YAXAttributeForClass()]
         public int ID { get; set; }
-
-        [YAXAttributeForClass()]
         public string Name { get; set; }
-
-        [YAXValueForClass()]
-        [YAXCollection(YAXCollectionSerializationTypes.Serially, SeparateBy = ",")]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         public List<int> Values { get; set; }
     }
 
 
-    [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     public class Var
     {
-        [YAXAttributeForClass()]
         public int ID { get; set; }
-
-        [YAXDontSerialize()]
         public VarType Type { get; set; }
-
-        [YAXAttributeForClass()]
-        [YAXSerializeAs("Type")]
-        private string TypeSer
-        {
-            get { return Type.ToString(); }
-            set { Type = TypeFromString(value); }
-        }
-
-        [YAXAttributeForClass()]
         public string Name { get; set; }
-
-        [YAXAttributeForClass()]
         public bool IsNull { get; set; }
-
-        [YAXValueForClass()]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         public string Value { get; set; }
-
-        [YAXAttributeForClass()]
-        [YAXCollection(YAXCollectionSerializationTypes.Serially, SeparateBy = ",")]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         public List<int> Refs { get; set; }
+
+        public bool IsConst
+        { 
+            get
+            {
+                return Value != "";
+            }
+        }
+        public bool IsLocal
+        {
+            get
+            {
+                return Refs.Count == 1;
+            }
+        }
 
         public override string ToString()
         {
@@ -986,47 +970,29 @@ namespace Chef.HW1.Script
             Value = copy.Value;
         }
 
-        [YAXDontSerialize()]
         public string Name { get; set; }
-
-        [YAXAttributeForClass()]
         public int SigID { get; set; }
-
-        [YAXDontSerialize()]
         public bool Optional { get; set; }
-
-        [YAXValueForClass()]
         public int Value { get; set; }
     }
 
-    [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     public abstract class Logic
     {
         public Logic()
         {
             ParamValues = new Dictionary<int, int>();
+            Comment = "";
+            DBID = -1;
+            Version = -1;
         }
 
         public abstract string TypeName { get; }
-
-        [YAXAttributeForClass()]
         public int Version { get; set; }
-
-        [YAXAttributeForClass()]
         public int DBID { get; set; }
-
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore, DefaultValue = "")]
-        [YAXAttributeForClass()]
         public string Comment { get; set; }
 
         public abstract Dictionary<int, LogicParamInfo> StaticParamInfo { get; }
-
-        [YAXDontSerialize]
         private Dictionary<int, int> ParamValues { get; set; }
-
-        [YAXValueForClass()]
-        [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement, EachElementName = "Input")]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         public List<LogicParam> Inputs
         {
             get
@@ -1054,9 +1020,6 @@ namespace Chef.HW1.Script
                 }
             }
         }
-        [YAXValueForClass()]
-        [YAXCollection(YAXCollectionSerializationTypes.RecursiveWithNoContainingElement, EachElementName = "Output")]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         public List<LogicParam> Outputs
         {
             get
@@ -1101,16 +1064,10 @@ namespace Chef.HW1.Script
         }
     }
 
-    [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     public class Effect : Logic
     {
         public Effect() : base() { }
-
-        [YAXAttributeForClass()]
-        [YAXSerializeAs("Type")]
         public override string TypeName { get { return LogicName(LogicType.Effect, DBID); } }
-
-        [YAXDontSerialize]
         public override Dictionary<int, LogicParamInfo> StaticParamInfo
         {
             get
@@ -1128,33 +1085,19 @@ namespace Chef.HW1.Script
                 return LogicParamInfos(LogicType.Effect, DBID, Version);
             }
         }
-        [YAXDontSerialize]
+        
         private int cachedDBID = -1;
-        [YAXDontSerialize]
         private int cachedVersion = -1;
-        [YAXDontSerialize]
         private Dictionary<int, LogicParamInfo> cachedParams;
     }
 
-    [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields)]
     public class Condition : Logic
     {
         public Condition() : base() { }
-
-        [YAXAttributeForClass()]
-        [YAXSerializeAs("Type")]
         public override string TypeName { get { return LogicName(LogicType.Condition, DBID); } }
-
-        [YAXAttributeForClass()]
         public bool Invert { get; set; }
-
-        [YAXAttributeForClass()]
         public bool Async { get; set; }
-
-        [YAXAttributeForClass()]
         public int AsyncParameterKey { get; set; }
-
-        [YAXDontSerialize]
         public override Dictionary<int, LogicParamInfo> StaticParamInfo
         {
             get
@@ -1172,40 +1115,29 @@ namespace Chef.HW1.Script
                 return LogicParamInfos(LogicType.Condition, DBID, Version);
             }
         }
-        [YAXDontSerialize]
+        
         private int cachedDBID = -1;
-        [YAXDontSerialize]
         private int cachedVersion = -1;
-        [YAXDontSerialize]
         private Dictionary<int, LogicParamInfo> cachedParams;
     }
 
-
-    [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields, Options = YAXSerializationOptions.DisplayLineInfoInExceptions)]
     public class Trigger
     {
         public Trigger()
         {
             TriggerEffectsOnTrue = new List<Effect>();
             TriggerEffectsOnFalse = new List<Effect>();
-            ConditionsAnd = new List<Condition>();
+            Conditions = new List<Condition>();
+            ConditionsAreAND = true;
         }
 
-        [YAXAttributeForClass()]
         public int ID { get; set; }
-        [YAXAttributeForClass()]
         public string Name { get; set; }
-        [YAXAttributeForClass()]
         public bool Active { get; set; }
-        [YAXAttributeForClass()]
-        public int EvaluateFrequency { get; set; }
-        [YAXAttributeForClass()]
-        public int EvalLimit { get; set; }
-        [YAXAttributeForClass()]
+        public float EvaluateFrequency { get; set; }
+        public float EvalLimit { get; set; }
         public bool CommentOut { get; set; }
-        [YAXAttributeForClass()]
         public bool ConditionalTrigger { get; set; }
-        [YAXAttributeForClass()]
         public int GroupID { get; set; }
 
         //[YAXAttributeForClass()]
@@ -1215,77 +1147,19 @@ namespace Chef.HW1.Script
         //[YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         //public float Y { get; set; }
 
-
-        [YAXAttributeForClass()]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
-        [YAXSerializeAs("X")]
         private float pX { get; set; }
-        [YAXAttributeForClass()]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
-        [YAXSerializeAs("Y")]
         private float pY { get; set; }
-        [YAXDontSerialize]
         public float X { get { return pX * TriggerSpacingMultiplier; } set { pX = value / TriggerSpacingMultiplier; } }
-        [YAXDontSerialize]
         public float Y { get { return pY * TriggerSpacingMultiplier; } set { pY = value / TriggerSpacingMultiplier; } }
 
 
-        [YAXCollection(YAXCollectionSerializationTypes.Recursive, EachElementName = "Condition")]
-        [YAXElementFor("TriggerConditions")]
-        [YAXSerializeAs("Or")]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
-        private List<Condition> ConditionsOr
-        {
-            get
-            {
-                if (!ConditionsAreAND) return Conditions;
-                else return null;
-            }
-            set
-            {
-                ConditionsAreAND = false;
-                if (value == null) Conditions = new List<Condition>();
-                else Conditions = value;
-            }
-        }
-
-        [YAXCollection(YAXCollectionSerializationTypes.Recursive, EachElementName = "Condition")]
-        [YAXElementFor("TriggerConditions")]
-        [YAXSerializeAs("And")]
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
-        private List<Condition> ConditionsAnd
-        {
-            get
-            {
-                if (ConditionsAreAND) return Conditions;
-                else return null;
-            }
-            set
-            {
-                ConditionsAreAND = true;
-                if (value == null) Conditions = new List<Condition>();
-                else Conditions = value;
-            }
-        }
-
-        [YAXDontSerialize()]
-        public bool ConditionsAreAND { get; private set; }
-        [YAXDontSerialize()]
+        public bool ConditionsAreAND { get; set; }
         public List<Condition> Conditions { get; set; }
-
-        [YAXValueForClass()]
-        [YAXCollection(YAXCollectionSerializationTypes.Recursive, EachElementName = "Effect")]
-        [YAXDontSerializeIfNull()]
         public List<Effect> TriggerEffectsOnTrue { get; set; }
-
-        [YAXValueForClass()]
-        [YAXCollection(YAXCollectionSerializationTypes.Recursive, EachElementName = "Effect")]
-        [YAXDontSerializeIfNull()]
         public List<Effect> TriggerEffectsOnFalse { get; set; }
     }
 
 
-    [YAXSerializableType(FieldsToSerialize = YAXSerializationFields.AllFields, Options = YAXSerializationOptions.DisplayLineInfoInExceptions)]
     public class Triggerscript
     {
         public Triggerscript()
@@ -1296,85 +1170,15 @@ namespace Chef.HW1.Script
             Name = "";
             Type = "TriggerScript";
         }
-
-        [YAXAttributeForClass()]
         public string Name { get; set; }
-
-        [YAXAttributeForClass()]
         public string Type { get; set; }
-
-        [YAXAttributeForClass()]
         public int NextTriggerVarID { get; set; }
-
-        [YAXAttributeForClass()]
         public int NextTriggerID { get; set; }
-
-        [YAXAttributeForClass()]
         public int NextConditionID { get; set; }
-
-        [YAXAttributeForClass()]
         public int NextEffectID { get; set; }
-
-        [YAXErrorIfMissed(YAXExceptionTypes.Ignore, DefaultValue = true)]
-        [YAXAttributeForClass()]
         public bool External { get; set; }
-
-
-        //YAX needs a list, we want to expose a dictionary for fast acces via id.
-        [YAXCollection(YAXCollectionSerializationTypes.Recursive, EachElementName = "Group")]
-        [YAXSerializeAs("TriggerGroups")]
-        private List<Group> TriggerGroupsSer
-        {
-            get { return TriggerGroups.Values.ToList(); }
-            set
-            {
-                TriggerGroups.Clear();
-                foreach (var g in value)
-                {
-                    TriggerGroups.Add(g.ID, g);
-                }
-            }
-        }
-        [YAXDontSerialize]
         public Dictionary<int, Group> TriggerGroups { get; set; }
-
-
-        //YAX needs a list, we want to expose a dictionary for fast acces via id.
-        [YAXCollection(YAXCollectionSerializationTypes.Recursive, EachElementName = "TriggerVar")]
-        [YAXSerializeAs("TriggerVars")]
-        private List<Var> TriggerVarsSer
-        {
-            //get; set;
-            get { return TriggerVars.Values.ToList(); }
-            set
-            {
-                TriggerVars.Clear();
-                foreach (var v in value)
-                {
-                    TriggerVars.Add(v.ID, v);
-                }
-            }
-        }
-        [YAXDontSerialize]
         public Dictionary<int, Var> TriggerVars { get; set; }
-
-
-        //YAX needs a list, we want to expose a dictionary for fast acces via id.
-        [YAXCollection(YAXCollectionSerializationTypes.Recursive, EachElementName = "Trigger")]
-        [YAXSerializeAs("Triggers")]
-        private List<Trigger> TriggersSer
-        {
-            get { return Triggers.Values.ToList(); }
-            set
-            {
-                Triggers.Clear();
-                foreach (var t in value)
-                {
-                    Triggers.Add(t.ID, t);
-                }
-            }
-        }
-        [YAXDontSerialize]
         public Dictionary<int, Trigger> Triggers { get; set; }
     }
 }

@@ -15,7 +15,6 @@ namespace Chef.HW1.Map
         /// Read a terrain visual from an xtd stream (ecf based).
         /// </summary>
         /// <param name="stream"></param>
-        /// <returns>null if there was an error.</returns>
         public static void ReadXtd(Stream stream, TerrainVisual terrain)
         {
             Ecf ecf = new Ecf();

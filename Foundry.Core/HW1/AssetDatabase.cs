@@ -115,10 +115,10 @@ namespace Chef.HW1
                     // scripts
                     case ".triggerscript":
                         if (cache.Scenarios.ContainsKey(name)) continue;
-                        Triggerscript ts;
+                        Triggerscript ts = new Triggerscript();
                         using (Stream s = File.OpenRead(f))
                         {
-                            ts = TriggerscriptIO.ReadXml(s);
+                           TriggerscriptIO.ReadXml(s, ts);
                         }
                         cache.Triggerscripts.Add(name, new Asset<Triggerscript>(ts, f));
                         break;
