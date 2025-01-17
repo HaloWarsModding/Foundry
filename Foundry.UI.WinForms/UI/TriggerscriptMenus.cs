@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using static Chef.HW1.Script.TriggerscriptHelpers;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Chef.Win.UI
 {

@@ -149,6 +149,8 @@ namespace Chef.HW1.Script
                 }
             }
             ret.Width += 50;
+            //TODO: Separate logic unit container header from the rest of this.
+            ret.Height += HeaderHeight;
 
             return ret;
         }
@@ -202,7 +204,8 @@ namespace Chef.HW1.Script
                 size.Height = Math.Max(size.Height, BodySize(l).Height);
             }
 
-            //size.Height += HeaderHeight;
+            //TODO: Separate logic unit container header from the rest of this.
+            size.Height += HeaderHeight;
             return new Rectangle(loc, size);
         }
         public static Rectangle BoundsLogicNode(Trigger trigger, TriggerLogicSlot type, int index)
@@ -221,39 +224,30 @@ namespace Chef.HW1.Script
         }
         public static Rectangle BoundsLogicDrop(Trigger trigger, TriggerLogicSlot type, int index)
         {
+            //TODO: technically this works, but its a mess.
+            //I want to rework all the bounds to not need random += everywhere.
+            //TODO: Separate logic unit container header from the rest of this.
             var logics = Logics(trigger, type);
-            Rectangle b;
+
+            Rectangle fullbounds = BoundsTriggerUnit(trigger);
+            Rectangle ubounds = BoundsLogicUnit(trigger, type);
 
             if (logics.Count() == 0)
             {
-                b = BoundsLogicUnit(trigger, type);
-                b.Inflate(LogicSectionSpacing / 2, 0);
-                return b; //early out here because were just using the empty logic section bounds wholesale.
-            }
-            //if index == last+1, make a bounds as if last+1 existed.
-            else if (index == logics.Count())
-            {
-                b = BoundsLogicNode(trigger, type, logics.Count() - 1);
-                b.X += b.Width;
-                b.X += LogicSpacing;
-            }
-            //for everything else just use the default bounds.
-            else
-            {
-                b = BoundsLogicNode(trigger, type, index);
+                ubounds.Height = fullbounds.Height;
+                return ubounds; //if theres no nodes, just use the unit bounds.
             }
 
-            Rectangle slotClamp = BoundsLogicUnit(trigger, type);
+            index = Math.Min(index, logics.Count());
+            Rectangle nbounds = ubounds;
+            nbounds.X = ubounds.X - (DefaultWidth / 2) + (index * (DefaultWidth + LogicSpacing));
+            nbounds.Width = DefaultWidth;
 
-            b.X -= LogicSpacing;
-            b.X -= b.Width / 2;
-            b.Width += LogicSpacing;
-            b.Height = slotClamp.Height;
+            ubounds.Inflate(LogicSectionSpacing / 2, 0);
+            nbounds.Intersect(ubounds);
+            nbounds.Height = fullbounds.Height;
 
-            slotClamp.Inflate(LogicSectionSpacing / 2, 0);
-            b.Intersect(slotClamp);
-
-            return b;
+            return nbounds;
         }
 
         public static Rectangle ParamNameBounds(Trigger trigger, TriggerLogicSlot type, int index, int paramIndex)
