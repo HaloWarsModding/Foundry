@@ -99,7 +99,7 @@ namespace Chef.Win.UI
 
             //this
             ClientSize = new Size(942, 493);
-            Icon = Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
+            //Icon = Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
             Text = Properties.Resources.Title;
             Controls.Add(DockPanel);
             Controls.Add(MainMenuStrip);

@@ -9,6 +9,15 @@
     <AssemblyName>chefwin</AssemblyName>
     <ApplicationIcon>icons\chef.ico</ApplicationIcon>
     <RootNamespace>Chef.Win</RootNamespace>
+	<PublishSingleFile>true</PublishSingleFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
