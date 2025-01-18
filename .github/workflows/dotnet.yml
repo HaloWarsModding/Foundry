@@ -23,7 +23,9 @@ jobs:
     - name: Build
       run: dotnet build Foundry.UI.WinForms/Chef.Win.csproj -o _publish/chefwin
     - name: Zip
-      run: zip -r chefwin.zip _publish/chefwin/
+      uses: montudor/action-zip@v1
+      with:
+        args: 7z a -r chefwin.zip _publish/chefwin/
     - name: Create Release
       uses: actions/create-release@v1
       env:
