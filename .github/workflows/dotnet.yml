@@ -23,4 +23,4 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build chef.win --no-restore
+      run: dotnet build Chef.Win.csproj --no-restore
