@@ -48,15 +48,15 @@ namespace Chef.Win
 
             AssetDatabase.Index("E:\\Repos\\Foundry\\_resources\\workspace", window.Assets);
 
-            Triggerscript t = new Triggerscript();
-            using (FileStream fs = new FileStream("E:\\Repos\\emod\\data\\triggerscripts\\ammo.triggerscript", FileMode.Open))
-            {
-                TriggerscriptIO.ReadXml(fs, t);
-            }
-            using (FileStream fs = new FileStream("E:\\Repos\\emod\\data\\triggerscripts\\ammo_temp.triggerscript", FileMode.OpenOrCreate))
-            {
-                TriggerscriptIO.WriteXml(fs, t);
-            }
+            //Triggerscript t = new Triggerscript();
+            //using (FileStream fs = new FileStream("E:\\Repos\\emod\\data\\triggerscripts\\ammo.triggerscript", FileMode.Open))
+            //{
+            //    TriggerscriptIO.ReadXml(fs, t);
+            //}
+            //using (FileStream fs = new FileStream("E:\\Repos\\emod\\data\\triggerscripts\\ammo_temp.triggerscript", FileMode.OpenOrCreate))
+            //{
+            //    TriggerscriptIO.WriteXml(fs, t);
+            //}
 
             //AssetDatabase.GetOrLoadModel("art\\gorgon_01", window.Assets);
 

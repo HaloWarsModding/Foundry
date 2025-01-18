@@ -155,7 +155,14 @@ namespace Chef.HW1.Script
         {
             XDocument doc = new XDocument();
             XElement root = new XElement("TriggerSystem");
-            
+            root.SetAttributeValue("Name", "");
+            root.SetAttributeValue("Type", "TriggerScript");
+            root.SetAttributeValue("NextTriggerVarID", 0);
+            root.SetAttributeValue("NextTriggerID", 0);
+            root.SetAttributeValue("NextConditionID", 0);
+            root.SetAttributeValue("NextEffectID", 0);
+            root.SetAttributeValue("External", false);
+
             XElement groups = new XElement("TriggerGroups");
             
             XElement vars = new XElement("TriggerVars");
@@ -219,8 +226,11 @@ namespace Chef.HW1.Script
         
         private static void WriteTriggerConditions(XElement triggerNode, Trigger trigger)
         {
+            XElement triggerConditions = new XElement("TriggerConditions");
+            triggerNode.Add(triggerConditions);
+            
             XElement andOr = new XElement(trigger.ConditionsAreAND ? "And" : "Or");
-            triggerNode.Add(andOr);
+            triggerConditions.Add(andOr);
 
             foreach (var cnd in trigger.Conditions)
             {
@@ -259,8 +269,11 @@ namespace Chef.HW1.Script
 
         private static void WriteTriggerLogicBase(XElement logicNode, Logic logic)
         {
+            logicNode.SetAttributeValue("Type", logic.TypeName);
             logicNode.SetAttributeValue("DBID", logic.DBID);
             logicNode.SetAttributeValue("Version", logic.Version);
+            logicNode.SetAttributeValue("ID", 0);
+            logicNode.SetAttributeValue("Comment", logic.Comment);
 
             foreach (var param in logic.StaticParamInfo)
             {
