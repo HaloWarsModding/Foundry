@@ -1,5 +1,4 @@
-﻿using KSoft.Phoenix.Phx;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing; //cross platform System.Drawing.Primitives is used.
 using System.Linq;
@@ -235,7 +234,7 @@ namespace Chef.HW1.Script
             if (logics.Count() == 0)
             {
                 ubounds.Height = fullbounds.Height;
-                return ubounds; //if theres no nodes, just use the unit bounds.
+                return ubounds; //if there are no nodes, just use the unit bounds.
             }
 
             index = Math.Min(index, logics.Count());
@@ -361,63 +360,6 @@ namespace Chef.HW1.Script
 
 
         //Queries
-        //public static Selection SelectAt(Triggerscript script, Point point)
-        //{
-        //    Selection ret = new Selection();
-
-        //    ret.TriggerId = -1;
-        //    ret.LogicIndex = -1;
-        //    foreach (var trigger in script.Triggers.Values)
-        //    {
-        //        Rectangle unitBounds = UnitBounds(trigger);
-        //        if (unitBounds.Contains(point))
-        //        {
-        //            ret.UnitId = trigger.ID;
-        //            ret.TriggerId = trigger.ID;
-
-        //            foreach (var type in Enum.GetValues<TriggerLogicSlot>())
-        //            {
-        //                if (SlotBounds(trigger, type).Contains(point))
-        //                {
-        //                    ret.LogicType = type;
-
-        //                    var logics = Logics(trigger, type);
-        //                    for (int i = 0; i < logics.Count(); i++)
-        //                    {
-        //                        if (LogicDropBounds(trigger, type, i).Contains(point))
-        //                        {
-        //                            ret.InsertIndex = i;
-        //                        }
-        //                        if (LogicBodyBounds(trigger, type, i).Contains(point))
-        //                        {
-        //                            ret.LogicIndex = i;
-
-        //                            for (int v = 0; v < Logics(trigger, type).ElementAt(i).StaticParamInfo.Count(); v++)
-        //                            {
-        //                                if (ParamValBounds(trigger, type, i, v).Contains(point))
-        //                                {
-        //                                    ret.VarSigId = Logics(trigger, type).ElementAt(i).StaticParamInfo.ElementAt(v).Key;
-        //                                }
-        //                            }
-        //                        }
-        //                    }
-
-        //                    if (LogicDropBounds(trigger, type, logics.Count()).Contains(point))
-        //                    {
-        //                        ret.InsertIndex = logics.Count();
-        //                    }
-
-        //                    if (Logics(trigger, type).Count() == 0)
-        //                    {
-        //                        ret.LogicIndex = 0;
-        //                        ret.InsertIndex = 0;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return ret;
-        //}
         public static int NextVarId(Triggerscript script)
         {
             List<int> ids = script.TriggerVars.Keys.ToList();
@@ -550,7 +492,7 @@ namespace Chef.HW1.Script
             {
                 ret = new Var()
                 {
-                    ID = script.NextTriggerVarID++,
+                    ID = script.TriggerVars.Max(v => v.Value.ID) + 1,
                     IsNull = true,
                     Name = string.Format("Null{0}", type),
                     Type = type,
@@ -563,6 +505,7 @@ namespace Chef.HW1.Script
             return ret.ID;
         }
 
+        
         //Validation
         public static bool CanTransfer(TriggerLogicSlot from, TriggerLogicSlot to)
         {
@@ -919,26 +862,6 @@ namespace Chef.HW1.Script
                 if (type == LogicType.Effect) l = new Effect();
                 else if (type == LogicType.Condition) l = new Condition();
                 else return null;
-
-                //foreach (var info in LogicParamInfos(type, dbid, version))
-                //{
-                //    var param = new LogicParam()
-                //    {
-                //        Name = info.Value.Name,
-                //        Optional = info.Value.Optional,
-                //        SigID = info.Key,
-                //        Value = -1
-                //    };
-
-                //    if (info.Value.Output)
-                //    {
-                //        l.Outputs.Add(param);
-                //    }
-                //    else
-                //    {
-                //        l.Inputs.Add(param);
-                //    }
-                //}
 
                 l.DBID = dbid;
                 l.Version = version;

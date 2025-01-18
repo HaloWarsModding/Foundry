@@ -131,7 +131,7 @@ namespace Chef.Win.UI
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(VarNewItem(script, paramInfo.Type, trigger.ID, slot, logic, sigid));
             menu.Items.Add(VarNullItem(script, l, sigid));
-            menu.Items.Add(VarListItem(script, "Set...", trigger, new List<VarType>() { paramInfo.Type },
+            menu.Items.Add(VarListItem(script, "Set...", currentId, trigger, new List<VarType>() { paramInfo.Type },
                 (s, e) =>
                 {
                     l.SetValueOfParam(sigid, e);
@@ -142,11 +142,11 @@ namespace Chef.Win.UI
         public static void ShowVarList(Triggerscript script, Point point)
         {
             ContextMenuStrip menu = new ContextMenuStrip();
-            menu.Items.Add(VarListItem(script, "Variables", null, null,
-                (s, e) =>
-                {
-                    ShowVarOptionsMenu(script.TriggerVars[e], point);
-                }));
+            //menu.Items.Add(VarListItem(script, "Variables", null, null,
+            //    (s, e) =>
+            //    {
+            //        ShowVarOptionsMenu(script.TriggerVars[e], point);
+            //    }));
 
             menu.Show(point);
         }
@@ -169,16 +169,16 @@ namespace Chef.Win.UI
         }
 
         //Items
-        public static ToolStripItem VarListItem(Triggerscript script, string text, Trigger localTrigger = null, IEnumerable<VarType> types = null, EventHandler<int> varClicked = null)
+        public static ToolStripItem VarListItem(Triggerscript script, string text, int initialValue, Trigger localTrigger = null, IEnumerable<VarType> types = null,  EventHandler<int> varClicked = null)
         {
             ToolStripMenuItem root = new ToolStripMenuItem(text);
 
             Dictionary<VarType, ToolStripMenuItem> typeItems = new Dictionary<VarType, ToolStripMenuItem>();
 
             List<Var> selectionSet =
-                localTrigger == null ?
-                script.TriggerVars.Values.ToList() :
-                script.TriggerVars.Values.Where(v => (v.Refs.Contains(localTrigger.ID) || v.Refs.Count == 0)).ToList();
+                //localTrigger == null ?
+                //script.TriggerVars.Values.ToList() :
+                script.TriggerVars.Values.Where(v => !v.IsNull && types.Contains(v.Type)).ToList();
             selectionSet.Sort((l, r) =>
             {
                 int ret = l.Type.ToString().CompareTo(r.Type.ToString());
@@ -186,41 +186,18 @@ namespace Chef.Win.UI
                 return ret;
             });
 
-            foreach (var v in selectionSet)
+            ToolStripComboBox cb = new ToolStripComboBox();
+
+            cb.Items.AddRange(selectionSet.ToArray());
+            cb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cb.AutoCompleteSource = AutoCompleteSource.ListItems;
+
+            cb.SelectedIndexChanged += (s, e) =>
             {
-                ToolStripMenuItem varItem = new ToolStripMenuItem();
-                varItem.Text = v.Name == "" ? "\"\"" : v.Name;
-                //varItem.Image = v.Refs.Count() > 1 ? Properties.Resources.world : null;
-                varItem.Click += (s, e) => { varClicked?.Invoke(varItem, v.ID); };
+                varClicked?.Invoke(cb, ((Var)cb.Items[cb.SelectedIndex]).ID);
+            };
 
-                if (types == null || types.Count() != 1)
-                {
-                    if (!typeItems.ContainsKey(v.Type))
-                    {
-                        typeItems.Add(v.Type, new ToolStripMenuItem(v.Type.ToString()));
-                        root.DropDownItems.Add(typeItems[v.Type]);
-                        typeItems[v.Type].DropDownItems.Add(VarNewItem(script, v.Type)); //add "new var..." button.
-                        typeItems[v.Type].DropDownItems.Add(new ToolStripSeparator()); //add separator.
-                    }
-
-                    if (types != null)
-                    {
-                        if (types.Contains(v.Type))
-                            typeItems[v.Type].DropDownItems.Add(varItem);
-                    }
-                    else
-                    {
-                        typeItems[v.Type].DropDownItems.Add(varItem);
-                    }
-                }
-                else
-                {
-                    if (types.Contains(v.Type))
-                        root.DropDownItems.Add(varItem);
-                }
-            }
-
-            return root;
+            return cb;
         }
         public static ToolStripItem VarNewItem(Triggerscript script, VarType type, int setTrigger = -1, TriggerLogicSlot setSlot = TriggerLogicSlot.Condition, int setLogic = -1, int setVar = -1)
         {

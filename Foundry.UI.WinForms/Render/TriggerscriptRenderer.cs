@@ -111,7 +111,6 @@ namespace Chef.Win.Render
                     }
                 );
             }
-
         }
         private static void DrawLogicBases(Graphics g, Triggerscript script, Trigger trigger, TriggerLogicSlot type, Selection sel, bool drawDetail)
         {
@@ -316,6 +315,9 @@ namespace Chef.Win.Render
                 Alignment = center ? StringAlignment.Center : StringAlignment.Near,
                 LineAlignment = StringAlignment.Center,
             });
+        }
+        private static void DrawVarList(Graphics g, Triggerscript script, bool detail)
+        {
         }
 
         private static void DrawTriggerDebug(Graphics g, Trigger trigger, Selection sel)

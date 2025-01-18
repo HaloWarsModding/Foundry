@@ -46,7 +46,7 @@ namespace Chef.Win
             Application.SetCompatibleTextRenderingDefault(false);
             MainWindow window = new MainWindow();
 
-            AssetDatabase.Index("E:\\Repos\\Foundry\\_resources\\workspace", window.Assets);
+            AssetDatabase.Index("E:\\Repos\\emod", window.Assets);
 
             //Triggerscript t = new Triggerscript();
             //using (FileStream fs = new FileStream("E:\\Repos\\emod\\data\\triggerscripts\\ammo.triggerscript", FileMode.Open))

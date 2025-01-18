@@ -97,16 +97,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\_extlib\Vita\Games\Phoenix\KSoft.Phoenix\KSoft.Phoenix.csproj" />
-    <ProjectReference Include="..\_extlib\Vita\KSoft\KSoft.Compression\KSoft.Compression.csproj" />
-    <ProjectReference Include="..\_extlib\Vita\KSoft\KSoft.IO.TagElementStreams\KSoft.IO.TagElementStreams.csproj" />
-    <ProjectReference Include="..\_extlib\Vita\KSoft\KSoft.Math\KSoft.Math.csproj" />
-    <ProjectReference Include="..\_extlib\Vita\KSoft\KSoft.Security\KSoft.Security.csproj" />
-    <ProjectReference Include="..\_extlib\Vita\KSoft\KSoft.T4\KSoft.T4.csproj" />
-    <ProjectReference Include="..\_extlib\Vita\KSoft\KSoft\KSoft.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="conditions.tsdef">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
