@@ -124,6 +124,10 @@ namespace Chef.Win.UI
             {
                 ShowLogicAddMenu(Triggerscript, dropTrigger, dropSlot, dropLogic, PointToScreen(e.Location));
             }
+            else if (e.Button == MouseButtons.Right)
+            {
+                ShowVarList(Triggerscript, PointToScreen(e.Location));
+            }
 
             MouseLast = e.Location;
             Invalidate();

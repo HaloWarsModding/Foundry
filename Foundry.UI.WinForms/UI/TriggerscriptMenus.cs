@@ -14,45 +14,6 @@ namespace Chef.Win.UI
 {
     public static class TriggerscriptMenus
     {
-        //Show menu based on selection
-        public static void ShowOptionsForSelection(Triggerscript script, int triggerId, TriggerLogicSlot slot, int logicIndex, int varId, Point point)
-        {
-            if (triggerId != -1)
-            {
-                Trigger trigger = script.Triggers[triggerId];
-                if (logicIndex == -1) //no logic selected
-                {
-                    ShowTriggerOptionsMenu(trigger, point);
-                }
-                else
-                {
-                    Logic logic = Logics(trigger, slot).ElementAt(logicIndex);
-                    if (logicIndex != -1)
-                    {
-                        if (varId == -1)
-                        {
-                            if (slot == TriggerLogicSlot.Condition)
-                            {
-                                ShowConditionOptionsMenu((Condition)logic, point);
-                            }
-                            else
-                            {
-                                ShowEffectOptionsMenu((Effect)logic, point);
-                            }
-                        }
-                        else
-                        {
-                            //ShowSetVarMenu(script, trigger, logic, varId, point);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                ShowVarList(script, point);
-            }
-        }
-
         //Menus
         public static void ShowTriggerOptionsMenu(Trigger trigger, Point point)
         {
@@ -129,12 +90,12 @@ namespace Chef.Win.UI
             //Info
             menu.Items.Add(new ToolStripLabel(paramInfo.Name + " [" + paramInfo.Type + "]"));
             menu.Items.Add(new ToolStripSeparator());
-            menu.Items.Add(VarNewItem(script, paramInfo.Type, trigger.ID, slot, logic, sigid));
-            menu.Items.Add(VarNullItem(script, l, sigid));
-            menu.Items.Add(VarListItem(script, "Set...", currentId, trigger, new List<VarType>() { paramInfo.Type },
+            menu.Items.Add(VarAddItem(script, paramInfo.Type, trigger.ID, slot, logic, sigid));
+            menu.Items.Add(VarSetItem(script, "Set...", currentId, paramInfo.Type,
                 (s, e) =>
                 {
                     l.SetValueOfParam(sigid, e);
+                    menu.Close();
                 }));
 
             menu.Show(point);
@@ -142,11 +103,8 @@ namespace Chef.Win.UI
         public static void ShowVarList(Triggerscript script, Point point)
         {
             ContextMenuStrip menu = new ContextMenuStrip();
-            //menu.Items.Add(VarListItem(script, "Variables", null, null,
-            //    (s, e) =>
-            //    {
-            //        ShowVarOptionsMenu(script.TriggerVars[e], point);
-            //    }));
+
+            menu.Items.AddRange(VarListItems(script).ToArray());
 
             menu.Show(point);
         }
@@ -169,22 +127,15 @@ namespace Chef.Win.UI
         }
 
         //Items
-        public static ToolStripItem VarListItem(Triggerscript script, string text, int initialValue, Trigger localTrigger = null, IEnumerable<VarType> types = null,  EventHandler<int> varClicked = null)
+        public static ToolStripItem VarSetItem(Triggerscript script, string text, int initialValue, VarType type, EventHandler<int> varClicked = null)
         {
-            ToolStripMenuItem root = new ToolStripMenuItem(text);
-
-            Dictionary<VarType, ToolStripMenuItem> typeItems = new Dictionary<VarType, ToolStripMenuItem>();
-
-            List<Var> selectionSet =
-                //localTrigger == null ?
-                //script.TriggerVars.Values.ToList() :
-                script.TriggerVars.Values.Where(v => !v.IsNull && types.Contains(v.Type)).ToList();
+            List<Var> selectionSet = script.TriggerVars.Values.Where(v => !v.IsNull && v.Type == type).ToList();
             selectionSet.Sort((l, r) =>
             {
-                int ret = l.Type.ToString().CompareTo(r.Type.ToString());
-                if (ret == 0) ret = l.Name.CompareTo(r.Name);
-                return ret;
+                return l.Name.CompareTo(r.Name);
             });
+            Var nullVar = script.TriggerVars[GetOrAddNullVar(script, type)];
+            selectionSet.Insert(0, nullVar);
 
             ToolStripComboBox cb = new ToolStripComboBox();
 
@@ -192,14 +143,21 @@ namespace Chef.Win.UI
             cb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cb.AutoCompleteSource = AutoCompleteSource.ListItems;
 
+            Var curVar = script.TriggerVars[initialValue];
+            cb.SelectedIndex = selectionSet.IndexOf(curVar);
+
             cb.SelectedIndexChanged += (s, e) =>
             {
                 varClicked?.Invoke(cb, ((Var)cb.Items[cb.SelectedIndex]).ID);
             };
+            cb.KeyDown += (s, e) =>
+            {
+                cb.DroppedDown = false;
+            };
 
             return cb;
         }
-        public static ToolStripItem VarNewItem(Triggerscript script, VarType type, int setTrigger = -1, TriggerLogicSlot setSlot = TriggerLogicSlot.Condition, int setLogic = -1, int setVar = -1)
+        public static ToolStripItem VarAddItem(Triggerscript script, VarType type, int setTrigger = -1, TriggerLogicSlot setSlot = TriggerLogicSlot.Condition, int setLogic = -1, int setVar = -1)
         {
             ToolStripMenuItem add = new ToolStripMenuItem();
 
@@ -226,81 +184,27 @@ namespace Chef.Win.UI
 
             return add;
         }
-        public static ToolStripItem VarNullItem(Triggerscript script, Logic logic, int sigid)
+        public static IEnumerable<ToolStripItem> VarListItems(Triggerscript script)
         {
-            ToolStripMenuItem nullVar = new ToolStripMenuItem();
-            var paramInfo = logic.StaticParamInfo[sigid];
-            int currentId = logic.GetValueOfParam(sigid);
-
-            nullVar.Text = "Set null";
-            nullVar.Click += (s, e) =>
+            Dictionary<VarType, ToolStripMenuItem> types = new Dictionary<VarType, ToolStripMenuItem>();
+            foreach(Var v in script.TriggerVars.Values.OrderBy(v => v.Name))
             {
-                logic.SetValueOfParam(sigid, GetOrAddNullVar(script, paramInfo.Type));
-            };
-            nullVar.Enabled = paramInfo.Optional; //only nullable if optional.
-            nullVar.ToolTipText = !paramInfo.Optional ? "Only optional parameters can be set to null." : "";
-            return nullVar;
-        }
-        public static ToolStripItem VarSearchItem(Triggerscript script, int defaultVarId, Trigger localTrigger = null, IEnumerable<VarType> types = null, EventHandler<int> varChanged = null)
-        {
-            ToolStripComboBox availableVars = new ToolStripComboBox();
-            availableVars.AutoSize = false;
-            availableVars.Size = new Size(165, 20);
-            availableVars.AutoCompleteMode = AutoCompleteMode.Suggest;
-            availableVars.AutoCompleteSource = AutoCompleteSource.ListItems;
+                if (v.IsNull) continue;
 
-            IEnumerable<Var> selectionSet =
-                localTrigger == null ?
-                script.TriggerVars.Values :
-                script.TriggerVars.Values.Where(v => v.Refs.Contains(localTrigger.ID) || v.Refs.Count == 0).ToList();
+                if (!types.ContainsKey(v.Type))
+                {
+                    var newType = new ToolStripMenuItem(v.Type.ToString());
+                    types.Add(v.Type, newType);
+                }
 
-            if (types != null)
-            {
-                selectionSet = selectionSet.Where(v => types.Contains(v.Type));
+                var curVar = new ToolStripMenuItem(v.Name);
+                curVar.DropDownItems.AddRange(VarOptionItems(v).ToArray());
+
+                var curRoot = types[v.Type];
+                curRoot.DropDownItems.Add(curVar);
             }
 
-            availableVars.Items.AddRange(selectionSet.ToArray());
-            availableVars.ComboBox.DisplayMember = "Name";
-
-            for (int i = 0; i < availableVars.Items.Count; i++)
-            {
-                if (((Var)availableVars.Items[i]).ID == defaultVarId)
-                    availableVars.ComboBox.SelectedIndex = i;
-            }
-
-            availableVars.SelectedIndexChanged += (s, e) =>
-            {
-                varChanged?.Invoke(availableVars, selectionSet.ElementAt(availableVars.SelectedIndex).ID);
-            };
-
-            return availableVars;
-
-            //var paramInfo = logic.StaticParamInfo[sigid];
-            //int currentId = logic.GetValueOfParam(sigid);
-
-            ////availableVars.AutoSize = false;
-            ////availableVars.Size = new Size(165, 20);
-            ////availableVars.AutoCompleteMode = AutoCompleteMode.Suggest;
-            ////availableVars.AutoCompleteSource = AutoCompleteSource.ListItems;
-            ////foreach (var v in Variables(script, paramInfo.Type))
-            ////{
-            ////    availableVars.Items.Add(v);
-            ////    if (v.ID == currentId)
-            ////    {
-            ////        availableVars.SelectedIndex = availableVars.Items.Count - 1;
-            ////    }
-            ////}
-            ////availableVars.ComboBox.SelectedIndexChanged += (s, e) =>
-            ////{
-            ////    logic.SetValueOfParam(sigid, ((Var)availableVars.SelectedItem).ID);
-            ////};
-
-            //return availableVars;
-        }
-        public static ToolStripItem TriggerSearchItem(Triggerscript script, int defaultTriggerId, EventHandler<int> triggerChanged = null)
-        {
-            ToolStripComboBox item = new ToolStripComboBox();
-            return item;
+            return types.Values;
         }
         public static ToolStripItem LogicAddItem(Trigger trigger, TriggerLogicSlot slot, int index)
         {
