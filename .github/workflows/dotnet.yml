@@ -23,4 +23,5 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build Chef.Win.csproj --no-restore
+      run: dotnet build Foundry.UI.WinForms/Chef.Win.csproj --no-restore
+      run: dotnet build Foundry/Foundry.UI.WinForms/Chef.Win.csproj --no-restore
