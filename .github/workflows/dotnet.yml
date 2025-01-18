@@ -24,5 +24,3 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build Foundry.UI.WinForms/Chef.Win.csproj
-    - name: Build2
-      run: dotnet build Foundry/Foundry.UI.WinForms/Chef.Win.csproj
