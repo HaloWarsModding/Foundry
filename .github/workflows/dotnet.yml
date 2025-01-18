@@ -24,3 +24,26 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build Foundry.UI.WinForms/Chef.Win.csproj
+    - name: Publish
+      run: dotnet publish Foundry.UI.WinForms/Chef.Win.csproj -o _publish/chefwin
+    - name: Zip
+      run: zip -r chefwin _publish/chefwin/chefwin.zip
+    - name: Create Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.run_number }}
+        release_name: Nightly ${{ github.ref }}
+        body: Nightly build.
+        draft: false
+        prerelease: true
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: _publish/chefwin/chefwin.zip
+        asset_name: chefwin.zip
+        asset_content_type: application/zip
