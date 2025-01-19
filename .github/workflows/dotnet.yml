@@ -20,14 +20,12 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
     - name: Build
-      run: dotnet build Foundry.UI.WinForms/Chef.Win.csproj
-    - name: Publish
-      run: dotnet publish Foundry.UI.WinForms/Chef.Win.csproj -o _publish/chefwin
+      run: dotnet build Foundry.UI.WinForms/Chef.Win.csproj -o _publish/chefwin
     - name: Zip
-      run: zip -r chefwin _publish/chefwin/chefwin.zip
+      uses: montudor/action-zip@v1
+      with:
+        args: 7z a -r chefwin.zip _publish/chefwin/
     - name: Create Release
       uses: actions/create-release@v1
       env:
@@ -44,6 +42,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: _publish/chefwin/chefwin.zip
+        asset_path: chefwin.zip
         asset_name: chefwin.zip
         asset_content_type: application/zip
