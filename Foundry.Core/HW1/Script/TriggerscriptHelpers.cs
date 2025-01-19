@@ -135,23 +135,11 @@ namespace Chef.HW1.Script
         
         public static Rectangle BoundsTriggerUnit(Trigger trigger)
         {
-            Rectangle triggerBounds = BoundsTriggerNode(trigger);
-            Rectangle ret = triggerBounds;
-
-            foreach (var type in Enum.GetValues<TriggerLogicSlot>())
-            {
-                for (int i = 0; i < Logics(trigger, type).Count(); i++)
-                {
-                    Rectangle logicBounds = BoundsLogicNode(trigger, type, i);
-                    ret.Width = logicBounds.X - triggerBounds.X + logicBounds.Width;
-                    ret.Height = Math.Max(ret.Height, logicBounds.Height);
-                }
-            }
-            ret.Width += 50;
-            //TODO: Separate logic unit container header from the rest of this.
-            ret.Height += HeaderHeight;
-
-            return ret;
+            Rectangle tbounds = BoundsTriggerNode(trigger);
+            Rectangle efbounds = BoundsLogicUnit(trigger, TriggerLogicSlot.EffectFalse);
+            tbounds.Width = efbounds.Right - tbounds.X;
+            tbounds.Height = efbounds.Height;
+            return tbounds;
         }
         public static Rectangle BoundsTriggerNode(Trigger trigger)
         {
@@ -163,49 +151,46 @@ namespace Chef.HW1.Script
         }
         public static Rectangle BoundsLogicUnit(Trigger trigger, TriggerLogicSlot type)
         {
-            IEnumerable<Logic> logics;
-            Point loc;
-            if (type == TriggerLogicSlot.Condition)
-            {
-                logics = trigger.Conditions;
-                var bounds = BoundsTriggerNode(trigger);
-                loc = bounds.Location;
-                loc.X += bounds.Width;
-                loc.X += LogicSectionSpacing;
-                //loc.Y -= HeaderHeight;
-            }
-            else if (type == TriggerLogicSlot.EffectTrue)
-            {
-                logics = trigger.TriggerEffectsOnTrue;
-                Rectangle blu = BoundsLogicUnit(trigger, TriggerLogicSlot.Condition);
-                loc = new Point(blu.X + blu.Width + LogicSectionSpacing, blu.Y);
-            }
-            else
-            {
-                logics = trigger.TriggerEffectsOnFalse;
-                Rectangle blu = BoundsLogicUnit(trigger, TriggerLogicSlot.EffectTrue);
-                loc = new Point(blu.X + blu.Width + LogicSectionSpacing, blu.Y);
-            }
+            Rectangle bounds = BoundsTriggerNode(trigger);
 
-            int logicsCount = logics.Count();
-            Size size = new Size(0, 25);
-            if (logicsCount == 0)
-            {
-                size.Width = LogicSectionSpacing * 4;
-            }
-            else
-            {
-                size.Width = DefaultWidth * logicsCount;
-                size.Width += LogicSpacing * (logicsCount - 1);
-            }
-            foreach (var l in logics)
-            {
-                size.Height = Math.Max(size.Height, BodySize(l).Height);
-            }
+            int maxParamCount = 0;
+            foreach(var c in trigger.Conditions)
+                maxParamCount = c.StaticParamInfo.Count > maxParamCount ? c.StaticParamInfo.Count : maxParamCount;
+            foreach (var t in trigger.TriggerEffectsOnTrue)
+                maxParamCount = t.StaticParamInfo.Count > maxParamCount ? t.StaticParamInfo.Count : maxParamCount;
+            foreach (var f in trigger.TriggerEffectsOnFalse)
+                maxParamCount = f.StaticParamInfo.Count > maxParamCount ? f.StaticParamInfo.Count : maxParamCount;
 
-            //TODO: Separate logic unit container header from the rest of this.
-            size.Height += HeaderHeight;
-            return new Rectangle(loc, size);
+            bounds.Height = maxParamCount * (VarHeight + VarSpacing);
+
+            int logics = 0;
+
+            bounds.X += bounds.Width;
+            bounds.X += LogicSectionSpacing;
+            logics = trigger.Conditions.Count;
+            bounds.Width = trigger.Conditions.Count != 0
+                ? (trigger.Conditions.Count * (DefaultWidth + LogicSpacing)) - LogicSpacing
+                : DefaultWidth;
+            if (type == TriggerLogicSlot.Condition) 
+                return bounds;
+
+            bounds.X += bounds.Width;
+            bounds.X += LogicSectionSpacing;
+            bounds.Width = trigger.TriggerEffectsOnTrue.Count != 0 
+                ? (trigger.TriggerEffectsOnTrue.Count * (DefaultWidth + LogicSpacing)) - LogicSpacing 
+                : DefaultWidth;
+            if (type == TriggerLogicSlot.EffectTrue)
+                return bounds;
+
+            bounds.X += bounds.Width;
+            bounds.X += LogicSectionSpacing;
+            bounds.Width = trigger.TriggerEffectsOnFalse.Count != 0
+                ? (trigger.TriggerEffectsOnFalse.Count * (DefaultWidth + LogicSpacing)) - LogicSpacing
+                : DefaultWidth;
+            if (type == TriggerLogicSlot.EffectFalse)
+                return bounds;
+
+            return bounds;
         }
         public static Rectangle BoundsLogicNode(Trigger trigger, TriggerLogicSlot type, int index)
         {
@@ -597,7 +582,8 @@ namespace Chef.HW1.Script
         public static string LogicName(LogicType type, int dbid)
         {
             LogicDatabase db = TableForType(type);
-            return db.Types[dbid].Name;
+
+            return db.Types.GetValueOrDefault(dbid, new LogicTypeInfo() { Name = "" }).Name;
         }
         public static string LogicCategory(LogicType type, int dbid)
         {
@@ -869,6 +855,33 @@ namespace Chef.HW1.Script
                 return l;
             }
             return null;
+        }
+
+        public static bool VarTypeIsEnum(VarType type)
+        {
+            if (!VarTypeIsEnumFor(type, LogicType.Condition)) return false;
+            if (!VarTypeIsEnumFor(type, LogicType.Effect)) return false;
+            return true;
+        }
+        private static bool VarTypeIsEnumFor(VarType type, LogicType ltype)
+        {
+            foreach (var l in TableForType(ltype).Types.Values)
+            {
+                foreach (var v in l.Versions)
+                {
+                    if (v.Value.Params == null) continue; //once again, I hate YAX.
+                    foreach (var p in v.Value.Params)
+                    {
+                        //if its ever written to, its not an enum.
+                        if (p.Value.Output && p.Value.Type == type)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
         }
 
         private static LogicDatabase TableForType(LogicType type)

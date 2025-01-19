@@ -46,7 +46,8 @@ namespace Chef.Win
             Application.SetCompatibleTextRenderingDefault(false);
             MainWindow window = new MainWindow();
 
-            AssetDatabase.Index("E:\\Repos\\emod", window.Assets);
+#if DEBUG
+            AssetDatabase.Index("E:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\extract", window.Assets);
 
             //Triggerscript t = new Triggerscript();
             //using (FileStream fs = new FileStream("E:\\Repos\\emod\\data\\triggerscripts\\ammo.triggerscript", FileMode.Open))
@@ -66,8 +67,9 @@ namespace Chef.Win
             //scn.RefreshAssets();
 
             TriggerscriptWindow ts = new TriggerscriptWindow(window.Assets, window.GpuAssets);
-            ts.ScriptName = "ammo";
+            ts.ScriptName = "skirmishai_raw_";
             ts.Show(window.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
+#endif
 
             Application.Run(window);
 

@@ -71,7 +71,10 @@ namespace Chef.Win.UI
                     //e.Cancel = true;
                 }
             };
-            menu.Items.AddRange(VarOptionItems(var).ToArray());
+            menu.Items.AddRange(VarOptionItems(var, (s, e) =>
+            {
+
+            }).ToArray());
             menu.Show(point);
         }
         public static void ShowSetVarMenu(Triggerscript script, Trigger trigger, TriggerLogicSlot slot, int logic, int sigid, Point point)
@@ -184,28 +187,6 @@ namespace Chef.Win.UI
 
             return add;
         }
-        public static IEnumerable<ToolStripItem> VarListItems(Triggerscript script)
-        {
-            Dictionary<VarType, ToolStripMenuItem> types = new Dictionary<VarType, ToolStripMenuItem>();
-            foreach(Var v in script.TriggerVars.Values.OrderBy(v => v.Name))
-            {
-                if (v.IsNull) continue;
-
-                if (!types.ContainsKey(v.Type))
-                {
-                    var newType = new ToolStripMenuItem(v.Type.ToString());
-                    types.Add(v.Type, newType);
-                }
-
-                var curVar = new ToolStripMenuItem(v.Name);
-                curVar.DropDownItems.AddRange(VarOptionItems(v).ToArray());
-
-                var curRoot = types[v.Type];
-                curRoot.DropDownItems.Add(curVar);
-            }
-
-            return types.Values;
-        }
         public static ToolStripItem LogicAddItem(Trigger trigger, TriggerLogicSlot slot, int index)
         {
             ToolStripMenuItem root = new ToolStripMenuItem("Add...");
@@ -309,7 +290,58 @@ namespace Chef.Win.UI
 
             return items;
         }
-        public static IEnumerable<ToolStripItem> VarOptionItems(Var var)
+
+        public static IEnumerable<ToolStripItem> VarListItems(Triggerscript script)
+        {
+            Dictionary<VarType, ToolStripMenuItem> types = new Dictionary<VarType, ToolStripMenuItem>();
+
+            foreach (var varTy in Enum.GetValues<VarType>())
+            {
+                if (VarTypeIsEnum(varTy)) continue;
+
+                ToolStripMenuItem varRoot = new ToolStripMenuItem(varTy.ToString());
+                types.Add(varTy, varRoot);
+
+                ToolStripMenuItem varAdd = new ToolStripMenuItem("Add...");
+                varAdd.Click += (s, e) =>
+                {
+
+                };
+
+                varRoot.DropDownItems.Add(varAdd);
+                varRoot.DropDownItems.Add(new ToolStripSeparator());
+
+                foreach(var v in script.TriggerVars.Values.Where(tv => tv.Type == varTy && tv.IsNull == false))
+                {
+                    ToolStripMenuItem varCur = new ToolStripMenuItem(v.Name == "" ? "\"\"" : v.Name);
+
+                    varRoot.DropDownItems.Add(varCur);
+                }
+            }
+
+            //foreach (Var v in script.TriggerVars.Values.OrderBy(v => v.Name))
+            //{
+            //    if (v.IsNull) continue;
+
+            //    if (!types.ContainsKey(v.Type))
+            //    {
+            //        var newType = new ToolStripMenuItem(v.Type.ToString());
+            //        types.Add(v.Type, newType);
+            //    }
+
+            //    var curVar = new ToolStripMenuItem(v.Name);
+            //    curVar.DropDownItems.AddRange(VarOptionItems(v, (s, e) =>
+            //    {
+            //        curVar.Text = e;
+            //    }).ToArray());
+
+            //    var curRoot = types[v.Type];
+            //    curRoot.DropDownItems.Add(curVar);
+            //}
+
+            return types.Values;
+        }
+        public static IEnumerable<ToolStripItem> VarOptionItems(Var var, EventHandler<string> textChanged = null)
         {
             List<ToolStripItem> items = new List<ToolStripItem>();
 
@@ -326,6 +358,7 @@ namespace Chef.Win.UI
             name.TextChanged += (s, e) =>
             {
                 var.Name = name.Text;
+                textChanged?.Invoke(name, name.Text);
             };
             items.Add(name);
 

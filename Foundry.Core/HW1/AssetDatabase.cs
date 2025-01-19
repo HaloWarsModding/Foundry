@@ -86,7 +86,7 @@ namespace Chef.HW1
                     case ".xsd":
                         //if (cache.TerrainSims.ContainsKey(name)) continue;
                         //cache.TerrainSims.Add(name, new Asset<TerrainSim>(null, f));
-                        //break;
+                        break;
 
                     // scenarios
                     case ".scn":
@@ -121,6 +121,7 @@ namespace Chef.HW1
                            TriggerscriptIO.ReadXml(s, ts);
                         }
                         cache.Triggerscripts.Add(name, new Asset<Triggerscript>(ts, f));
+                        TriggerscriptHelpers.Validate(ts);
                         break;
                 }
 
