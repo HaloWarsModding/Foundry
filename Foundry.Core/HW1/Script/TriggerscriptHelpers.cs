@@ -267,6 +267,7 @@ namespace Chef.HW1.Script
                 );
         }
 
+        
         public static void BodyBoundsAtPoint(Triggerscript script, Point point, out int trigger, out TriggerLogicSlot slot, out int logic)
         {
             trigger = -1;
@@ -275,10 +276,9 @@ namespace Chef.HW1.Script
 
             foreach (var t in script.Triggers.Values)
             {
-                if (BoundsTriggerNode(t).Contains(point))
+                if (BoundsTriggerUnit(t).Contains(point))
                 {
                     trigger = t.ID;
-                    return;
                 }
 
                 foreach (var s in Enum.GetValues<TriggerLogicSlot>())
