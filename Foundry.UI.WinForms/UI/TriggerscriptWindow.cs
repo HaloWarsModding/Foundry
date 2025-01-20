@@ -223,6 +223,7 @@ namespace Chef.Win.UI
         }
         private void OnPaint(object o, PaintEventArgs e)
         {
+            Text = ScriptName;
             Triggerscript = AssetDatabase.GetOrLoadTriggerscript(ScriptName, Assets);
             if (Triggerscript == null) return;
 

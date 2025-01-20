@@ -21,6 +21,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UI\BrowserItems.old.cs" />
+    <Compile Remove="UI\BrowserWindow.old.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="icons\chef.ico" />
   </ItemGroup>
 

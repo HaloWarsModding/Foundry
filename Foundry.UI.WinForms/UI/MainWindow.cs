@@ -81,18 +81,18 @@ namespace Chef.Win.UI
                         {
                             AssetDatabase.Index(fbd.SelectedPath, Assets);
                             Root = new WorkspaceFile(fbd.SelectedPath);
-                            Browser.RootItems.Clear();
-                            //Browser.RootItems.Add(WorkspaceBrowser.ArtItem(Root));
-                            //Browser.RootItems.Add(WorkspaceBrowser.DataItem(Root));
-                            //Browser.RootItems.Add(WorkspaceBrowser.ScenarioItem(Root));
-                            Browser.UpdateView();
+                            Browser.Update(Assets, GpuAssets, DockPanel);
+                            //Browser.RootItems.Clear();
+                            ////Browser.RootItems.Add(WorkspaceBrowser.ArtItem(Root));
+                            ////Browser.RootItems.Add(WorkspaceBrowser.DataItem(Root));
+                            ////Browser.RootItems.Add(WorkspaceBrowser.ScenarioItem(Root));
+                            //Browser.UpdateView();
                         }
                     }
                 }),
                     new ToolStripMenuItem("Close Workspace", null, (s, e) =>
                     {
-                        Browser.RootItems.Clear();
-                        Browser.UpdateView();
+                        Browser.Update(Assets, GpuAssets, DockPanel);
                         Root = null;
                     })
                 ]));
@@ -107,7 +107,7 @@ namespace Chef.Win.UI
             //browser
             Browser = new BrowserWindow();
             Browser.Show(DockPanel, DockState.DockLeft);
-            Browser.BrowserNodeDoubleClicked += (s, e) =>
+            //Browser.BrowserNodeDoubleClicked += (s, e) =>
             {
                 //if (e.Item is WorkspaceBrowserPath)
                 //{
@@ -130,12 +130,11 @@ namespace Chef.Win.UI
                 //}
             };
 #if DEBUG
-            Root = new WorkspaceFile("D:\\Repos\\Foundry\\_resources\\workspace\\");
-            Browser.RootItems.Clear();
+            //Browser.RootItems.Clear();
             //Browser.RootItems.Add(WorkspaceBrowser.ArtItem(Root));
             //Browser.RootItems.Add(WorkspaceBrowser.DataItem(Root));
             //Browser.RootItems.Add(WorkspaceBrowser.ScenarioItem(Root));
-            Browser.UpdateView();
+            //Browser.UpdateView();
 #endif
         }
         private Dictionary<WorkspaceFile, DockContent> EditorWindows;
