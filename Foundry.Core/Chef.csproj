@@ -13,7 +13,7 @@
     <RootNamespace>Chef</RootNamespace>
     <AssemblyName>cheflib</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	  <PublishSingleFile>true</PublishSingleFile>
+	<PublishSingleFile>true</PublishSingleFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

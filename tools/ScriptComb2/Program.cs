@@ -179,7 +179,7 @@ class Program
                             Name = pname,
                             Optional = poptional,
                             Output = poutput,
-                            Type = Database.TypeFromString(ptypestr),
+                            Type = TriggerscriptHelpers.TypeFromString(ptypestr),
                         });
                     }
                     catch (Exception ex) { Console.WriteLine(ex.Message); }
