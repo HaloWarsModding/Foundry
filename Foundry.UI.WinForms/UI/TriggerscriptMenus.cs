@@ -290,7 +290,6 @@ namespace Chef.Win.UI
 
             return items;
         }
-
         public static IEnumerable<ToolStripItem> VarListItems(Triggerscript script)
         {
             Dictionary<VarType, ToolStripMenuItem> types = new Dictionary<VarType, ToolStripMenuItem>();

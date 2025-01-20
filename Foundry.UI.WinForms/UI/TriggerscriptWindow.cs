@@ -119,6 +119,10 @@ namespace Chef.Win.UI
                     else
                         ShowEffectOptionsMenu((Effect)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location));
                 }
+                else
+                {
+                    ShowTriggerOptionsMenu(t, e.Location);
+                }
             }
             else if (e.Button == MouseButtons.Right && dropTrigger != -1 && dropLogic != -1)
             {
