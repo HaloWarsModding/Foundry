@@ -306,7 +306,9 @@ namespace Chef.Win.Render
 
             if (hoverIndex != -1)
             {
+#if DEBUG
                 g.DrawRectangle(new Pen(Color.Green, 1), BoundsLogicDrop(trigger, slot, hoverIndex));
+#endif
             }
 
             bounds.Inflate(-2, 0);
