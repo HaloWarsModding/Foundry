@@ -278,10 +278,8 @@ namespace Chef.HW1.Script
         //[YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
         //public float Y { get; set; }
 
-        private float pX { get; set; }
-        private float pY { get; set; }
-        public float X { get { return pX * TriggerSpacingMultiplier; } set { pX = value / TriggerSpacingMultiplier; } }
-        public float Y { get { return pY * TriggerSpacingMultiplier; } set { pY = value / TriggerSpacingMultiplier; } }
+        public float X { get; set; }
+        public float Y { get; set; }
 
 
         public bool ConditionsAreAND { get; set; }

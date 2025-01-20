@@ -43,6 +43,7 @@ namespace Chef.Win.Render
 
         private static void DrawUnit(Graphics g, Triggerscript script, Trigger trigger, Selection sel, Selection hover, bool drawDetail)
         {
+            DrawBackdrop(g, trigger);
             DrawTrigger(g, trigger, sel, drawDetail);
             DrawLogicBases(g, script, trigger, TriggerLogicSlot.Condition, sel, drawDetail);
             DrawLogicBases(g, script, trigger, TriggerLogicSlot.EffectTrue, sel, drawDetail);
@@ -69,6 +70,13 @@ namespace Chef.Win.Render
                 g.DrawString(text, HugeFont, new SolidBrush(TextColor), bounds, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }
 
+        private static void DrawBackdrop(Graphics g, Trigger trigger)
+        {
+            Rectangle bounds = BoundsTriggerUnit(trigger);
+            bounds.Inflate(Margin * 5, Margin * 5);
+            g.FillRectangle(new SolidBrush(UnitColor), bounds);
+            g.DrawRectangle(new Pen(TrimColor), bounds);
+        }
         private static void DrawTrigger(Graphics g, Trigger trigger, Selection sel, bool drawDetail)
         {
             Rectangle bounds = BoundsTriggerNode(trigger);

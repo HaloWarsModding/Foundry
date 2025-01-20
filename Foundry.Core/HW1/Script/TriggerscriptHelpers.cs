@@ -161,7 +161,7 @@ namespace Chef.HW1.Script
             foreach (var f in trigger.TriggerEffectsOnFalse)
                 maxParamCount = f.StaticParamInfo.Count > maxParamCount ? f.StaticParamInfo.Count : maxParamCount;
 
-            bounds.Height = maxParamCount * (VarHeight + VarSpacing);
+            bounds.Height = (HeaderHeight * 2) + (maxParamCount * (VarHeight + VarSpacing)) + VarHeight;
 
             int logics = 0;
 

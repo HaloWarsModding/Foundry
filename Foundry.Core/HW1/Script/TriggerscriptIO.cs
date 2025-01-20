@@ -72,8 +72,8 @@ namespace Chef.HW1.Script
                     ConditionalTrigger = bool.Parse(triggerNode.Attribute("ConditionalTrigger").Value),
                     EvalLimit = float.Parse(triggerNode.Attribute("EvalLimit").Value),
                     EvaluateFrequency = float.Parse(triggerNode.Attribute("EvaluateFrequency").Value),
-                    X = float.Parse(triggerNode.Attribute("X").Value),
-                    Y = float.Parse(triggerNode.Attribute("Y").Value),
+                    X = float.Parse(triggerNode.Attribute("X").Value) * TriggerscriptParams.TriggerSpacingMultiplier,
+                    Y = float.Parse(triggerNode.Attribute("Y").Value) * TriggerscriptParams.TriggerSpacingMultiplier,
                     GroupID = int.Parse(triggerNode.Attribute("GroupID").Value)
                 };
 
@@ -212,8 +212,8 @@ namespace Chef.HW1.Script
                 triggerNode.SetAttributeValue("EvaluateFrequency", trigger.Value.EvaluateFrequency);
                 triggerNode.SetAttributeValue("EvalLimit", trigger.Value.EvalLimit);
                 triggerNode.SetAttributeValue("ConditionalTrigger", trigger.Value.ConditionalTrigger);
-                triggerNode.SetAttributeValue("X", trigger.Value.X);
-                triggerNode.SetAttributeValue("Y", trigger.Value.Y);
+                triggerNode.SetAttributeValue("X", trigger.Value.X / TriggerscriptParams.TriggerSpacingMultiplier);
+                triggerNode.SetAttributeValue("Y", trigger.Value.Y / TriggerscriptParams.TriggerSpacingMultiplier);
                 triggerNode.SetAttributeValue("GroupID", trigger.Value.GroupID);
 
                 WriteTriggerConditions(triggerNode, trigger.Value);
