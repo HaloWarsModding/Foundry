@@ -18,6 +18,46 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Profile|Win32'">
+    <OutputPath>bin\Win32\Profile\</OutputPath>
+    <DefineConstants>_WIN32;CONTRACTS_FULL_SHIM;TRACE;</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Profile|AnyCPU'">
+    <OutputPath>bin\Profile\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL_SHIM;TRACE;</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Profile|x86'">
+    <OutputPath>bin\x86\Profile\</OutputPath>
+    <DefineConstants>_WIN32;CONTRACTS_FULL_SHIM;TRACE;</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Profile|x64'">
+    <OutputPath>bin\x64\Profile\</OutputPath>
+    <DefineConstants>_WIN64;CONTRACTS_FULL_SHIM;TRACE;</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <Import Project="$(MSBuildProjectDirectory)\..\KSoft.BCL.props" />
   <Import Project="$(VitaNugetPackagesDir)\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.9\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props" Condition="Exists('$(VitaNugetPackagesDir)\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.9\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" />
   <Import Project="$(VitaNugetPackagesDir)\Microsoft.NetFramework.Analyzers.2.9.9\build\Microsoft.NetFramework.Analyzers.props" Condition="Exists('$(VitaNugetPackagesDir)\Microsoft.NetFramework.Analyzers.2.9.9\build\Microsoft.NetFramework.Analyzers.props')" />

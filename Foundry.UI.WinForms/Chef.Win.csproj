@@ -10,6 +10,7 @@
     <ApplicationIcon>icons\chef.ico</ApplicationIcon>
     <RootNamespace>Chef.Win</RootNamespace>
 	<PublishSingleFile>true</PublishSingleFile>
+	<Configurations>Debug;Release;Profile</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -18,6 +19,11 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
