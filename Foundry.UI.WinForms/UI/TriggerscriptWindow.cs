@@ -84,7 +84,7 @@ namespace Chef.Win.UI
 
             RefChanged += (s, e) =>
             {
-                Rectangle bounds = ScriptBounds(Triggerscript);
+                Rectangle bounds = BoundsScript(Triggerscript);
                 ViewPos = new PointF(
                     bounds.X + bounds.Width / 2,
                     bounds.Y + bounds.Height / 2
@@ -101,9 +101,9 @@ namespace Chef.Win.UI
 
             Point ViewMouse = ViewMatrix.Inverted().TransformPoint(e.Location);
 
-            BodyBoundsAtPoint(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic);
-            DropBoundsAtPoint(Triggerscript, ViewMouse, out dropTrigger, out dropSlot, out dropLogic);
-            VarBoundsAtPoint(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic, out selVar);
+            SelectBoundsBody(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic);
+            SelectBoundsInsert(Triggerscript, ViewMouse, out dropTrigger, out dropSlot, out dropLogic);
+            SelectBoundsParamValue(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic, out selVar);
 
             if (e.Button == MouseButtons.Right && selTrigger != -1)
             {
@@ -153,7 +153,7 @@ namespace Chef.Win.UI
             if (Triggerscript == null) return;
 
             Point ViewMouse = ViewMatrix.Inverted().TransformPoint(e.Location);
-            DropBoundsAtPoint(Triggerscript, ViewMouse, out dropTrigger, out dropSlot, out dropLogic);
+            SelectBoundsInsert(Triggerscript, ViewMouse, out dropTrigger, out dropSlot, out dropLogic);
 
             if (MouseButtons == MouseButtons.Middle)
             {
@@ -278,7 +278,7 @@ namespace Chef.Win.UI
 
             ViewScale = Math.Clamp(ViewScale, ScaleViewMin, ScaleViewMax);
 
-            Rectangle bounds = ScriptBounds(Triggerscript);
+            Rectangle bounds = BoundsScript(Triggerscript);
             bounds.Location = ViewMatrix.Inverted().TransformPoint(bounds.Location);
             bounds.Size = ((SizeF)bounds.Size * ViewScale).ToSize();
 

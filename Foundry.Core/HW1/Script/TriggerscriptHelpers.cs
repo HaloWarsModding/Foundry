@@ -108,7 +108,7 @@ namespace Chef.HW1.Script
     public static class TriggerscriptHelpers
     {
         //Bounds
-        public static Rectangle ScriptBounds(Triggerscript script)
+        public static Rectangle BoundsScript(Triggerscript script)
         {
             if (script.Triggers.Count == 0) return Rectangle.Empty;
             Trigger minX = script.Triggers.Values.First();
@@ -126,30 +126,21 @@ namespace Chef.HW1.Script
             Rectangle ret = new Rectangle(
                 (int)minX.X,
                 (int)minY.Y,
-                (int)(maxX.X - minX.X + BoundsTriggerUnit(maxX).Width),
-                (int)(maxY.Y - minY.Y + BoundsTriggerUnit(maxY).Height)
+                (int)(maxX.X - minX.X + BoundsTrigger(maxX).Width),
+                (int)(maxY.Y - minY.Y + BoundsTrigger(maxY).Height)
                 );
             ret.Inflate(100, 100);
             return ret;
         }
-        
-        public static Rectangle BoundsTriggerUnit(Trigger trigger)
+        public static Rectangle BoundsTrigger(Trigger trigger)
         {
-            Rectangle bounds = BoundsLogicUnit(trigger, TriggerLogicSlot.EffectFalse);
+            Rectangle bounds = BoundsLogicSlot(trigger, TriggerLogicSlot.EffectFalse);
             bounds.Width = bounds.Right - (int)trigger.X;
             bounds.X = (int)trigger.X;
             bounds.Y = (int)trigger.Y;
             return bounds;
         }
-        //public static Rectangle BoundsTriggerNode(Trigger trigger)
-        //{
-        //    return new Rectangle(
-        //        (int)trigger.X,
-        //        (int)trigger.Y,
-        //        DefaultWidth,
-        //        HeaderHeight * 3);
-        //}
-        public static Rectangle BoundsLogicUnit(Trigger trigger, TriggerLogicSlot type)
+        public static Rectangle BoundsLogicSlot(Trigger trigger, TriggerLogicSlot type)
         {
             Rectangle bounds = new Rectangle();
             bounds.X = (int)trigger.X;
@@ -193,33 +184,44 @@ namespace Chef.HW1.Script
 
             return bounds;
         }
-        public static Rectangle BoundsLogicNode(Trigger trigger, TriggerLogicSlot type, int index)
+        public static Rectangle BoundsLogicBody(Trigger trigger, TriggerLogicSlot type, int index)
         {
             IEnumerable<Logic> logics = Logics(trigger, type);
 
-            Point loc = BoundsLogicUnit(trigger, type).Location;
+            Point loc = BoundsLogicSlot(trigger, type).Location;
             loc.Y += HeaderHeight * 2;
             for (int i = 0; i < index; i++)
             {
-                loc.X += BodySize(logics.ElementAt(i)).Width;
+                loc.X += DefaultWidth;
                 loc.X += LogicSpacing;
             }
 
-            return new Rectangle(loc, BodySize(logics.ElementAt(index)));
+            Logic cur = logics.ElementAt(index);
+            int varCount = LogicParamInfos(type == TriggerLogicSlot.Condition ? LogicType.Condition : LogicType.Effect, cur.DBID, cur.Version).Count;
+
+            return new Rectangle(
+                loc.X,
+                loc.Y,
+                DefaultWidth,
+                HeaderHeight + (varCount * (VarHeight + VarSpacing)) + VarHeight
+                );
         }
-        public static Rectangle BoundsLogicDrop(Trigger trigger, TriggerLogicSlot type, int index)
+        public static Rectangle BoundsLogicInsert(Trigger trigger, TriggerLogicSlot type, int index)
         {
             //TODO: technically this works, but its a mess.
             //I want to rework all the bounds to not need random += everywhere.
             //TODO: Separate logic unit container header from the rest of this.
             var logics = Logics(trigger, type);
 
-            Rectangle fullbounds = BoundsTriggerUnit(trigger);
-            Rectangle ubounds = BoundsLogicUnit(trigger, type);
+            Rectangle ubounds = BoundsLogicSlot(trigger, type);
+            if (type != TriggerLogicSlot.EffectFalse)
+            {
+                //grab the height from this, if we dont already have it.
+                ubounds.Height = BoundsLogicSlot(trigger, TriggerLogicSlot.EffectFalse).Height;
+            }
 
             if (logics.Count() == 0)
             {
-                ubounds.Height = fullbounds.Height;
                 return ubounds; //if there are no nodes, just use the unit bounds.
             }
 
@@ -230,14 +232,12 @@ namespace Chef.HW1.Script
 
             ubounds.Inflate(LogicSectionSpacing / 2, 0);
             nbounds.Intersect(ubounds);
-            nbounds.Height = fullbounds.Height;
 
             return nbounds;
         }
-
-        public static Rectangle ParamNameBounds(Trigger trigger, TriggerLogicSlot type, int index, int paramIndex)
+        public static Rectangle BoundsParamName(Trigger trigger, TriggerLogicSlot type, int index, int paramIndex)
         {
-            Rectangle logicBounds = BoundsLogicNode(trigger, type, index);
+            Rectangle logicBounds = BoundsLogicBody(trigger, type, index);
             Rectangle ret = new Rectangle(
                 logicBounds.X + Margin,
                 logicBounds.Y + HeaderHeight + paramIndex * VarSpacing + paramIndex * VarHeight + VarHeight / 2,
@@ -245,9 +245,9 @@ namespace Chef.HW1.Script
                 VarNameHeight);
             return ret;
         }
-        public static Rectangle ParamValBounds(Trigger trigger, TriggerLogicSlot type, int index, int paramIndex)
+        public static Rectangle BoundsParamValue(Trigger trigger, TriggerLogicSlot type, int index, int paramIndex)
         {
-            Rectangle logicBounds = BoundsLogicNode(trigger, type, index);
+            Rectangle logicBounds = BoundsLogicBody(trigger, type, index);
             Rectangle ret = new Rectangle(
                 logicBounds.X + Margin,
                 logicBounds.Y + HeaderHeight + paramIndex * VarSpacing + paramIndex * VarHeight + VarHeight / 2 + VarNameHeight,
@@ -255,21 +255,10 @@ namespace Chef.HW1.Script
                 VarValHeight);
             return ret;
         }
-       
-        public static Size BodySize(Logic logic)
-        {
-            int varCount = logic.StaticParamInfo.Count;
 
-            int width = DefaultWidth;
 
-            return new Size(
-                width,
-                HeaderHeight + varCount * (VarHeight + VarSpacing) + VarHeight
-                );
-        }
-
-        
-        public static void BodyBoundsAtPoint(Triggerscript script, Point point, out int trigger, out TriggerLogicSlot slot, out int logic)
+        //Selection
+        public static void SelectBoundsBody(Triggerscript script, Point point, out int trigger, out TriggerLogicSlot slot, out int logic)
         {
             trigger = -1;
             slot = TriggerLogicSlot.Condition;
@@ -277,7 +266,7 @@ namespace Chef.HW1.Script
 
             foreach (var t in script.Triggers.Values)
             {
-                if (BoundsTriggerUnit(t).Contains(point))
+                if (BoundsTrigger(t).Contains(point))
                 {
                     trigger = t.ID;
                 }
@@ -287,7 +276,7 @@ namespace Chef.HW1.Script
                     var l = Logics(t, s);
                     for (int i = 0; i < l.Count(); i++)
                     {
-                        if (BoundsLogicNode(t, s, i).Contains(point))
+                        if (BoundsLogicBody(t, s, i).Contains(point))
                         {
                             trigger = t.ID;
                             slot = s;
@@ -299,35 +288,37 @@ namespace Chef.HW1.Script
             }
             return;
         }
-        public static void DropBoundsAtPoint(Triggerscript script, Point point, out int trigger, out TriggerLogicSlot slot, out int logic)
+        public static void SelectBoundsInsert(Triggerscript script, Point point, out int trigger, out TriggerLogicSlot slot, out int logic)
         {
             trigger = -1;
             slot = TriggerLogicSlot.Condition;
             logic = -1;
 
-            foreach (var t in script.Triggers.Values)
+            foreach (var (tid, t) in script.Triggers)
             {
                 foreach (var s in Enum.GetValues<TriggerLogicSlot>())
                 {
-                    var l = Logics(t, s);
-                    for (int i = 0; i < l.Count() + 1; i++) //count + 1 because we also want the trailing drop bounds.
+                    if (BoundsLogicSlot(t, s).Contains(point))
                     {
-                        if (BoundsLogicDrop(t, s, i).Contains(point))
+                        for (int i = 0; i < Logics(t, s).Count() + 1; i++)
                         {
-                            trigger = t.ID;
-                            slot = s;
-                            logic = i;
-                            return;
+                            if (BoundsLogicInsert(t, s, i).Contains(point))
+                            {
+                                trigger = tid;
+                                slot = s;
+                                logic = i;
+                                return;
+                            }
                         }
                     }
                 }
             }
             return;
         }
-        public static void VarBoundsAtPoint(Triggerscript script, Point point, out int trigger, out TriggerLogicSlot slot, out int logic, out int param)
+        public static void SelectBoundsParamValue(Triggerscript script, Point point, out int trigger, out TriggerLogicSlot slot, out int logic, out int param)
         {
             param = -1;
-            BodyBoundsAtPoint(script, point, out trigger, out slot, out logic);
+            SelectBoundsBody(script, point, out trigger, out slot, out logic);
             if (trigger == -1 || logic == -1) return;
 
             Trigger t = script.Triggers[trigger];
@@ -336,7 +327,7 @@ namespace Chef.HW1.Script
             {
                 if (//ParamNameBounds(t, slot, logic, i).Contains(point)
                     //||
-                    ParamValBounds(t, slot, logic, i).Contains(point))
+                    BoundsParamValue(t, slot, logic, i).Contains(point))
                 {
                     param = l.StaticParamInfo.ElementAt(i).Key;
                     return;
@@ -348,34 +339,34 @@ namespace Chef.HW1.Script
         //Queries
         public static int NextVarId(Triggerscript script)
         {
-            return script.TriggerVars.Max(t => t.Value.ID) + 1;
-
             List<int> ids = script.TriggerVars.Keys.ToList();
             ids.Sort();
             for (int i = 0; i < ids.Count; i++)
             {
-                //this is the last one.
-                if (i == ids.Count - 1) return ids[i] + 1;
+                //is this the last one?
+                if (i == ids.Count - 1) 
+                    return ids[i] + 1;
                 else
                 {
-                    if (ids[i] != ids[i + 1] - 1) return ids[i] + 1;
+                    //is there a gap?
+                    if (ids[i] != ids[i + 1] - 1) 
+                        return ids[i] + 1;
                 }
             }
             return -1; //this shouldnt happen.
         }
         public static int NextTriggerId(Triggerscript script)
         {
-            return script.Triggers.Max(t => t.Value.ID) + 1;
-
             List<int> ids = script.Triggers.Keys.ToList();
             ids.Sort();
             for (int i = 0; i < ids.Count; i++)
             {
-                //this is the last one.
+                //is this the last one?
                 if (i == ids.Count - 1) 
                     return ids[i] + 1;
                 else
                 {
+                    //is there a gap?
                     if (ids[i] != ids[i + 1] - 1) 
                         return ids[i] + 1;
                 }
@@ -400,69 +391,6 @@ namespace Chef.HW1.Script
         public static IEnumerable<Var> Variables(Triggerscript script, VarType type)
         {
             return script.TriggerVars.Values.Where(v => v.Type == type);
-        }
-        /// <summary>
-        /// Is var id used in any condition or effect?
-        /// </summary>
-        public static bool VarUsedIn(int varid, Trigger trigger, out Dictionary<TriggerLogicSlot, Dictionary<int, List<int>>> slots)
-        {
-            slots = new Dictionary<TriggerLogicSlot, Dictionary<int, List<int>>>();
-
-            var indices = new Dictionary<int, List<int>>();
-            if (VarUsedIn(varid, trigger, TriggerLogicSlot.Condition, out indices))
-            {
-                slots.Add(TriggerLogicSlot.Condition, indices);
-            }
-            if (VarUsedIn(varid, trigger, TriggerLogicSlot.EffectTrue, out indices))
-            {
-                slots.Add(TriggerLogicSlot.EffectTrue, indices);
-            }
-            if (VarUsedIn(varid, trigger, TriggerLogicSlot.EffectFalse, out indices))
-            {
-                slots.Add(TriggerLogicSlot.EffectFalse, indices);
-            }
-
-            return slots.Count > 0;
-        }
-        /// <summary>
-        /// Is var id used in any logic of a particular slot?
-        /// </summary>
-        public static bool VarUsedIn(int varid, Trigger trigger, TriggerLogicSlot slot, out Dictionary<int, List<int>> indices)
-        {
-            IEnumerable<Logic> logics = Logics(trigger, slot);
-            indices = new Dictionary<int, List<int>>();
-
-            for (int i = 0; i < logics.Count(); i++)
-            {
-                List<int> sigids;
-                if (VarUsedIn(varid, trigger, slot, i, out sigids))
-                {
-                    indices.Add(i, sigids);
-                }
-            }
-
-            return indices.Count > 0;
-        }
-        /// <summary>
-        /// Is var id used in the logic of a particular slot at index?
-        /// </summary>
-        public static bool VarUsedIn(int varid, Trigger trigger, TriggerLogicSlot slot, int index, out List<int> sigids)
-        {
-            IEnumerable<Logic> logics = Logics(trigger, slot);
-            sigids = new List<int>();
-
-            foreach (Logic logic in logics)
-            {
-                foreach (var pair in logic.Params)
-                {
-                    if (pair.Value == varid)
-                    {
-                        sigids.Add(pair.Key);
-                    }
-                }
-            }
-
-            return sigids.Count > 0;
         }
 
 
@@ -508,14 +436,21 @@ namespace Chef.HW1.Script
 
             return false;
         }
-        public static int GetOrAddNullVar(Triggerscript script, VarType type)
+        public static bool CanTransfer(TriggerLogicSlot from, TriggerLogicSlot to)
+        {
+            if (from == to) return true;
+            if (from == TriggerLogicSlot.EffectTrue && to == TriggerLogicSlot.EffectFalse) return true;
+            if (from == TriggerLogicSlot.EffectFalse && to == TriggerLogicSlot.EffectTrue) return true;
+            return false;
+        }
+        public static Var GetOrAddNullVar(Triggerscript script, VarType type)
         {
             foreach (var (id, var) in script.TriggerVars)
             {
                 if (var.IsNull && var.Type == type)
                 {
                     var.Name = "NULL";
-                    return id;
+                    return var;
                 }
             }
 
@@ -529,18 +464,11 @@ namespace Chef.HW1.Script
                 Value = ""
             };
             script.TriggerVars.Add(nvar.ID, nvar);
-            return nvar.ID;
+            return nvar;
         }
 
         
         //Validation
-        public static bool CanTransfer(TriggerLogicSlot from, TriggerLogicSlot to)
-        {
-            if (from == to) return true;
-            if (from == TriggerLogicSlot.EffectTrue && to == TriggerLogicSlot.EffectFalse) return true;
-            if (from == TriggerLogicSlot.EffectFalse && to == TriggerLogicSlot.EffectTrue) return true;
-            return false;
-        }
         public static void Validate(Triggerscript script)
         {
             FixupVarLocality(script);
@@ -548,32 +476,27 @@ namespace Chef.HW1.Script
         }
         public static void FixupVarLocality(Triggerscript script)
         {
-            foreach (Trigger t in script.Triggers.Values)
+            foreach (var (vid, var) in script.TriggerVars)
             {
-                FixupVarLocalityFor(script, t, Logics(t, TriggerLogicSlot.Condition));
-                FixupVarLocalityFor(script, t, Logics(t, TriggerLogicSlot.EffectTrue));
-                FixupVarLocalityFor(script, t, Logics(t, TriggerLogicSlot.EffectFalse));
-            }
-        }
-        private static void FixupVarLocalityFor(Triggerscript script, Trigger trigger, IEnumerable<Logic> logics)
-        {
-            foreach (Var v in script.TriggerVars.Values)
-            {
-                if (v.Refs == null)
+                if (var.Refs == null)
                 {
-                    v.Refs = new List<int>();
+                    var.Refs = new List<int>();
                 }
             }
-            foreach (Logic logic in logics)
+
+            foreach (var (tid, trigger) in script.Triggers)
             {
-                foreach (int sigid in logic.StaticParamInfo.Keys)
+                foreach (Logic logic in Logics(trigger))
                 {
-                    int val = logic.GetValueOfParam(sigid);
-                    if (!script.TriggerVars.ContainsKey(val)) continue;
-                    Var v = script.TriggerVars[val];
-                    if (!v.Refs.Contains(trigger.ID))
+                    foreach (int sigid in logic.StaticParamInfo.Keys)
                     {
-                        v.Refs.Add(trigger.ID);
+                        int val = logic.GetValueOfParam(sigid);
+                        if (!script.TriggerVars.ContainsKey(val)) continue;
+                        Var v = script.TriggerVars[val];
+                        if (!v.Refs.Contains(tid))
+                        {
+                            v.Refs.Add(tid);
+                        }
                     }
                 }
             }
@@ -583,9 +506,9 @@ namespace Chef.HW1.Script
             Dictionary<VarType, Var> nulls = new Dictionary<VarType, Var>();
             List<int> toRemove = new List<int>();
 
-            foreach (var t in script.Triggers.Values)
+            foreach (var (tid, trigger) in script.Triggers)
             {
-                foreach (var logic in Logics(t))
+                foreach (var logic in Logics(trigger))
                 {
                     foreach(var (sigid, curVal) in logic.Params)
                     {
@@ -594,7 +517,7 @@ namespace Chef.HW1.Script
                         {
                             if (!nulls.ContainsKey(v.Type))
                             {
-                                nulls.Add(v.Type, script.TriggerVars[GetOrAddNullVar(script, v.Type)]);
+                                nulls.Add(v.Type, GetOrAddNullVar(script, v.Type));
                             }
 
                             logic.Params[sigid] = nulls[v.Type].ID;
@@ -603,19 +526,17 @@ namespace Chef.HW1.Script
                 }
             }
 
-            foreach(var (id, var) in script.TriggerVars)
+            foreach(var (vid, var) in script.TriggerVars)
             {
                 if (!var.IsNull) continue;
                 if (nulls.ContainsValue(var)) continue;
 
-                script.TriggerVars.Remove(id);
+                script.TriggerVars.Remove(vid);
             }
         }
-        public static void FixupTriggerVars(Triggerscript script)
-        {
 
-        }
 
+        //Static param info
         public static IEnumerable<int> LogicIds(LogicType type)
         {
             LogicDatabase db = TableForType(type);

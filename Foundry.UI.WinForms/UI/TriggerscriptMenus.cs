@@ -135,7 +135,7 @@ namespace Chef.Win.UI
             {
                 return l.Name.CompareTo(r.Name);
             });
-            Var nullVar = script.TriggerVars[GetOrAddNullVar(script, type)];
+            Var nullVar = GetOrAddNullVar(script, type);
             selectionSet.Insert(0, nullVar);
 
             ToolStripComboBox cb = new ToolStripComboBox();
