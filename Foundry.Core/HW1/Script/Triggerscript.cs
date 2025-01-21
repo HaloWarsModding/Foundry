@@ -177,7 +177,7 @@ namespace Chef.HW1.Script
     {
         public Logic()
         {
-            ParamValues = new Dictionary<int, int>();
+            Params = new Dictionary<int, int>();
             Comment = "";
             DBID = -1;
             Version = -1;
@@ -190,20 +190,21 @@ namespace Chef.HW1.Script
 
         public abstract Dictionary<int, LogicParamInfo> StaticParamInfo { get; }
 
-        private Dictionary<int, int> ParamValues;
+        public Dictionary<int, int> Params { get; set; }
         public int GetValueOfParam(int sigID)
         {
             if (!StaticParamInfo.ContainsKey(sigID)) return -1;
 
-            if (!ParamValues.ContainsKey(sigID)) ParamValues.Add(sigID, -1);
-            return ParamValues[sigID];
+            if (Params.ContainsKey(sigID)) 
+                return Params[sigID];
+            return -1;
         }
         public void SetValueOfParam(int sigID, int value)
         {
             if (!StaticParamInfo.ContainsKey(sigID)) return;
 
-            if (!ParamValues.ContainsKey(sigID)) ParamValues.Add(sigID, value);
-            ParamValues[sigID] = value;
+            if (!Params.ContainsKey(sigID)) Params.Add(sigID, value);
+            Params[sigID] = value;
         }
     }
     public class Effect : Logic
@@ -280,7 +281,6 @@ namespace Chef.HW1.Script
 
         public float X { get; set; }
         public float Y { get; set; }
-
 
         public bool ConditionsAreAND { get; set; }
         public List<Condition> Conditions { get; set; }

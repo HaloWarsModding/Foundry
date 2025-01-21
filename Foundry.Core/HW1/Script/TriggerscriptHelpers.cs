@@ -135,23 +135,25 @@ namespace Chef.HW1.Script
         
         public static Rectangle BoundsTriggerUnit(Trigger trigger)
         {
-            Rectangle tbounds = BoundsTriggerNode(trigger);
-            Rectangle efbounds = BoundsLogicUnit(trigger, TriggerLogicSlot.EffectFalse);
-            tbounds.Width = efbounds.Right - tbounds.X;
-            tbounds.Height = efbounds.Height;
-            return tbounds;
+            Rectangle bounds = BoundsLogicUnit(trigger, TriggerLogicSlot.EffectFalse);
+            bounds.Width = bounds.Right - (int)trigger.X;
+            bounds.X = (int)trigger.X;
+            bounds.Y = (int)trigger.Y;
+            return bounds;
         }
-        public static Rectangle BoundsTriggerNode(Trigger trigger)
-        {
-            return new Rectangle(
-                (int)trigger.X,
-                (int)trigger.Y,
-                DefaultWidth,
-                HeaderHeight * 3);
-        }
+        //public static Rectangle BoundsTriggerNode(Trigger trigger)
+        //{
+        //    return new Rectangle(
+        //        (int)trigger.X,
+        //        (int)trigger.Y,
+        //        DefaultWidth,
+        //        HeaderHeight * 3);
+        //}
         public static Rectangle BoundsLogicUnit(Trigger trigger, TriggerLogicSlot type)
         {
-            Rectangle bounds = BoundsTriggerNode(trigger);
+            Rectangle bounds = new Rectangle();
+            bounds.X = (int)trigger.X;
+            bounds.Y = (int)trigger.Y;
 
             int maxParamCount = 0;
             foreach(var c in trigger.Conditions)
@@ -161,12 +163,11 @@ namespace Chef.HW1.Script
             foreach (var f in trigger.TriggerEffectsOnFalse)
                 maxParamCount = f.StaticParamInfo.Count > maxParamCount ? f.StaticParamInfo.Count : maxParamCount;
 
-            bounds.Height = (HeaderHeight * 2) + (maxParamCount * (VarHeight + VarSpacing)) + VarHeight;
+            bounds.Height = (HeaderHeight * 3) + (maxParamCount * (VarHeight + VarSpacing)) + VarHeight;
 
             int logics = 0;
 
             bounds.X += bounds.Width;
-            bounds.X += LogicSectionSpacing;
             logics = trigger.Conditions.Count;
             bounds.Width = trigger.Conditions.Count != 0
                 ? (trigger.Conditions.Count * (DefaultWidth + LogicSpacing)) - LogicSpacing
@@ -197,7 +198,7 @@ namespace Chef.HW1.Script
             IEnumerable<Logic> logics = Logics(trigger, type);
 
             Point loc = BoundsLogicUnit(trigger, type).Location;
-            loc.Y += HeaderHeight;
+            loc.Y += HeaderHeight * 2;
             for (int i = 0; i < index; i++)
             {
                 loc.X += BodySize(logics.ElementAt(i)).Width;
@@ -347,6 +348,8 @@ namespace Chef.HW1.Script
         //Queries
         public static int NextVarId(Triggerscript script)
         {
+            return script.TriggerVars.Max(t => t.Value.ID) + 1;
+
             List<int> ids = script.TriggerVars.Keys.ToList();
             ids.Sort();
             for (int i = 0; i < ids.Count; i++)
@@ -362,6 +365,8 @@ namespace Chef.HW1.Script
         }
         public static int NextTriggerId(Triggerscript script)
         {
+            return script.Triggers.Max(t => t.Value.ID) + 1;
+
             List<int> ids = script.Triggers.Keys.ToList();
             ids.Sort();
             for (int i = 0; i < ids.Count; i++)
@@ -377,6 +382,15 @@ namespace Chef.HW1.Script
             }
             return -1; //this shouldnt happen.
         }
+        public static IEnumerable<Logic> Logics(Trigger trigger)
+        {
+            return
+            [
+                ..Logics(trigger, TriggerLogicSlot.Condition),
+                ..Logics(trigger, TriggerLogicSlot.EffectTrue),
+                ..Logics(trigger, TriggerLogicSlot.EffectFalse),
+            ];
+        }
         public static IEnumerable<Logic> Logics(Trigger trigger, TriggerLogicSlot slot)
         {
             if (slot == TriggerLogicSlot.Condition) return trigger.Conditions;
@@ -390,41 +404,65 @@ namespace Chef.HW1.Script
         /// <summary>
         /// Is var id used in any condition or effect?
         /// </summary>
-        public static bool VarUsedIn(int varid, Trigger trigger)
+        public static bool VarUsedIn(int varid, Trigger trigger, out Dictionary<TriggerLogicSlot, Dictionary<int, List<int>>> slots)
         {
-            if (VarUsedIn(varid, trigger, TriggerLogicSlot.Condition)) return true;
-            if (VarUsedIn(varid, trigger, TriggerLogicSlot.EffectTrue)) return true;
-            if (VarUsedIn(varid, trigger, TriggerLogicSlot.EffectFalse)) return true;
-            return false;
+            slots = new Dictionary<TriggerLogicSlot, Dictionary<int, List<int>>>();
+
+            var indices = new Dictionary<int, List<int>>();
+            if (VarUsedIn(varid, trigger, TriggerLogicSlot.Condition, out indices))
+            {
+                slots.Add(TriggerLogicSlot.Condition, indices);
+            }
+            if (VarUsedIn(varid, trigger, TriggerLogicSlot.EffectTrue, out indices))
+            {
+                slots.Add(TriggerLogicSlot.EffectTrue, indices);
+            }
+            if (VarUsedIn(varid, trigger, TriggerLogicSlot.EffectFalse, out indices))
+            {
+                slots.Add(TriggerLogicSlot.EffectFalse, indices);
+            }
+
+            return slots.Count > 0;
         }
         /// <summary>
         /// Is var id used in any logic of a particular slot?
         /// </summary>
-        public static bool VarUsedIn(int varid, Trigger trigger, TriggerLogicSlot slot)
+        public static bool VarUsedIn(int varid, Trigger trigger, TriggerLogicSlot slot, out Dictionary<int, List<int>> indices)
         {
             IEnumerable<Logic> logics = Logics(trigger, slot);
+            indices = new Dictionary<int, List<int>>();
+
             for (int i = 0; i < logics.Count(); i++)
             {
-                if (VarUsedIn(varid, trigger, slot, i)) return true;
+                List<int> sigids;
+                if (VarUsedIn(varid, trigger, slot, i, out sigids))
+                {
+                    indices.Add(i, sigids);
+                }
             }
-            return false;
+
+            return indices.Count > 0;
         }
         /// <summary>
         /// Is var id used in the logic of a particular slot at index?
         /// </summary>
-        public static bool VarUsedIn(int varid, Trigger trigger, TriggerLogicSlot slot, int index)
+        public static bool VarUsedIn(int varid, Trigger trigger, TriggerLogicSlot slot, int index, out List<int> sigids)
         {
             IEnumerable<Logic> logics = Logics(trigger, slot);
+            sigids = new List<int>();
 
             foreach (Logic logic in logics)
             {
-                foreach (var (sigid, _) in logic.StaticParamInfo)
+                foreach (var pair in logic.Params)
                 {
-                    if (logic.GetValueOfParam(sigid) == varid) return true;
+                    if (pair.Value == varid)
+                    {
+                        sigids.Add(pair.Key);
+                    }
                 }
             }
 
-            return false;
+            return sigids.Count > 0;
         }
 
 
@@ -472,22 +510,26 @@ namespace Chef.HW1.Script
         }
         public static int GetOrAddNullVar(Triggerscript script, VarType type)
         {
-            Var ret = script.TriggerVars.Values.Where(v => v.IsNull && v.Type == type).FirstOrDefault((Var)null);
-            if (ret == null)
+            foreach (var (id, var) in script.TriggerVars)
             {
-                ret = new Var()
+                if (var.IsNull && var.Type == type)
                 {
-                    ID = script.TriggerVars.Max(v => v.Value.ID) + 1,
-                    IsNull = true,
-                    Name = string.Format("Null{0}", type),
-                    Type = type,
-                    Value = "",
-                    Refs = new List<int>()
-                };
-                script.TriggerVars.Add(ret.ID, ret);
+                    var.Name = "NULL";
+                    return id;
+                }
             }
-            ret.Name = "Null" + type.ToString() + "Var";
-            return ret.ID;
+
+            var nvar = new Var()
+            {
+                ID = NextVarId(script),
+                IsNull = true,
+                Name = "NULL",
+                Refs = new List<int>(),
+                Type = type,
+                Value = ""
+            };
+            script.TriggerVars.Add(nvar.ID, nvar);
+            return nvar.ID;
         }
 
         
@@ -502,6 +544,7 @@ namespace Chef.HW1.Script
         public static void Validate(Triggerscript script)
         {
             FixupVarLocality(script);
+            FixupNullVars(script);
         }
         public static void FixupVarLocality(Triggerscript script)
         {
@@ -535,7 +578,39 @@ namespace Chef.HW1.Script
                 }
             }
         }
+        public static void FixupNullVars(Triggerscript script)
+        {
+            Dictionary<VarType, Var> nulls = new Dictionary<VarType, Var>();
+            List<int> toRemove = new List<int>();
 
+            foreach (var t in script.Triggers.Values)
+            {
+                foreach (var logic in Logics(t))
+                {
+                    foreach(var (sigid, curVal) in logic.Params)
+                    {
+                        var v = script.TriggerVars[curVal];
+                        if (v.IsNull)
+                        {
+                            if (!nulls.ContainsKey(v.Type))
+                            {
+                                nulls.Add(v.Type, script.TriggerVars[GetOrAddNullVar(script, v.Type)]);
+                            }
+
+                            logic.Params[sigid] = nulls[v.Type].ID;
+                        }
+                    }
+                }
+            }
+
+            foreach(var (id, var) in script.TriggerVars)
+            {
+                if (!var.IsNull) continue;
+                if (nulls.ContainsValue(var)) continue;
+
+                script.TriggerVars.Remove(id);
+            }
+        }
         public static void FixupTriggerVars(Triggerscript script)
         {
 

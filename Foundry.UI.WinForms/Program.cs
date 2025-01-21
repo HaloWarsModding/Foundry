@@ -70,7 +70,7 @@ namespace Chef.Win
             window.Browser.Update(window.Assets, window.GpuAssets, window.DockPanel);
 
             TriggerscriptWindow ts = new TriggerscriptWindow(window.Assets, window.GpuAssets);
-            ts.ScriptName = "explode_01";
+            ts.ScriptName = "skirmishai_raw_";
             ts.Show(window.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
 #endif
 

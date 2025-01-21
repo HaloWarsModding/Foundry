@@ -79,8 +79,6 @@ namespace Chef.Win.UI
         }
         public static void ShowSetVarMenu(Triggerscript script, Trigger trigger, TriggerLogicSlot slot, int logic, int sigid, Point point)
         {
-            Validate(script);
-
             Logic l = Logics(trigger, slot).ElementAt(logic);
 
             if (!l.StaticParamInfo.ContainsKey(sigid)) return;

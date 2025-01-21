@@ -43,14 +43,14 @@ namespace Chef.Win.Render
 
         private static void DrawUnit(Graphics g, Triggerscript script, Trigger trigger, Selection sel, Selection hover, bool drawDetail)
         {
-            DrawBackdrop(g, trigger);
-            DrawTrigger(g, trigger, sel, drawDetail);
+            DrawBackdrop(g, trigger, sel.TriggerId, sel.LogicIndex, drawDetail);
+            DrawLogicHeaders(g, script, trigger, drawDetail);
             DrawLogicBases(g, script, trigger, TriggerLogicSlot.Condition, sel, drawDetail);
             DrawLogicBases(g, script, trigger, TriggerLogicSlot.EffectTrue, sel, drawDetail);
             DrawLogicBases(g, script, trigger, TriggerLogicSlot.EffectFalse, sel, drawDetail);
-            DrawLogicContainer(g, script, trigger, TriggerLogicSlot.Condition, hover.LogicType == TriggerLogicSlot.Condition ? hover.LogicIndex : -1, drawDetail);
-            DrawLogicContainer(g, script, trigger, TriggerLogicSlot.EffectTrue, hover.LogicType == TriggerLogicSlot.EffectTrue ? hover.LogicIndex : -1, drawDetail);
-            DrawLogicContainer(g, script, trigger, TriggerLogicSlot.EffectFalse, hover.LogicType == TriggerLogicSlot.EffectFalse ? hover.LogicIndex : -1, drawDetail);
+            //DrawLogicContainer(g, script, trigger, TriggerLogicSlot.Condition, hover.LogicType == TriggerLogicSlot.Condition ? hover.LogicIndex : -1, drawDetail);
+            //DrawLogicContainer(g, script, trigger, TriggerLogicSlot.EffectTrue, hover.LogicType == TriggerLogicSlot.EffectTrue ? hover.LogicIndex : -1, drawDetail);
+            //DrawLogicContainer(g, script, trigger, TriggerLogicSlot.EffectFalse, hover.LogicType == TriggerLogicSlot.EffectFalse ? hover.LogicIndex : -1, drawDetail);
         }
         private static void DrawUnitProxy(Graphics g, Rectangle bounds, string text, bool drawDetail, bool active)
         {
@@ -70,54 +70,19 @@ namespace Chef.Win.Render
                 g.DrawString(text, HugeFont, new SolidBrush(TextColor), bounds, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }
 
-        private static void DrawBackdrop(Graphics g, Trigger trigger)
+        private static void DrawBackdrop(Graphics g, Trigger trigger, int selectedTrigger, int selectedLogic, bool detail)
         {
             Rectangle bounds = BoundsTriggerUnit(trigger);
             bounds.Inflate(Margin * 5, Margin * 5);
             g.FillRectangle(new SolidBrush(UnitColor), bounds);
-            g.DrawRectangle(new Pen(TrimColor), bounds);
-        }
-        private static void DrawTrigger(Graphics g, Trigger trigger, Selection sel, bool drawDetail)
-        {
-            Rectangle bounds = BoundsTriggerNode(trigger);
 
-            g.FillRectangle(new SolidBrush(BodyColor), bounds);
-            g.FillRectangle(new SolidBrush(TriggerHeaderColor), bounds.X, bounds.Y, bounds.Width, HeaderHeight);
+            g.DrawRectangle(new Pen(trigger.Active ? TriggerActiveColor : TrimColor), bounds);
 
-            if (trigger.Active)
+            if (selectedTrigger == trigger.ID && selectedLogic == -1)
             {
-                Rectangle activeBounds = bounds;
-                activeBounds.Inflate(-Margin, -Margin);
-                g.DrawRectangle(new Pen(TriggerActiveColor, Margin), activeBounds);
-            }
-
-            if (trigger.ID == sel.TriggerId && sel.LogicIndex == -1)
-            {
-                g.DrawRectangle(new Pen(Color.White, Margin), bounds);
-            }
-            else if (drawDetail)
-            {
-                g.DrawRectangle(new Pen(TrimColor, Margin), bounds);
-            }
-
-            //draw name title
-            if (drawDetail)
-            {
-                g.DrawString(
-                    trigger.Name,
-                    TitleFont,
-                    new SolidBrush(TextColor),
-                    new Rectangle(
-                        bounds.X + Margin * 2, //double the margin for the active outline.
-                        bounds.Y + Margin * 2,
-                         bounds.Width - Margin * 4,
-                        HeaderHeight - Margin * 4),
-                    new StringFormat()
-                    {
-                        Alignment = StringAlignment.Center,
-                        LineAlignment = StringAlignment.Center
-                    }
-                );
+                Rectangle sel = bounds;
+                sel.Inflate(1, 1);
+                g.DrawRectangle(new Pen(Color.White), sel);
             }
         }
         private static void DrawLogicBases(Graphics g, Triggerscript script, Trigger trigger, TriggerLogicSlot type, Selection sel, bool drawDetail)
@@ -267,6 +232,39 @@ namespace Chef.Win.Render
             }
 
         }
+        private static void DrawLogicHeaders(Graphics g, Triggerscript script, Trigger trigger, bool detail)
+        {
+            Rectangle bounds = BoundsTriggerUnit(trigger);
+
+            bounds.Height = HeaderHeight;
+            g.FillRectangle(new SolidBrush(TriggerHeaderColor), bounds);
+            g.DrawRectangle(new Pen(TrimColor, Margin), bounds);
+
+            bounds.Y += HeaderHeight;
+
+
+            Rectangle lbounds;
+            lbounds = BoundsLogicUnit(trigger, TriggerLogicSlot.Condition);
+            lbounds.Height = bounds.Height;
+            lbounds.Y = bounds.Y;
+            lbounds.Inflate(0, -2);
+            g.FillRectangle(new SolidBrush(ConditionHeaderColor), lbounds);
+            g.DrawRectangle(new Pen(TrimColor, Margin), lbounds);
+
+            lbounds = BoundsLogicUnit(trigger, TriggerLogicSlot.EffectTrue);
+            lbounds.Height = bounds.Height;
+            lbounds.Y = bounds.Y;
+            lbounds.Inflate(0, -2);
+            g.FillRectangle(new SolidBrush(EffectHeaderColor), lbounds);
+            g.DrawRectangle(new Pen(TrimColor, Margin), lbounds);
+
+            lbounds = BoundsLogicUnit(trigger, TriggerLogicSlot.EffectFalse);
+            lbounds.Height = bounds.Height;
+            lbounds.Y = bounds.Y;
+            lbounds.Inflate(0, -2);
+            g.FillRectangle(new SolidBrush(EffectHeaderColor), lbounds);
+            g.DrawRectangle(new Pen(TrimColor, Margin), lbounds);
+        }
         private static void DrawLogicContainer(Graphics g, Triggerscript script, Trigger trigger, TriggerLogicSlot slot, int hoverIndex, bool detail)
         {
             Rectangle bounds = BoundsLogicUnit(trigger, slot);
@@ -284,7 +282,7 @@ namespace Chef.Win.Render
             }
             if (slot == TriggerLogicSlot.EffectTrue)
             {
-                text = trigger.ConditionsAreAND ? "All Pass" : "Any Pass";
+                text = trigger.ConditionsAreAND ? "If All" : "If Any";
                 color = EffectHeaderColor;
             }
             if (slot == TriggerLogicSlot.EffectFalse)
@@ -308,7 +306,8 @@ namespace Chef.Win.Render
                 color = trigger.ConditionalTrigger ? EffectHeaderColor : Color.Black;
             }
 
-            g.FillRectangle(new SolidBrush(TrimColor), bounds.Left - LogicSectionSpacing, bounds.Top + 1, LogicSectionSpacing, bounds.Height - 2);
+            bounds.Y += HeaderHeight;
+            g.FillRectangle(new SolidBrush(TrimColor), bounds.Left - LogicSectionSpacing, bounds.Top, LogicSectionSpacing, bounds.Height - 2);
             g.FillRectangle(new SolidBrush(color), bounds);
             g.DrawRectangle(new Pen(TrimColor, Margin), bounds);
 
