@@ -253,7 +253,7 @@ namespace Chef.Win.Render
             g.FillRectangle(new SolidBrush(ConditionHeaderColor), lbounds);
             g.DrawRectangle(new Pen(TrimColor, Margin), lbounds);
             string cndAndStr = trigger.ConditionsAreAND ? "All" : "Any";
-            string cndStr = trigger.ConditionalTrigger ? cndAndStr + " Pass" : "Await " + cndAndStr;
+            string cndStr = trigger.ConditionalTrigger ? "If " + cndAndStr : "Await " + cndAndStr;
             lbounds.Inflate(-3, 0);
             if (detail) g.DrawString(cndStr, TextFont, new SolidBrush(TextColor), lbounds, new StringFormat()
             {
@@ -267,7 +267,7 @@ namespace Chef.Win.Render
             lbounds.Inflate(0, -2);
             g.FillRectangle(new SolidBrush(EffectHeaderColor), lbounds);
             g.DrawRectangle(new Pen(TrimColor, Margin), lbounds);
-            string eftStr = trigger.ConditionalTrigger ? "Pass" : "Do";
+            string eftStr = trigger.ConditionalTrigger ? "Then" : "Do";
             lbounds.Inflate(-3, 0);
             if (detail) g.DrawString(eftStr, TextFont, new SolidBrush(TextColor), lbounds, new StringFormat()
             {
@@ -281,84 +281,13 @@ namespace Chef.Win.Render
             lbounds.Inflate(0, -2);
             g.FillRectangle(new SolidBrush(EffectHeaderColor), lbounds);
             g.DrawRectangle(new Pen(TrimColor, Margin), lbounds);
-            string effStr = trigger.ConditionalTrigger ? "Fail" : "-----";
+            string effStr = trigger.ConditionalTrigger ? "Else" : "UNREACHABLE";
             lbounds.Inflate(-3, 0);
             if (detail) g.DrawString(effStr, TextFont, new SolidBrush(TextColor), lbounds, new StringFormat()
             {
                 Alignment = StringAlignment.Near,
                 LineAlignment = StringAlignment.Center,
             });
-        }
-        private static void DrawLogicContainer(Graphics g, Triggerscript script, Trigger trigger, TriggerLogicSlot slot, int hoverIndex, bool detail)
-        {
-            Rectangle bounds = BoundsLogicSlot(trigger, slot);
-            bounds.Height = HeaderHeight - LogicSpacing;
-
-            string text = "";
-            Color textColor = TextColor;
-            Color color = Color.Black;
-            bool center = false;
-
-            if (slot == TriggerLogicSlot.Condition)
-            {
-                text = trigger.ConditionalTrigger ? "Test" : "Await";
-                color = ConditionHeaderColor;
-            }
-            if (slot == TriggerLogicSlot.EffectTrue)
-            {
-                text = trigger.ConditionsAreAND ? "If All" : "If Any";
-                color = EffectHeaderColor;
-            }
-            if (slot == TriggerLogicSlot.EffectFalse)
-            {
-                if (trigger.ConditionalTrigger)
-                {
-                    text = "Else";
-                    color = EffectHeaderColor;
-                }
-                else if (trigger.TriggerEffectsOnFalse.Count > 0)
-                {
-                    text = "UNREACHABLE";
-                    textColor = Color.Red;
-                    color = Color.Black;
-                }
-                else
-                {
-                    return; //if there are no nodes in this non-conditional trigger, dont draw the section.
-                }
-                
-                color = trigger.ConditionalTrigger ? EffectHeaderColor : Color.Black;
-            }
-
-            bounds.Y += HeaderHeight;
-            g.FillRectangle(new SolidBrush(TrimColor), bounds.Left - LogicSectionSpacing, bounds.Top, LogicSectionSpacing, bounds.Height - 2);
-            g.FillRectangle(new SolidBrush(color), bounds);
-            g.DrawRectangle(new Pen(TrimColor, Margin), bounds);
-
-            if (hoverIndex != -1)
-            {
-#if DEBUG
-                g.DrawRectangle(new Pen(Color.Green, 1), BoundsLogicInsert(trigger, slot, hoverIndex));
-#endif
-            }
-
-            bounds.Inflate(-2, 0);
-            g.DrawString(text, TitleFont, new SolidBrush(textColor), bounds, new StringFormat()
-            {
-                Alignment = center ? StringAlignment.Center : StringAlignment.Near,
-                LineAlignment = StringAlignment.Center,
-            });
-        }
-        private static void DrawVarList(Graphics g, Triggerscript script, bool detail)
-        {
-        }
-
-        private static void DrawTriggerDebug(Graphics g, Trigger trigger, Selection sel)
-        {
-            g.DrawRectangle(new Pen(Color.YellowGreen, 1), BoundsLogicSlot(trigger, TriggerLogicSlot.Condition));
-            g.DrawRectangle(new Pen(Color.Yellow, 1), BoundsLogicSlot(trigger, TriggerLogicSlot.EffectTrue));
-            g.DrawRectangle(new Pen(Color.Green, 1), BoundsLogicSlot(trigger, TriggerLogicSlot.EffectFalse));
-            g.DrawRectangle(new Pen(Color.Red, 1), BoundsTrigger(trigger));
         }
     }
 }

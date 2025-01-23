@@ -156,10 +156,8 @@ namespace Chef.HW1.Script
 
             bounds.Height = (HeaderHeight * 3) + (maxParamCount * (VarHeight + VarSpacing)) + VarHeight;
 
-            int logics = 0;
 
             bounds.X += bounds.Width;
-            logics = trigger.Conditions.Count;
             bounds.Width = trigger.Conditions.Count != 0
                 ? (trigger.Conditions.Count * (DefaultWidth + LogicSpacing)) - LogicSpacing
                 : DefaultWidth;
@@ -175,12 +173,21 @@ namespace Chef.HW1.Script
                 return bounds;
 
             bounds.X += bounds.Width;
-            bounds.X += LogicSectionSpacing;
             bounds.Width = trigger.TriggerEffectsOnFalse.Count != 0
                 ? (trigger.TriggerEffectsOnFalse.Count * (DefaultWidth + LogicSpacing)) - LogicSpacing
                 : DefaultWidth;
             if (type == TriggerLogicSlot.EffectFalse)
+            {
+                if (!trigger.ConditionalTrigger && trigger.TriggerEffectsOnFalse.Count == 0)
+                {
+                    bounds.Width = 0;
+                }
+                else
+                {
+                    bounds.X += LogicSectionSpacing; //we only want the spacing from the last section if we have this section.
+                }
                 return bounds;
+            }
 
             return bounds;
         }
@@ -208,8 +215,11 @@ namespace Chef.HW1.Script
         }
         public static Rectangle BoundsLogicInsert(Trigger trigger, TriggerLogicSlot type, int index)
         {
-            //TODO: technically this works, but its a mess.
-            //I want to rework all the bounds to not need random += everywhere.
+            if (type == TriggerLogicSlot.EffectFalse && !trigger.ConditionalTrigger)
+            {
+                return Rectangle.Empty;
+            }
+
             //TODO: Separate logic unit container header from the rest of this.
             var logics = Logics(trigger, type);
 
@@ -222,7 +232,7 @@ namespace Chef.HW1.Script
 
             if (logics.Count() == 0)
             {
-                return ubounds; //if there are no nodes, just use the unit bounds.
+                return ubounds; //if there are no nodes and we can have falses, just use the unit bounds.
             }
 
             index = Math.Min(index, logics.Count());
