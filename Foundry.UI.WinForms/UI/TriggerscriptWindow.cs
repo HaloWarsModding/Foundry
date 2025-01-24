@@ -112,6 +112,8 @@ namespace Chef.Win.UI
             else
             {
                 selLogic = -1;
+                dropLogic = -1;
+                selVar = -1;
             }
 
             if (e.Button == MouseButtons.Right && selTrigger != -1)
@@ -123,6 +125,13 @@ namespace Chef.Win.UI
                     {
                         AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
                     });
+                }
+                else if (dropLogic != -1)
+                {
+                        ShowLogicAddMenu(Triggerscript, dropTrigger, dropSlot, dropLogic, PointToScreen(e.Location), (s, e) =>
+                        {
+                            AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
+                        });
                 }
                 else if (selLogic != -1)
                 {
