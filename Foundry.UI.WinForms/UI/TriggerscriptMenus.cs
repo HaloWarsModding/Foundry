@@ -15,7 +15,7 @@ namespace Chef.Win.UI
     public static class TriggerscriptMenus
     {
         //Menus
-        public static void ShowTriggerOptionsMenu(Trigger trigger, Point point)
+        public static void ShowTriggerOptionsMenu(Trigger trigger, Point point, EventHandler onEdit = null)
         {
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.Closing += (s, e) =>
@@ -27,10 +27,10 @@ namespace Chef.Win.UI
                 }
             };
             menu.MouseHover += (s, e) => { menu.Focus(); };
-            menu.Items.AddRange(TriggerOptionItems(trigger).ToArray());
+            menu.Items.AddRange(TriggerOptionItems(trigger, onEdit).ToArray());
             menu.Show(point);
         }
-        public static void ShowConditionOptionsMenu(Condition condition, Point point)
+        public static void ShowConditionOptionsMenu(Condition condition, Point point, EventHandler onEdit = null)
         {
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.Closing += (s, e) =>
@@ -42,10 +42,10 @@ namespace Chef.Win.UI
                 }
             };
             menu.MouseHover += (s, e) => { menu.Focus(); };
-            menu.Items.AddRange(ConditionOptionItems(condition).ToArray());
+            menu.Items.AddRange(ConditionOptionItems(condition, onEdit).ToArray());
             menu.Show(point);
         }
-        public static void ShowEffectOptionsMenu(Effect effect, Point point)
+        public static void ShowEffectOptionsMenu(Effect effect, Point point, EventHandler onEdit = null)
         {
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.Closing += (s, e) =>
@@ -57,10 +57,10 @@ namespace Chef.Win.UI
                 }
             };
             menu.MouseHover += (s, e) => { menu.Focus(); };
-            menu.Items.AddRange(EffectOptionItems(effect).ToArray());
+            menu.Items.AddRange(EffectOptionItems(effect, onEdit).ToArray());
             menu.Show(point);
         }
-        public static void ShowVarOptionsMenu(Var var, Point point)
+        public static void ShowVarOptionsMenu(Var var, Point point, EventHandler onEdit = null)
         {
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.Closing += (s, e) =>
@@ -71,13 +71,19 @@ namespace Chef.Win.UI
                     //e.Cancel = true;
                 }
             };
-            menu.Items.AddRange(VarOptionItems(var, (s, e) =>
+            menu.Items.AddRange(VarOptionItems(var, 
+                (s, e) =>
             {
-
-            }).ToArray());
+                onEdit?.Invoke(menu, EventArgs.Empty);
+            },
+                (s, e) =>
+            {
+                onEdit?.Invoke(menu, EventArgs.Empty);
+            }
+            ).ToArray());
             menu.Show(point);
         }
-        public static void ShowSetVarMenu(Triggerscript script, Trigger trigger, TriggerLogicSlot slot, int logic, int sigid, Point point)
+        public static void ShowSetVarMenu(Triggerscript script, Trigger trigger, TriggerLogicSlot slot, int logic, int sigid, Point point, EventHandler onEdit = null)
         {
             Logic l = Logics(trigger, slot).ElementAt(logic);
 
@@ -91,25 +97,26 @@ namespace Chef.Win.UI
             //Info
             menu.Items.Add(new ToolStripLabel(paramInfo.Name + " [" + paramInfo.Type + "]"));
             menu.Items.Add(new ToolStripSeparator());
-            menu.Items.Add(VarAddItem(script, paramInfo.Type, trigger.ID, slot, logic, sigid));
+            menu.Items.Add(VarAddItem(script, paramInfo.Type, trigger.ID, slot, logic, sigid, onEdit));
             menu.Items.Add(VarSetItem(script, "Set...", currentId, paramInfo.Type,
                 (s, e) =>
                 {
                     l.SetValueOfParam(sigid, e);
+                    onEdit?.Invoke(menu, EventArgs.Empty);
                     menu.Close();
                 }));
 
             menu.Show(point);
         }
-        public static void ShowVarList(Triggerscript script, Point point)
+        public static void ShowVarList(Triggerscript script, Point point, EventHandler onEdit = null)
         {
             ContextMenuStrip menu = new ContextMenuStrip();
 
-            menu.Items.AddRange(VarListItems(script).ToArray());
+            menu.Items.AddRange(VarListItems(script, onEdit).ToArray());
 
             menu.Show(point);
         }
-        public static void ShowLogicAddMenu(Triggerscript script, int triggerId, TriggerLogicSlot slot, int logicIndex, Point point)
+        public static void ShowLogicAddMenu(Triggerscript script, int triggerId, TriggerLogicSlot slot, int logicIndex, Point point, EventHandler onEdit = null)
         {
             Trigger trigger = script.Triggers[triggerId];
             ContextMenuStrip menu = new ContextMenuStrip();
@@ -123,12 +130,12 @@ namespace Chef.Win.UI
             };
 
             menu.MouseHover += (s, e) => { menu.Focus(); };
-            menu.Items.Add(LogicAddItem(trigger, slot, logicIndex));
+            menu.Items.Add(LogicAddItem(trigger, slot, logicIndex, onEdit));
             menu.Show(point);
         }
 
         //Items
-        public static ToolStripItem VarSetItem(Triggerscript script, string text, int initialValue, VarType type, EventHandler<int> varClicked = null)
+        public static ToolStripItem VarSetItem(Triggerscript script, string text, int initialValue, VarType type, EventHandler<int> onEdit = null)
         {
             List<Var> selectionSet = script.TriggerVars.Values.Where(v => !v.IsNull && v.Type == type).ToList();
             selectionSet.Sort((l, r) =>
@@ -149,7 +156,7 @@ namespace Chef.Win.UI
 
             cb.SelectedIndexChanged += (s, e) =>
             {
-                varClicked?.Invoke(cb, ((Var)cb.Items[cb.SelectedIndex]).ID);
+                onEdit?.Invoke(cb, ((Var)cb.Items[cb.SelectedIndex]).ID);
             };
             cb.KeyDown += (s, e) =>
             {
@@ -158,7 +165,7 @@ namespace Chef.Win.UI
 
             return cb;
         }
-        public static ToolStripItem VarAddItem(Triggerscript script, VarType type, int setTrigger = -1, TriggerLogicSlot setSlot = TriggerLogicSlot.Condition, int setLogic = -1, int setVar = -1)
+        public static ToolStripItem VarAddItem(Triggerscript script, VarType type, int setTrigger = -1, TriggerLogicSlot setSlot = TriggerLogicSlot.Condition, int setLogic = -1, int setVar = -1, EventHandler onEdit = null)
         {
             ToolStripMenuItem add = new ToolStripMenuItem();
 
@@ -180,12 +187,13 @@ namespace Chef.Win.UI
                 if (setTrigger != -1 && setLogic != -1)
                 {
                     Logics(script.Triggers[setTrigger], setSlot).ElementAt(setLogic).SetValueOfParam(setVar, var.ID);
+                    onEdit?.Invoke(add, EventArgs.Empty);
                 }
             };
 
             return add;
         }
-        public static ToolStripItem LogicAddItem(Trigger trigger, TriggerLogicSlot slot, int index)
+        public static ToolStripItem LogicAddItem(Trigger trigger, TriggerLogicSlot slot, int index, EventHandler onEdit = null)
         {
             ToolStripMenuItem root = new ToolStripMenuItem("Add...");
             LogicType t = slot == TriggerLogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
@@ -204,6 +212,7 @@ namespace Chef.Win.UI
                         trigger.TriggerEffectsOnTrue.Insert(index, (Effect)logic);
                     if (slot == TriggerLogicSlot.EffectFalse)
                         trigger.TriggerEffectsOnFalse.Insert(index, (Effect)logic);
+                    onEdit?.Invoke(b, EventArgs.Empty);
                 };
 
                 //category menu items
@@ -229,7 +238,7 @@ namespace Chef.Win.UI
         }
 
         //Item collections
-        public static IEnumerable<ToolStripItem> TriggerOptionItems(Trigger trigger)
+        public static IEnumerable<ToolStripItem> TriggerOptionItems(Trigger trigger, EventHandler onEdit = null)
         {
             List<ToolStripItem> items = new List<ToolStripItem>();
 
@@ -253,6 +262,7 @@ namespace Chef.Win.UI
             name.TextChanged += (s, e) =>
             {
                 trigger.Name = name.Text;
+                onEdit?.Invoke(name, EventArgs.Empty);
             };
             items.Add(name);
             ToolStripSeparator nameSeparator = new ToolStripSeparator();
@@ -269,6 +279,7 @@ namespace Chef.Win.UI
             {
                 trigger.Active = !trigger.Active;
                 active.Image = trigger.Active ? activeOnImg : activeOffImg;
+                onEdit?.Invoke(active, EventArgs.Empty);
             };
             items.Add(active);
 
@@ -283,12 +294,13 @@ namespace Chef.Win.UI
             {
                 trigger.ConditionalTrigger = !trigger.ConditionalTrigger;
                 conditional.Image = trigger.ConditionalTrigger ? conditionalOnImg : conditionalOffImg;
+                onEdit?.Invoke(conditional, EventArgs.Empty);
             };
             items.Add(conditional);
 
             return items;
         }
-        public static IEnumerable<ToolStripItem> VarListItems(Triggerscript script)
+        public static IEnumerable<ToolStripItem> VarListItems(Triggerscript script, EventHandler onEdit = null)
         {
             Dictionary<VarType, ToolStripMenuItem> types = new Dictionary<VarType, ToolStripMenuItem>();
 
@@ -302,7 +314,7 @@ namespace Chef.Win.UI
                 ToolStripMenuItem varAdd = new ToolStripMenuItem("Add...");
                 varAdd.Click += (s, e) =>
                 {
-
+                    onEdit?.Invoke(varAdd, EventArgs.Empty);
                 };
 
                 varRoot.DropDownItems.Add(varAdd);
@@ -338,7 +350,7 @@ namespace Chef.Win.UI
 
             return types.Values;
         }
-        public static IEnumerable<ToolStripItem> VarOptionItems(Var var, EventHandler<string> textChanged = null)
+        public static IEnumerable<ToolStripItem> VarOptionItems(Var var, EventHandler<string> textChanged = null, EventHandler onEdit = null)
         {
             List<ToolStripItem> items = new List<ToolStripItem>();
 
@@ -356,6 +368,7 @@ namespace Chef.Win.UI
             {
                 var.Name = name.Text;
                 textChanged?.Invoke(name, name.Text);
+                onEdit?.Invoke(name, EventArgs.Empty);
             };
             items.Add(name);
 
@@ -367,12 +380,13 @@ namespace Chef.Win.UI
             val.TextChanged += (s, e) =>
             {
                 var.Value = val.Text;
+                onEdit?.Invoke(name, EventArgs.Empty);
             };
             items.Add(val);
 
             return items;
         }
-        public static IEnumerable<ToolStripItem> ConditionOptionItems(Condition condition)
+        public static IEnumerable<ToolStripItem> ConditionOptionItems(Condition condition, EventHandler onEdit = null)
         {
             List<ToolStripItem> items = new List<ToolStripItem>();
 
@@ -396,6 +410,7 @@ namespace Chef.Win.UI
             {
                 condition.Invert = !condition.Invert;
                 invert.Image = condition.Invert ? invertOnImg : invertOffImg;
+                onEdit?.Invoke(invert, EventArgs.Empty);
             };
             items.Add(invert);
 
@@ -416,12 +431,13 @@ namespace Chef.Win.UI
             comment.TextChanged += (s, e) =>
             {
                 condition.Comment = comment.Text;
+                onEdit?.Invoke(condition, EventArgs.Empty);
             };
             items.Add(comment);
 
             return items;
         }
-        public static IEnumerable<ToolStripItem> EffectOptionItems(Effect effect)
+        public static IEnumerable<ToolStripItem> EffectOptionItems(Effect effect, EventHandler onEdit = null)
         {
             List<ToolStripItem> items = new List<ToolStripItem>();
 
@@ -447,6 +463,7 @@ namespace Chef.Win.UI
             comment.TextChanged += (s, e) =>
             {
                 effect.Comment = comment.Text;
+                onEdit?.Invoke(effect, EventArgs.Empty);
             };
             items.Add(comment);
             items.Add(commentSeparator);

@@ -118,27 +118,45 @@ namespace Chef.Win.UI
                 Trigger t = Triggerscript.Triggers[selTrigger];
                 if (selVar != -1)
                 {
-                    ShowSetVarMenu(Triggerscript, t, selSlot, selLogic, selVar, PointToScreen(e.Location));
+                    ShowSetVarMenu(Triggerscript, t, selSlot, selLogic, selVar, PointToScreen(e.Location), (s, e) =>
+                    {
+                        AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
+                    });
                 }
                 else if (selLogic != -1)
                 {
                     if (selSlot == TriggerLogicSlot.Condition)
-                        ShowConditionOptionsMenu((Condition)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location));
+                        ShowConditionOptionsMenu((Condition)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location), (s, e) =>
+                        {
+                            AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
+                        });
                     else
-                        ShowEffectOptionsMenu((Effect)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location));
+                        ShowEffectOptionsMenu((Effect)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location), (s, e) =>
+                        {
+                            AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
+                        });
                 }
                 else
                 {
-                    ShowTriggerOptionsMenu(t, e.Location);
+                    ShowTriggerOptionsMenu(t, e.Location, (s, e) =>
+                    {
+                        AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
+                    });
                 }
             }
             else if (e.Button == MouseButtons.Right && dropTrigger != -1 && dropLogic != -1)
             {
-                ShowLogicAddMenu(Triggerscript, dropTrigger, dropSlot, dropLogic, PointToScreen(e.Location));
+                ShowLogicAddMenu(Triggerscript, dropTrigger, dropSlot, dropLogic, PointToScreen(e.Location), (s, e) =>
+                {
+                    AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
+                });
             }
             else if (e.Button == MouseButtons.Right)
             {
-                ShowVarList(Triggerscript, PointToScreen(e.Location));
+                ShowVarList(Triggerscript, PointToScreen(e.Location), (s, e) =>
+                {
+                    AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
+                });
             }
 
             MouseLast = e.Location;
@@ -180,6 +198,7 @@ namespace Chef.Win.UI
                     {
                         selected.X += (e.Location.X - MouseLast.X) * (1 / ViewScale);
                         selected.Y += (e.Location.Y - MouseLast.Y) * (1 / ViewScale);
+                        AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
                     }
                 }
                 if (selTrigger != -1 && selLogic != -1 && dropLogic != -1 && CanTransfer(selSlot, dropSlot))
@@ -199,6 +218,7 @@ namespace Chef.Win.UI
                     selTrigger = dropTrigger;
                     selSlot = dropSlot;
                     selLogic = dropLogic;
+                    AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
                 }
             }
 
@@ -227,17 +247,26 @@ namespace Chef.Win.UI
                 {
                     selected.X = ViewMouse.X + offset.Width; //(offset.Width * (1 / ViewZoom));
                     selected.Y = ViewMouse.Y + offset.Height; //(offset.Height * (1 / ViewZoom));
+                    AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
                 }
             }
 
             ClampView();
             Invalidate();
         }
+        private void OnKeyDown(object o, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                AssetDatabase.SaveTriggerscript(ScriptName, Assets);
+            }
+        }
         private void OnPaint(object o, PaintEventArgs e)
         {
             Text = ScriptName;
             Triggerscript = AssetDatabase.GetOrLoadTriggerscript(ScriptName, Assets);
             if (Triggerscript == null) return;
+            if (AssetDatabase.TriggerscriptIsEdited(ScriptName, Assets)) Text += "*";
 
             ClampView();
 

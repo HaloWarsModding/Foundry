@@ -24,6 +24,7 @@ namespace Chef.HW1
 
         public T Value { get; set; }
         public string File { get; set; }
+        public bool Edited { get; set; }
     }
 
     public class AssetCache
@@ -271,6 +272,8 @@ namespace Chef.HW1
 
             return asset.Value;
         }
+        
+        // Triggerscripts
         /// <summary>
         /// </summary>
         /// <returns>null if name is not available.</returns>
@@ -283,6 +286,54 @@ namespace Chef.HW1
             }
             //xml is always immediately loaded when indexing, so just return what we have.
             return cache.Triggerscripts[name].Value;
+        }
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public static void SaveTriggerscript(string name, AssetCache cache, bool force = false)
+        {
+            name = name.ToLower();
+            if (!cache.Triggerscripts.ContainsKey(name))
+            {
+                return;
+            }
+            var script = cache.Triggerscripts[name];
+
+            if (script.Edited || force)
+            {
+                using (FileStream file = new FileStream(script.File, FileMode.OpenOrCreate))
+                {
+                    TriggerscriptIO.WriteXml(file, script.Value);
+                }
+            }
+        }
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public static void TriggerscriptMarkEdited(string name, AssetCache cache, bool edited)
+        {
+            name = name.ToLower();
+            if (!cache.Triggerscripts.ContainsKey(name))
+            {
+                return;
+            }
+            var script = cache.Triggerscripts[name];
+
+            script.Edited = edited;
+        }
+        /// <summary>
+        /// </summary>
+        /// <returns>If the script has been edited.</returns>
+        public static bool TriggerscriptIsEdited(string name, AssetCache cache)
+        {
+            name = name.ToLower();
+            if (!cache.Triggerscripts.ContainsKey(name))
+            {
+                return false;
+            }
+            var script = cache.Triggerscripts[name];
+
+            return script.Edited;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
