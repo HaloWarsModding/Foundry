@@ -92,7 +92,7 @@ namespace Chef.Win.UI
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.MouseHover += (s, e) => { menu.Focus(); };
             var paramInfo = l.StaticParamInfo[sigid];
-            int currentId = l.GetValueOfParam(sigid);
+            int currentId = l.Params[sigid];
 
             //Info
             menu.Items.Add(new ToolStripLabel(paramInfo.Name + " [" + paramInfo.Type + "]"));
@@ -101,7 +101,7 @@ namespace Chef.Win.UI
             menu.Items.Add(VarSetItem(script, "Set...", currentId, paramInfo.Type,
                 (s, e) =>
                 {
-                    l.SetValueOfParam(sigid, e);
+                    l.Params[sigid] = e;
                     onEdit?.Invoke(menu, EventArgs.Empty);
                     menu.Close();
                 }));
@@ -186,7 +186,7 @@ namespace Chef.Win.UI
 
                 if (setTrigger != -1 && setLogic != -1)
                 {
-                    Logics(script.Triggers[setTrigger], setSlot).ElementAt(setLogic).SetValueOfParam(setVar, var.ID);
+                    Logics(script.Triggers[setTrigger], setSlot).ElementAt(setLogic).Params[setVar] = var.ID;
                     onEdit?.Invoke(add, EventArgs.Empty);
                 }
             };

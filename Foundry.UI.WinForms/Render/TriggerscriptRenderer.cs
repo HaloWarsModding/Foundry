@@ -126,7 +126,7 @@ namespace Chef.Win.Render
                         );
 
                         //value
-                        int varId = cur.GetValueOfParam(sigid);
+                        int varId = cur.Params[sigid];
 
                         Rectangle varValBounds = BoundsParamValue(trigger, type, i, paramIndex);
                         g.FillRectangle(new SolidBrush(TrimColor), varValBounds);

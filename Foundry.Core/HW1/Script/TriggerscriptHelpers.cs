@@ -500,7 +500,7 @@ namespace Chef.HW1.Script
                 {
                     foreach (int sigid in logic.StaticParamInfo.Keys)
                     {
-                        int val = logic.GetValueOfParam(sigid);
+                        int val = logic.Params[sigid];
                         if (!script.TriggerVars.ContainsKey(val)) continue;
                         Var v = script.TriggerVars[val];
                         if (!v.Refs.Contains(tid))

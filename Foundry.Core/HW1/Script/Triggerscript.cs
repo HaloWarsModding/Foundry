@@ -191,21 +191,6 @@ namespace Chef.HW1.Script
         public abstract Dictionary<int, LogicParamInfo> StaticParamInfo { get; }
 
         public Dictionary<int, int> Params { get; set; }
-        public int GetValueOfParam(int sigID)
-        {
-            if (!StaticParamInfo.ContainsKey(sigID)) return -1;
-
-            if (Params.ContainsKey(sigID)) 
-                return Params[sigID];
-            return -1;
-        }
-        public void SetValueOfParam(int sigID, int value)
-        {
-            if (!StaticParamInfo.ContainsKey(sigID)) return;
-
-            if (!Params.ContainsKey(sigID)) Params.Add(sigID, value);
-            Params[sigID] = value;
-        }
     }
     public class Effect : Logic
     {

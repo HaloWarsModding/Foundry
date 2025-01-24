@@ -145,7 +145,7 @@ namespace Chef.HW1.Script
                 if (c.Name == "Input" || c.Name == "Output")
                 {
                     int sigid = int.Parse(c.Attribute("SigID").Value);
-                    l.SetValueOfParam(sigid, int.Parse(c.Value));
+                    l.Params[sigid] = int.Parse(c.Value);
                 }
             }
         }
@@ -279,7 +279,7 @@ namespace Chef.HW1.Script
             {
                 XElement paramNode = new XElement(param.Value.Output ? "Output" : "Input");
                 paramNode.SetAttributeValue("SigID", param.Key);
-                paramNode.Value = logic.GetValueOfParam(param.Key).ToString();
+                paramNode.Value = logic.Params[param.Key].ToString();
                 
                 logicNode.Add(paramNode);
             }
