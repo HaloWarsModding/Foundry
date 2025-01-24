@@ -187,32 +187,12 @@ namespace Chef.HW1.Script
         public int Version { get; set; }
         public int DBID { get; set; }
         public string Comment { get; set; }
-
-        public abstract Dictionary<int, LogicParamInfo> StaticParamInfo { get; }
-
         public Dictionary<int, int> Params { get; set; }
     }
     public class Effect : Logic
     {
         public Effect() : base() { }
         public override string TypeName { get { return LogicName(LogicType.Effect, DBID); } }
-        
-        public override Dictionary<int, LogicParamInfo> StaticParamInfo
-        {
-            get
-            {
-                if (cachedDBID != DBID || cachedVersion != Version)
-                {
-                    cachedDBID = DBID;
-                    cachedVersion = Version;
-                    cachedParams = LogicParamInfos(LogicType.Effect, DBID, Version);
-                }
-                return cachedParams;
-            }
-        }
-        private int cachedDBID = -1;
-        private int cachedVersion = -1;
-        private Dictionary<int, LogicParamInfo> cachedParams;
     }
     public class Condition : Logic
     {
@@ -221,23 +201,6 @@ namespace Chef.HW1.Script
         public bool Invert { get; set; }
         public bool Async { get; set; }
         public int AsyncParameterKey { get; set; }
-
-        public override Dictionary<int, LogicParamInfo> StaticParamInfo
-        {
-            get
-            {
-                if (cachedDBID != DBID || cachedVersion != Version)
-                {
-                    cachedDBID = DBID;
-                    cachedVersion = Version;
-                    cachedParams = LogicParamInfos(LogicType.Condition, DBID, Version);
-                }
-                return cachedParams;
-            }
-        }
-        private int cachedDBID = -1;
-        private int cachedVersion = -1;
-        private Dictionary<int, LogicParamInfo> cachedParams;
     }
     public class Trigger
     {

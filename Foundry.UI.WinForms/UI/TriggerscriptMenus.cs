@@ -86,12 +86,13 @@ namespace Chef.Win.UI
         public static void ShowSetVarMenu(Triggerscript script, Trigger trigger, TriggerLogicSlot slot, int logic, int sigid, Point point, EventHandler onEdit = null)
         {
             Logic l = Logics(trigger, slot).ElementAt(logic);
+            var spi = LogicParamInfos(SlotType(slot), l.DBID, l.Version);
 
-            if (!l.StaticParamInfo.ContainsKey(sigid)) return;
+            if (!spi.ContainsKey(sigid)) return;
 
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.MouseHover += (s, e) => { menu.Focus(); };
-            var paramInfo = l.StaticParamInfo[sigid];
+            var paramInfo = spi[sigid];
             int currentId = l.Params[sigid];
 
             //Info

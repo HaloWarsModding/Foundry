@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chef.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -235,7 +236,7 @@ namespace Chef.HW1.Script
             foreach (var cnd in trigger.Conditions)
             {
                 XElement cndNode = new XElement("Condition");
-                WriteTriggerLogicBase(cndNode, cnd);
+                WriteTriggerLogicBase(cndNode, cnd, TriggerscriptHelpers.LogicParamInfos(LogicType.Condition, cnd.DBID, cnd.Version));
                 cndNode.SetAttributeValue("Async", cnd.Async);
                 cndNode.SetAttributeValue("AsyncParameterKey", cnd.AsyncParameterKey);
                 cndNode.SetAttributeValue("Invert", cnd.Invert);
@@ -250,7 +251,7 @@ namespace Chef.HW1.Script
             foreach (var eff in trigger.TriggerEffectsOnTrue)
             {
                 XElement effNode = new XElement("Effect");
-                WriteTriggerLogicBase(effNode, eff);
+                WriteTriggerLogicBase(effNode, eff, TriggerscriptHelpers.LogicParamInfos(LogicType.Effect, eff.DBID, eff.Version));
                 effTrue.Add(effNode);
             }
         }
@@ -262,12 +263,12 @@ namespace Chef.HW1.Script
             foreach (var eff in trigger.TriggerEffectsOnFalse)
             {
                 XElement effNode = new XElement("Effect");
-                WriteTriggerLogicBase(effNode, eff);
+                WriteTriggerLogicBase(effNode, eff, TriggerscriptHelpers.LogicParamInfos(LogicType.Effect, eff.DBID, eff.Version));
                 effTrue.Add(effNode);
             }
         }
 
-        private static void WriteTriggerLogicBase(XElement logicNode, Logic logic)
+        private static void WriteTriggerLogicBase(XElement logicNode, Logic logic, Dictionary<int, LogicParamInfo> pars)
         {
             logicNode.SetAttributeValue("Type", logic.TypeName);
             logicNode.SetAttributeValue("DBID", logic.DBID);
@@ -275,7 +276,7 @@ namespace Chef.HW1.Script
             logicNode.SetAttributeValue("ID", 0);
             logicNode.SetAttributeValue("Comment", logic.Comment);
 
-            foreach (var param in logic.StaticParamInfo)
+            foreach (var param in pars)
             {
                 XElement paramNode = new XElement(param.Value.Output ? "Output" : "Input");
                 paramNode.SetAttributeValue("SigID", param.Key);

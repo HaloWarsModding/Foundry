@@ -148,12 +148,21 @@ namespace Chef.HW1.Script
             bounds.Y = (int)trigger.Y;
 
             int maxParamCount = 0;
-            foreach(var c in trigger.Conditions)
-                maxParamCount = c.StaticParamInfo.Count > maxParamCount ? c.StaticParamInfo.Count : maxParamCount;
+            foreach (var c in trigger.Conditions)
+            {
+                int count = LogicParamInfos(LogicType.Condition, c.DBID, c.Version).Count;
+                maxParamCount = count > maxParamCount ? count : maxParamCount;
+            }
             foreach (var t in trigger.TriggerEffectsOnTrue)
-                maxParamCount = t.StaticParamInfo.Count > maxParamCount ? t.StaticParamInfo.Count : maxParamCount;
+            {
+                int count = LogicParamInfos(LogicType.Effect, t.DBID, t.Version).Count;
+                maxParamCount = count > maxParamCount ? count : maxParamCount;
+            }
             foreach (var f in trigger.TriggerEffectsOnFalse)
-                maxParamCount = f.StaticParamInfo.Count > maxParamCount ? f.StaticParamInfo.Count : maxParamCount;
+            {
+                int count = LogicParamInfos(LogicType.Effect, f.DBID, f.Version).Count;
+                maxParamCount = count > maxParamCount ? count : maxParamCount;
+            }
 
             bounds.Height = (HeaderHeight * 3) + (maxParamCount * (VarHeight + VarSpacing)) + VarHeight;
 
@@ -333,13 +342,14 @@ namespace Chef.HW1.Script
 
             Trigger t = script.Triggers[trigger];
             Logic l = Logics(t, slot).ElementAt(logic);
-            for (int i = 0; i < l.StaticParamInfo.Count; i++)
+            var paramInfos = LogicParamInfos(SlotType(slot), l.DBID, l.Version);
+            for (int i = 0; i < paramInfos.Count; i++)
             {
                 if (//ParamNameBounds(t, slot, logic, i).Contains(point)
                     //||
                     BoundsParamValue(t, slot, logic, i).Contains(point))
                 {
-                    param = l.StaticParamInfo.ElementAt(i).Key;
+                    param = paramInfos.ElementAt(i).Key;
                     return;
                 }
             }
@@ -496,16 +506,19 @@ namespace Chef.HW1.Script
 
             foreach (var (tid, trigger) in script.Triggers)
             {
-                foreach (Logic logic in Logics(trigger))
+                foreach (var slot in Enum.GetValues<TriggerLogicSlot>())
                 {
-                    foreach (int sigid in logic.StaticParamInfo.Keys)
+                    foreach (Logic logic in Logics(trigger, slot))
                     {
-                        int val = logic.Params[sigid];
-                        if (!script.TriggerVars.ContainsKey(val)) continue;
-                        Var v = script.TriggerVars[val];
-                        if (!v.Refs.Contains(tid))
+                        foreach (int sigid in LogicParamInfos(SlotType(slot), logic.DBID, logic.Version).Keys)
                         {
-                            v.Refs.Add(tid);
+                            int val = logic.Params[sigid];
+                            if (!script.TriggerVars.ContainsKey(val)) continue;
+                            Var v = script.TriggerVars[val];
+                            if (!v.Refs.Contains(tid))
+                            {
+                                v.Refs.Add(tid);
+                            }
                         }
                     }
                 }
@@ -841,6 +854,10 @@ namespace Chef.HW1.Script
                 varTypeEnum = VarType.UserClassType;
 
             return varTypeEnum;
+        }
+        public static LogicType SlotType(TriggerLogicSlot slot)
+        {
+            return slot == TriggerLogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
         }
 
         public static Logic LogicFromId(LogicType type, int dbid, int version)

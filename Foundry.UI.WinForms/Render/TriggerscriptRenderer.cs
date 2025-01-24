@@ -72,17 +72,17 @@ namespace Chef.Win.Render
                 });
             }
         }
-        private static void DrawLogicBases(Graphics g, Triggerscript script, Trigger trigger, TriggerLogicSlot type, Selection sel, bool detail)
+        private static void DrawLogicBases(Graphics g, Triggerscript script, Trigger trigger, TriggerLogicSlot slot, Selection sel, bool detail)
         {
             if (!detail) return;
 
-            IEnumerable<Logic> logics = Logics(trigger, type);
-            Color headerColor = type == TriggerLogicSlot.Condition ? ConditionHeaderColor : EffectHeaderColor;
+            IEnumerable<Logic> logics = Logics(trigger, slot);
+            Color headerColor = slot == TriggerLogicSlot.Condition ? ConditionHeaderColor : EffectHeaderColor;
 
             for (int i = 0; i < logics.Count(); i++)
             {
                 Logic cur = logics.ElementAt(i);
-                Rectangle bounds = BoundsLogicBody(trigger, type, i);
+                Rectangle bounds = BoundsLogicBody(trigger, slot, i);
 
                 //Draw background
                 g.FillRectangle(new SolidBrush(BodyColor), bounds);
@@ -103,7 +103,7 @@ namespace Chef.Win.Render
                 }
                 //always draw selection outline.
                 if (sel.TriggerId == trigger.ID
-                    && sel.LogicType == type
+                    && sel.LogicType == slot
                     && sel.LogicIndex == i)
                 {
                     g.DrawRectangle(new Pen(Color.White, Margin), bounds);
@@ -113,10 +113,10 @@ namespace Chef.Win.Render
                 if (detail)
                 {
                     int paramIndex = 0;
-                    foreach (var (sigid, param) in cur.StaticParamInfo)
+                    foreach (var (sigid, param) in LogicParamInfos(SlotType(slot), cur.DBID, cur.Version))
                     {
                         //name
-                        Rectangle varNameBounds = BoundsParamName(trigger, type, i, paramIndex);
+                        Rectangle varNameBounds = BoundsParamName(trigger, slot, i, paramIndex);
 
                         g.DrawString(
                             param.Name + " [" + param.Type + "]",
@@ -128,7 +128,7 @@ namespace Chef.Win.Render
                         //value
                         int varId = cur.Params[sigid];
 
-                        Rectangle varValBounds = BoundsParamValue(trigger, type, i, paramIndex);
+                        Rectangle varValBounds = BoundsParamValue(trigger, slot, i, paramIndex);
                         g.FillRectangle(new SolidBrush(TrimColor), varValBounds);
                         if (!script.TriggerVars.ContainsKey(varId))
                         {
@@ -138,7 +138,7 @@ namespace Chef.Win.Render
 
                         //outline var value box when selected.
                         if (sel.TriggerId == trigger.ID
-                            && sel.LogicType == type
+                            && sel.LogicType == slot
                             && sel.LogicIndex == i
                             && sel.VarSigId == sigid)
                         {
