@@ -82,6 +82,7 @@ namespace Chef.Win.UI
             MouseUp += OnMouseUp;
             MouseMove += OnMouseMove;
             MouseWheel += OnMouseScroll;
+            KeyDown += OnKeyDown;
 
             RefChanged += (s, e) =>
             {
@@ -259,6 +260,7 @@ namespace Chef.Win.UI
             if (e.Control && e.KeyCode == Keys.S)
             {
                 AssetDatabase.SaveTriggerscript(ScriptName, Assets);
+                AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, false);
             }
         }
         private void OnPaint(object o, PaintEventArgs e)
