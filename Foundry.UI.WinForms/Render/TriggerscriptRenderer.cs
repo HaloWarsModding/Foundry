@@ -164,7 +164,7 @@ namespace Chef.Win.Render
                 //Draw logic title
                 if (detail)
                 {
-                    string title = logics.ElementAt(i).TypeName;
+                    string title = LogicName(LogicType.Condition, logics.ElementAt(i).DBID);
                     if (logics.ElementAt(i).Version != -1)
                         title += " [v" + logics.ElementAt(i).Version + "]";
                     g.DrawString(

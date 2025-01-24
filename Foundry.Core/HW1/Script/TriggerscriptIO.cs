@@ -270,7 +270,7 @@ namespace Chef.HW1.Script
 
         private static void WriteTriggerLogicBase(XElement logicNode, Logic logic, Dictionary<int, LogicParamInfo> pars)
         {
-            logicNode.SetAttributeValue("Type", logic.TypeName);
+            logicNode.SetAttributeValue("Type", "");
             logicNode.SetAttributeValue("DBID", logic.DBID);
             logicNode.SetAttributeValue("Version", logic.Version);
             logicNode.SetAttributeValue("ID", 0);

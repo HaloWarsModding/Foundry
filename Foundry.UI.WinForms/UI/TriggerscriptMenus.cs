@@ -394,7 +394,8 @@ namespace Chef.Win.UI
             //Info
             ToolStripLabel conditionLabel = new ToolStripLabel("Condition");
             items.Add(conditionLabel);
-            ToolStripLabel info = new ToolStripLabel(string.Format("{0} [v{1}]", condition.TypeName, condition.Version)/*, Properties.Resources.information*/);
+            ToolStripLabel info = new ToolStripLabel(
+                string.Format("{0} [v{1}]", LogicName(LogicType.Condition ,condition.DBID), condition.Version)/*, Properties.Resources.information*/);
             items.Add(info);
             ToolStripSeparator infoSep = new ToolStripSeparator();
             items.Add(infoSep);
@@ -445,7 +446,8 @@ namespace Chef.Win.UI
             //Info
             ToolStripLabel effLabel = new ToolStripLabel("Effect");
             items.Add(effLabel);
-            ToolStripLabel info = new ToolStripLabel(string.Format("{0} [v{1}]", effect.TypeName, effect.Version)/*, Properties.Resources.information*/);
+            ToolStripLabel info = new ToolStripLabel(
+                string.Format("{0} [v{1}]", LogicName(LogicType.Effect, effect.DBID), effect.Version)/*, Properties.Resources.information*/);
             items.Add(info);
 
             //Comment

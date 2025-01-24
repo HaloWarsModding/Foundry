@@ -183,7 +183,6 @@ namespace Chef.HW1.Script
             Version = -1;
         }
 
-        public abstract string TypeName { get; }
         public int Version { get; set; }
         public int DBID { get; set; }
         public string Comment { get; set; }
@@ -192,12 +191,10 @@ namespace Chef.HW1.Script
     public class Effect : Logic
     {
         public Effect() : base() { }
-        public override string TypeName { get { return LogicName(LogicType.Effect, DBID); } }
     }
     public class Condition : Logic
     {
         public Condition() : base() { }
-        public override string TypeName { get { return LogicName(LogicType.Condition, DBID); } }
         public bool Invert { get; set; }
         public bool Async { get; set; }
         public int AsyncParameterKey { get; set; }
