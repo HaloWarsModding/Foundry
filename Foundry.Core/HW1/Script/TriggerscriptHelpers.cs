@@ -275,26 +275,25 @@ namespace Chef.HW1.Script
             slot = TriggerLogicSlot.Condition;
             logic = -1;
 
-            foreach (var t in script.Triggers.Values)
+            foreach (var t in script.Triggers.Values.Reverse())
             {
                 if (BoundsTrigger(t).Contains(point))
                 {
                     trigger = t.ID;
-                }
 
-                foreach (var s in Enum.GetValues<TriggerLogicSlot>())
-                {
-                    var l = Logics(t, s);
-                    for (int i = 0; i < l.Count(); i++)
+                    foreach (var s in Enum.GetValues<TriggerLogicSlot>())
                     {
-                        if (BoundsLogicBody(t, s, i).Contains(point))
+                        var l = Logics(t, s);
+                        for (int i = 0; i < l.Count(); i++)
                         {
-                            trigger = t.ID;
-                            slot = s;
-                            logic = i;
-                            return;
+                            if (BoundsLogicBody(t, s, i).Contains(point))
+                            {
+                                slot = s;
+                                logic = i;
+                            }
                         }
                     }
+                    return;
                 }
             }
             return;
@@ -305,7 +304,7 @@ namespace Chef.HW1.Script
             slot = TriggerLogicSlot.Condition;
             logic = -1;
 
-            foreach (var (tid, t) in script.Triggers)
+            foreach (var (tid, t) in script.Triggers.Reverse())
             {
                 foreach (var s in Enum.GetValues<TriggerLogicSlot>())
                 {
