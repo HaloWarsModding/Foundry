@@ -50,6 +50,7 @@ namespace Chef.Win.UI
 
         private PointF ViewPos { get; set; } = new PointF(0, 0);
         private float ViewScale { get; set; } = 1.0f;
+        private float ViewScaleLOD = 0.75f;
         private Matrix ViewMatrix
         {
             get
@@ -102,8 +103,15 @@ namespace Chef.Win.UI
             Point ViewMouse = ViewMatrix.Inverted().TransformPoint(e.Location);
 
             SelectBoundsBody(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic);
-            SelectBoundsInsert(Triggerscript, ViewMouse, out dropTrigger, out dropSlot, out dropLogic);
-            SelectBoundsParamValue(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic, out selVar);
+            if (ViewScale > ViewScaleLOD)
+            {
+                SelectBoundsInsert(Triggerscript, ViewMouse, out dropTrigger, out dropSlot, out dropLogic);
+                SelectBoundsParamValue(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic, out selVar);
+            }
+            else
+            {
+                selLogic = -1;
+            }
 
             if (e.Button == MouseButtons.Right && selTrigger != -1)
             {
@@ -248,26 +256,16 @@ namespace Chef.Win.UI
                 );
             e.Graphics.Transform = ViewMatrix;
 
-            bool detail, lod;
-            if (ViewScale > .75)
+            bool lod = false;
+            if (ViewScale > ViewScaleLOD)
             {
-                //regular
-                detail = false;
-                lod = false;
-                if (ViewScale > 1.0) detail = true;
-            }
-            else //ViewScale <= .75
-            {
-                //lod
-                detail = true;
                 lod = true;
-                if (ViewScale < .2) detail = false;
             }
 
             DrawScript(e.Graphics, viewClip, Triggerscript,
                 new Selection() { TriggerId = selTrigger, LogicType = selSlot, LogicIndex = selLogic },
                 new Selection() { TriggerId = dropTrigger, LogicType = dropSlot, LogicIndex = dropLogic, InsertIndex = dropLogic },
-                detail, lod);
+                lod);
         }
 
         //TODO:

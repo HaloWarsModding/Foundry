@@ -21,7 +21,7 @@ namespace Chef.Win.Render
         public static Font TextFont { get; } = new Font("Consolas", 2.2f, FontStyle.Regular);
         public static Font HugeFont { get; } = new Font("Consolas", 20.0f, FontStyle.Regular);
 
-        public static void DrawScript(Graphics g, Rectangle clip, Triggerscript script, Selection sel, Selection hover, bool drawDetail, bool drawLOD)
+        public static void DrawScript(Graphics g, Rectangle clip, Triggerscript script, Selection sel, Selection hover, bool lod)
         {
             DrawBackground(g, clip, script);
             foreach (Trigger trigger in script.Triggers.Values)
@@ -29,10 +29,7 @@ namespace Chef.Win.Render
                 Rectangle bounds = BoundsTrigger(trigger);
                 if (!bounds.IntersectsWith(clip)) continue;
 
-                if (!drawLOD)
-                    DrawUnit(g, script, trigger, sel, hover, drawDetail);
-                else
-                    DrawUnitProxy(g, bounds, trigger.Name, drawDetail, trigger.Active);
+                DrawUnit(g, script, trigger, sel, hover, lod);
             }
         }
 
@@ -82,9 +79,21 @@ namespace Chef.Win.Render
                 sel.Inflate(1, 1);
                 g.DrawRectangle(new Pen(Color.White), sel);
             }
+
+            if (!detail)
+            {
+                bounds.Inflate(-1, -1);
+                g.DrawString(trigger.Name, HugeFont, new SolidBrush(TextColor), bounds, new StringFormat()
+                {
+                    Alignment = StringAlignment.Center,
+                    LineAlignment = StringAlignment.Center
+                });
+            }
         }
-        private static void DrawLogicBases(Graphics g, Triggerscript script, Trigger trigger, TriggerLogicSlot type, Selection sel, bool drawDetail)
+        private static void DrawLogicBases(Graphics g, Triggerscript script, Trigger trigger, TriggerLogicSlot type, Selection sel, bool detail)
         {
+            if (!detail) return;
+
             IEnumerable<Logic> logics = Logics(trigger, type);
             Color headerColor = type == TriggerLogicSlot.Condition ? ConditionHeaderColor : EffectHeaderColor;
 
@@ -99,7 +108,7 @@ namespace Chef.Win.Render
 
                 //Draw outline
                 //only draw trim outlines if quality is set to high.
-                if (drawDetail)
+                if (detail)
                 {
                     //header-body divider
                     g.DrawLine(new Pen(TrimColor, Margin), 
@@ -119,7 +128,7 @@ namespace Chef.Win.Render
                 }
 
                 //Draw param slots, only if quality is set to high.
-                if (drawDetail)
+                if (detail)
                 {
                     int paramIndex = 0;
                     foreach (var (sigid, param) in cur.StaticParamInfo)
@@ -171,7 +180,7 @@ namespace Chef.Win.Render
                 }
 
                 //Draw logic title
-                if (drawDetail)
+                if (detail)
                 {
                     string title = logics.ElementAt(i).TypeName;
                     if (logics.ElementAt(i).Version != -1)
@@ -209,7 +218,7 @@ namespace Chef.Win.Render
                         FooterHeight);
 
                     //draw text and outline if high quality only
-                    if (drawDetail)
+                    if (detail)
                     {
                         g.DrawRectangle(new Pen(TrimColor, .25f),
                         bounds.X,
@@ -232,6 +241,8 @@ namespace Chef.Win.Render
         }
         private static void DrawLogicHeaders(Graphics g, Triggerscript script, Trigger trigger, bool detail)
         {
+            if (!detail) return;
+
             Rectangle bounds = BoundsTrigger(trigger);
 
             bounds.Height = HeaderHeight;
