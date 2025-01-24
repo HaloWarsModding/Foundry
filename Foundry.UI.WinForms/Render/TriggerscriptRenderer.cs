@@ -47,24 +47,6 @@ namespace Chef.Win.Render
             DrawLogicBases(g, script, trigger, TriggerLogicSlot.EffectTrue, sel, drawDetail);
             DrawLogicBases(g, script, trigger, TriggerLogicSlot.EffectFalse, sel, drawDetail);
         }
-        private static void DrawUnitProxy(Graphics g, Rectangle bounds, string text, bool drawDetail, bool active)
-        {
-            bounds.Width = Math.Max(bounds.Width, 200);
-            bounds.Height = Math.Max(bounds.Height, 65);
-
-            g.FillRectangle(new SolidBrush(BodyColor), bounds);
-            g.DrawRectangle(new Pen(TrimColor, 4), bounds);
-            if (active)
-            {
-                Rectangle boundsActive = bounds;
-                boundsActive.Inflate(-4, -4);
-                g.DrawRectangle(new Pen(TriggerActiveColor, 4), boundsActive);
-            }
-
-            if (drawDetail)
-                g.DrawString(text, HugeFont, new SolidBrush(TextColor), bounds, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
-        }
-
         private static void DrawBackdrop(Graphics g, Trigger trigger, int selectedTrigger, int selectedLogic, bool detail)
         {
             Rectangle bounds = BoundsTrigger(trigger);
@@ -86,7 +68,8 @@ namespace Chef.Win.Render
                 g.DrawString(trigger.Name, HugeFont, new SolidBrush(TextColor), bounds, new StringFormat()
                 {
                     Alignment = StringAlignment.Center,
-                    LineAlignment = StringAlignment.Center
+                    LineAlignment = StringAlignment.Center,
+                    FormatFlags = StringFormatFlags.NoClip
                 });
             }
         }
