@@ -138,6 +138,7 @@ namespace Chef.HW1.Script
             bounds.Width = bounds.Right - (int)trigger.X;
             bounds.X = (int)trigger.X;
             bounds.Y = (int)trigger.Y;
+            bounds.Inflate(Margin * 5, Margin * 5);
             return bounds;
         }
         public static Rectangle BoundsLogicSlot(Trigger trigger, TriggerLogicSlot type)

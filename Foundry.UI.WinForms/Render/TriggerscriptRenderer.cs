@@ -50,7 +50,6 @@ namespace Chef.Win.Render
         private static void DrawBackdrop(Graphics g, Trigger trigger, int selectedTrigger, int selectedLogic, bool detail)
         {
             Rectangle bounds = BoundsTrigger(trigger);
-            bounds.Inflate(Margin * 5, Margin * 5);
             g.FillRectangle(new SolidBrush(UnitColor), bounds);
 
             g.DrawRectangle(new Pen(trigger.Active ? TriggerActiveColor : TrimColor), bounds);
