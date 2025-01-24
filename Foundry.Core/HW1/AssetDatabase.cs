@@ -301,7 +301,7 @@ namespace Chef.HW1
 
             if (script.Edited || force)
             {
-                using (FileStream file = new FileStream(script.File, FileMode.OpenOrCreate))
+                using (FileStream file = new FileStream(script.File, FileMode.Create))
                 {
                     TriggerscriptIO.WriteXml(file, script.Value);
                 }
