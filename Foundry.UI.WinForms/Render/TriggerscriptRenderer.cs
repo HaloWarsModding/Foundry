@@ -229,7 +229,10 @@ namespace Chef.Win.Render
 
             bounds.Height = HeaderHeight;
             g.FillRectangle(new SolidBrush(TriggerHeaderColor), bounds);
-            g.DrawRectangle(new Pen(TrimColor, Margin), bounds);
+            g.DrawLine(new Pen(TrimColor, Margin), bounds.X, bounds.Bottom, bounds.Right, bounds.Bottom); //bottom, always trim
+            g.DrawLine(new Pen(trigger.Active ? Color.Yellow : TrimColor, Margin), bounds.X, bounds.Top, bounds.Right, bounds.Top); //top
+            g.DrawLine(new Pen(trigger.Active ? Color.Yellow : TrimColor, Margin), bounds.X, bounds.Top, bounds.X, bounds.Bottom + 1); //left
+            g.DrawLine(new Pen(trigger.Active ? Color.Yellow : TrimColor, Margin), bounds.Right, bounds.Top, bounds.Right, bounds.Bottom + 1); //right
             g.DrawString(trigger.Name, TitleFont, new SolidBrush(TextColor), bounds, new StringFormat()
             {
                 Alignment = StringAlignment.Center,
