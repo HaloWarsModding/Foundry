@@ -137,7 +137,6 @@ namespace Chef.Win.UI
             var paramInfos = LogicParamInfos(logic.Type, logic.DBID, logic.Version);
             var paramInfo = paramInfos[sigid];
             List<Var> selectionSet = Variables(script, paramInfo.Type).ToList();
-            selectionSet.Insert(0, new Var() { Name = "NULL" });
 
             int curIndex = 0;
             if (logic.Params.ContainsKey(sigid) && logic.Params[sigid] != null)
@@ -146,6 +145,7 @@ namespace Chef.Win.UI
             }
 
             ToolStripComboBox cb = new ToolStripComboBox();
+            cb.Items.Add("NULL");
             cb.Items.AddRange(selectionSet.ToArray());
             cb.SelectedIndex = curIndex;
             cb.ComboBox.DisplayMember = "Name";
