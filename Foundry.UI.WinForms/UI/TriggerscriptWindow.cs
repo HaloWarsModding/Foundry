@@ -152,7 +152,7 @@ namespace Chef.Win.UI
             }
             else if (e.Button == MouseButtons.Right)
             {
-                ShowVarList(Triggerscript, PointToScreen(e.Location), onEdit);
+                //ShowVarList(Triggerscript, PointToScreen(e.Location), onEdit);
             }
 
             MouseLast = e.Location;

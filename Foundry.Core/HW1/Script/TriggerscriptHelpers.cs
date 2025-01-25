@@ -357,42 +357,6 @@ namespace Chef.HW1.Script
 
 
         //Queries
-        public static int NextVarId(Triggerscript script)
-        {
-            List<int> ids = script.TriggerVars.Keys.ToList();
-            ids.Sort();
-            for (int i = 0; i < ids.Count; i++)
-            {
-                //is this the last one?
-                if (i == ids.Count - 1) 
-                    return ids[i] + 1;
-                else
-                {
-                    //is there a gap?
-                    if (ids[i] != ids[i + 1] - 1) 
-                        return ids[i] + 1;
-                }
-            }
-            return -1; //this shouldnt happen.
-        }
-        public static int NextTriggerId(Triggerscript script)
-        {
-            List<int> ids = script.Triggers.Keys.ToList();
-            ids.Sort();
-            for (int i = 0; i < ids.Count; i++)
-            {
-                //is this the last one?
-                if (i == ids.Count - 1) 
-                    return ids[i] + 1;
-                else
-                {
-                    //is there a gap?
-                    if (ids[i] != ids[i + 1] - 1) 
-                        return ids[i] + 1;
-                }
-            }
-            return -1; //this shouldnt happen.
-        }
         public static IEnumerable<Logic> Logics(Trigger trigger)
         {
             return
@@ -481,99 +445,9 @@ namespace Chef.HW1.Script
             if (from == TriggerLogicSlot.EffectFalse && to == TriggerLogicSlot.EffectTrue) return true;
             return false;
         }
-        public static Var GetOrAddNullVar(Triggerscript script, VarType type)
-        {
-            foreach (var (id, var) in script.TriggerVars)
-            {
-                if (var.IsNull && var.Type == type)
-                {
-                    var.Name = "NULL";
-                    return var;
-                }
-            }
-
-            var nvar = new Var()
-            {
-                ID = NextVarId(script),
-                IsNull = true,
-                Name = "NULL",
-                Refs = new List<int>(),
-                Type = type,
-                Value = ""
-            };
-            script.TriggerVars.Add(nvar.ID, nvar);
-            return nvar;
-        }
 
         
         //Validation
-        public static void Validate(Triggerscript script)
-        {
-            FixupVarLocality(script);
-            FixupNullVars(script);
-        }
-        public static void FixupVarLocality(Triggerscript script)
-        {
-            foreach (var (vid, var) in script.TriggerVars)
-            {
-                if (var.Refs == null)
-                {
-                    var.Refs = new List<int>();
-                }
-            }
-
-            foreach (var (tid, trigger) in script.Triggers)
-            {
-                foreach (var slot in Enum.GetValues<TriggerLogicSlot>())
-                {
-                    foreach (Logic logic in Logics(trigger, slot))
-                    {
-                        foreach (int sigid in LogicParamInfos(SlotType(slot), logic.DBID, logic.Version).Keys)
-                        {
-                            //if (logic.Params.ContainsKey(sigid))
-                            //{
-                            //    var v = logic.Params[sigid];
-                            //    if (v == null) continue;
-                            //}
-                        }
-                    }
-                }
-            }
-        }
-        public static void FixupNullVars(Triggerscript script)
-        {
-            Dictionary<VarType, Var> nulls = new Dictionary<VarType, Var>();
-            List<int> toRemove = new List<int>();
-
-            foreach (var (tid, trigger) in script.Triggers)
-            {
-                foreach (var logic in Logics(trigger))
-                {
-                    foreach(var (sigid, var) in logic.Params)
-                    {
-                        if (var == null) continue;
-                        //var v = script.TriggerVars[curVal];
-                        if (var.IsNull)
-                        {
-                            if (!nulls.ContainsKey(var.Type))
-                            {
-                                nulls.Add(var.Type, GetOrAddNullVar(script, var.Type));
-                            }
-
-                            logic.Params[sigid] = nulls[var.Type];
-                        }
-                    }
-                }
-            }
-
-            foreach(var (vid, var) in script.TriggerVars)
-            {
-                if (!var.IsNull) continue;
-                if (nulls.ContainsValue(var)) continue;
-
-                script.TriggerVars.Remove(vid);
-            }
-        }
 
 
         //Static param info

@@ -49,11 +49,10 @@ namespace Chef.HW1.Script
                 if (v.Name == "TriggerVar")
                 {
                     int id = int.Parse(v.Attribute("ID").Value);
+                    bool isNull = v.Attribute("IsNull").Value.ToLower() == "true" ? true : false;
 
                     var newVar = new Var()
                     {
-                        ID = id,
-                        IsNull = v.Attribute("IsNull").Value.ToLower() == "true" ? true : false,
                         Name = v.Attribute("Name").Value,
                         Type = TriggerscriptHelpers.TypeFromString(v.Attribute("Type").Value),
                         Value = v.Value == null ? "" : v.Value
@@ -61,10 +60,10 @@ namespace Chef.HW1.Script
 
                     if (newVar.Name == "")
                     {
-                        newVar.Name = "unnamed" + newVar.Type;
+                        newVar.Name = "unnamed";
                     }
 
-                    if (!newVar.IsNull)
+                    if (!isNull)
                     {
                         vars.Add(id, newVar);
                     }

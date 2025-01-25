@@ -184,11 +184,7 @@ namespace Chef.Win.UI
                 Var var = new Var()
                 {
                     Name = "new" + paramInfo.Type,
-                    ID = NextVarId(script),
-                    IsNull = false,
-                    Type = paramInfo.Type,
                     Value = "",
-                    Refs = new List<int>()
                 };
 
                 logic.Params[sigid] = var; //set the param value
@@ -325,12 +321,12 @@ namespace Chef.Win.UI
                 varRoot.DropDownItems.Add(varAdd);
                 varRoot.DropDownItems.Add(new ToolStripSeparator());
 
-                foreach(var v in script.TriggerVars.Values.Where(tv => tv.Type == varTy && tv.IsNull == false))
-                {
-                    ToolStripMenuItem varCur = new ToolStripMenuItem(v.Name == "" ? "\"\"" : v.Name);
+                //foreach(var v in script.TriggerVars.Values.Where(tv => tv.Type == varTy && tv.IsNull == false))
+                //{
+                //    ToolStripMenuItem varCur = new ToolStripMenuItem(v.Name == "" ? "\"\"" : v.Name);
 
-                    varRoot.DropDownItems.Add(varCur);
-                }
+                //    varRoot.DropDownItems.Add(varCur);
+                //}
             }
 
             //foreach (Var v in script.TriggerVars.Values.OrderBy(v => v.Name))

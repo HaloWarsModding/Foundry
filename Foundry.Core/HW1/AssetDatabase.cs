@@ -122,7 +122,6 @@ namespace Chef.HW1
                            TriggerscriptIO.ReadXml(s, ts);
                         }
                         cache.Triggerscripts.Add(name, new Asset<Triggerscript>(ts, f));
-                        TriggerscriptHelpers.Validate(ts);
                         break;
                 }
 

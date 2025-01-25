@@ -145,26 +145,9 @@ namespace Chef.HW1.Script
     }
     public class Var
     {
-        public int ID { get; set; }
         public VarType Type { get; set; }
         public string Name { get; set; }
-        public bool IsNull { get; set; }
         public string Value { get; set; }
-        public List<int> Refs { get; set; }
-
-        public bool IsConst
-        { 
-            get
-            {
-                return Value != "";
-            }
-        }
-
-        public override string ToString()
-        {
-            if (Name == "") return "\"\"";
-            else return Name;
-        }
     }
     public abstract class Logic
     {
@@ -233,11 +216,9 @@ namespace Chef.HW1.Script
         public Triggerscript()
         {
             TriggerGroups = new Dictionary<int, Group>();
-            TriggerVars = new Dictionary<int, Var>();
             Triggers = new Dictionary<int, Trigger>();
         }
         public Dictionary<int, Group> TriggerGroups { get; set; }
-        public Dictionary<int, Var> TriggerVars { get; set; }
         public Dictionary<int, Trigger> Triggers { get; set; }
     }
 }

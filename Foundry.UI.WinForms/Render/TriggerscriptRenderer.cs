@@ -136,11 +136,6 @@ namespace Chef.Win.Render
                             paramIndex++;
                             continue;
                         }
-                        //if (!script.TriggerVars.ContainsKey(varId))
-                        //{
-                        //    paramIndex++;
-                        //    continue;
-                        //}
 
                         //outline var value box when selected.
                         if (sel.TriggerId == trigger.ID
