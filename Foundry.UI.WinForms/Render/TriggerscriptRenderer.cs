@@ -126,15 +126,21 @@ namespace Chef.Win.Render
                         );
 
                         //value
-                        int varId = cur.Params[sigid];
+                        var var = cur.Params[sigid];
 
                         Rectangle varValBounds = BoundsParamValue(trigger, slot, i, paramIndex);
                         g.FillRectangle(new SolidBrush(TrimColor), varValBounds);
-                        if (!script.TriggerVars.ContainsKey(varId))
+
+                        if (var == null)
                         {
                             paramIndex++;
                             continue;
                         }
+                        //if (!script.TriggerVars.ContainsKey(varId))
+                        //{
+                        //    paramIndex++;
+                        //    continue;
+                        //}
 
                         //outline var value box when selected.
                         if (sel.TriggerId == trigger.ID
@@ -145,7 +151,7 @@ namespace Chef.Win.Render
                             g.DrawRectangle(new Pen(Color.White, .125f), varValBounds);
                         }
 
-                        string varValStr = script.TriggerVars[varId].Name;
+                        string varValStr = var.Name;
                         if (varValStr == "") varValStr = "NO NAME";
 
                         //shrink it by a margin for the string

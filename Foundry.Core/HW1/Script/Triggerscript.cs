@@ -159,13 +159,6 @@ namespace Chef.HW1.Script
                 return Value != "";
             }
         }
-        public bool IsLocal
-        {
-            get
-            {
-                return Refs.Count == 1;
-            }
-        }
 
         public override string ToString()
         {
@@ -177,7 +170,7 @@ namespace Chef.HW1.Script
     {
         public Logic()
         {
-            Params = new Dictionary<int, int>();
+            Params = new Dictionary<int, Var>();
             Comment = "";
             DBID = -1;
             Version = -1;
@@ -186,7 +179,7 @@ namespace Chef.HW1.Script
         public int Version { get; set; }
         public int DBID { get; set; }
         public string Comment { get; set; }
-        public Dictionary<int, int> Params { get; set; }
+        public Dictionary<int, Var> Params { get; set; }
     }
     public class Effect : Logic
     {

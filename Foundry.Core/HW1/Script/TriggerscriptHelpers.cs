@@ -512,13 +512,8 @@ namespace Chef.HW1.Script
                     {
                         foreach (int sigid in LogicParamInfos(SlotType(slot), logic.DBID, logic.Version).Keys)
                         {
-                            int val = logic.Params[sigid];
-                            if (!script.TriggerVars.ContainsKey(val)) continue;
-                            Var v = script.TriggerVars[val];
-                            if (!v.Refs.Contains(tid))
-                            {
-                                v.Refs.Add(tid);
-                            }
+                            var v = logic.Params[sigid];
+                            if (v == null) continue;
                         }
                     }
                 }
@@ -533,17 +528,18 @@ namespace Chef.HW1.Script
             {
                 foreach (var logic in Logics(trigger))
                 {
-                    foreach(var (sigid, curVal) in logic.Params)
+                    foreach(var (sigid, var) in logic.Params)
                     {
-                        var v = script.TriggerVars[curVal];
-                        if (v.IsNull)
+                        if (var == null) continue;
+                        //var v = script.TriggerVars[curVal];
+                        if (var.IsNull)
                         {
-                            if (!nulls.ContainsKey(v.Type))
+                            if (!nulls.ContainsKey(var.Type))
                             {
-                                nulls.Add(v.Type, GetOrAddNullVar(script, v.Type));
+                                nulls.Add(var.Type, GetOrAddNullVar(script, var.Type));
                             }
 
-                            logic.Params[sigid] = nulls[v.Type].ID;
+                            logic.Params[sigid] = nulls[var.Type];
                         }
                     }
                 }

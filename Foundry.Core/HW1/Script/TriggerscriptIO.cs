@@ -21,6 +21,8 @@ namespace Chef.HW1.Script
             XDocument doc = XDocument.Load(stream);
             XElement root = doc.Root;
 
+            Dictionary<int, Var> vars = new Dictionary<int, Var>();
+
             foreach(var e in root.Elements())
             {
                 if (e.Name == "TriggerGroups")
@@ -30,17 +32,17 @@ namespace Chef.HW1.Script
 
                 if (e.Name == "TriggerVars")
                 {
-                    ReadVars(e, script);
+                    ReadVars(e, script, vars);
                 }
 
                 if (e.Name == "Triggers")
                 {
-                    ReadTriggers(e, script);
+                    ReadTriggers(e, script, vars);
                 }
             }
         }
 
-        private static void ReadVars(XElement r, Triggerscript script)
+        private static void ReadVars(XElement r, Triggerscript script, Dictionary<int, Var> vars)
         {
             foreach(var v in r.Elements())
             {
@@ -48,18 +50,23 @@ namespace Chef.HW1.Script
                 {
                     int id = int.Parse(v.Attribute("ID").Value);
 
-                    script.TriggerVars.Add(id, new Var()
+                    var newVar = new Var()
                     {
                         ID = id,
                         IsNull = v.Attribute("IsNull").Value.ToLower() == "true" ? true : false,
                         Name = v.Attribute("Name").Value,
                         Type = TriggerscriptHelpers.TypeFromString(v.Attribute("Type").Value),
                         Value = v.Value == null ? "" : v.Value
-                    });
+                    };
+
+                    if (!newVar.IsNull)
+                    {
+                        vars.Add(id, newVar);
+                    }
                 }
             }
         }
-        private static void ReadTriggers(XElement r, Triggerscript script)
+        private static void ReadTriggers(XElement r, Triggerscript script, Dictionary<int, Var> vars)
         {
             foreach (var triggerNode in r.Elements().Where(node => node.Name == "Trigger"))
             {
@@ -78,15 +85,15 @@ namespace Chef.HW1.Script
                     GroupID = int.Parse(triggerNode.Attribute("GroupID").Value)
                 };
 
-                ReadTriggerConditions(triggerNode, script, trigger);
-                ReadTriggerEffectsTrue(triggerNode, script, trigger);
-                ReadTriggerEffectsFalse(triggerNode, script, trigger);
+                ReadTriggerConditions(triggerNode, script, trigger, vars);
+                ReadTriggerEffectsTrue(triggerNode, script, trigger, vars);
+                ReadTriggerEffectsFalse(triggerNode, script, trigger, vars);
 
                 script.Triggers.Add(id, trigger);
             }
         }
 
-        private static void ReadTriggerConditions(XElement r, Triggerscript script, Trigger t)
+        private static void ReadTriggerConditions(XElement r, Triggerscript script, Trigger t, Dictionary<int, Var> vars)
         {
             XElement conditions = null;
             if (r.Element("TriggerConditions").Element("And") != null)
@@ -107,34 +114,34 @@ namespace Chef.HW1.Script
                 cnd.Invert = bool.Parse(cndNode.Attribute("Invert").Value);
                 cnd.Async = bool.Parse(cndNode.Attribute("Async").Value);
                 cnd.AsyncParameterKey = int.Parse(cndNode.Attribute("AsyncParameterKey").Value);
-                ReadTriggerLogicBase(cndNode, script, cnd);
+                ReadTriggerLogicBase(cndNode, script, cnd, vars);
                 t.Conditions.Add(cnd);
             }
         }
-        private static void ReadTriggerEffectsTrue(XElement r, Triggerscript script, Trigger t)
+        private static void ReadTriggerEffectsTrue(XElement r, Triggerscript script, Trigger t, Dictionary<int, Var> vars)
         {
             var trues = r.Element("TriggerEffectsOnTrue");
                
             foreach (var effNode in trues.Elements().Where(node => node.Name == "Effect"))
             {
                 Effect eff = new Effect();
-                ReadTriggerLogicBase(effNode, script, eff);
+                ReadTriggerLogicBase(effNode, script, eff, vars);
                 t.TriggerEffectsOnTrue.Add(eff);
             }
         }
-        private static void ReadTriggerEffectsFalse(XElement r, Triggerscript script, Trigger t)
+        private static void ReadTriggerEffectsFalse(XElement r, Triggerscript script, Trigger t, Dictionary<int, Var> vars)
         {
             var trues = r.Element("TriggerEffectsOnFalse");
 
             foreach (var effNode in trues.Elements().Where(node => node.Name == "Effect"))
             {
                 Effect eff = new Effect();
-                ReadTriggerLogicBase(effNode, script, eff);
+                ReadTriggerLogicBase(effNode, script, eff, vars);
                 t.TriggerEffectsOnTrue.Add(eff);
             }
         }
 
-        private static void ReadTriggerLogicBase(XElement r, Triggerscript script, Logic l)
+        private static void ReadTriggerLogicBase(XElement r, Triggerscript script, Logic l, Dictionary<int, Var> vars)
         {
             XAttribute comment = r.Attribute("Comment");
             if (comment != null) l.Comment = comment.Value;
@@ -146,7 +153,15 @@ namespace Chef.HW1.Script
                 if (c.Name == "Input" || c.Name == "Output")
                 {
                     int sigid = int.Parse(c.Attribute("SigID").Value);
-                    l.Params[sigid] = int.Parse(c.Value);
+                    int sigval = int.Parse(c.Value);
+                    if (vars.ContainsKey(sigval))
+                    {
+                        l.Params[sigid] = vars[sigval];
+                    }
+                    else
+                    {
+                        l.Params[sigid] = null;
+                    }
                 }
             }
         }
@@ -165,12 +180,16 @@ namespace Chef.HW1.Script
             root.SetAttributeValue("External", false);
 
             XElement groups = new XElement("TriggerGroups");
-            
-            XElement vars = new XElement("TriggerVars");
-            WriteVars(vars, script);
-            
+
+
+            Dictionary<Var, int> varIds = new Dictionary<Var, int>();
+            Dictionary<VarType, Var> nullVars = new Dictionary<VarType, Var>();
+
             XElement triggers = new XElement("Triggers");
-            WriteTriggers(triggers, script);
+            WriteTriggers(triggers, script, varIds, nullVars);
+
+            XElement vars = new XElement("TriggerVars");
+            WriteVars(vars, varIds, nullVars);
 
             root.Add(groups);
             root.Add(vars);
@@ -179,32 +198,23 @@ namespace Chef.HW1.Script
 
             doc.Save(stream);
         }
-
-        private static void WriteVars(XElement varsNode, Triggerscript script)
+        private static void WriteVars(XElement varsNode, Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
         {
-            foreach(var var in script.TriggerVars)
+            foreach(var (var, id) in varIds)
             {
                 XElement varNode = new XElement("TriggerVar");
-                varNode.SetAttributeValue("ID", var.Key);
-                varNode.SetAttributeValue("Name", var.Value.Name);
-                varNode.SetAttributeValue("Type", var.Value.Type);
-                varNode.SetAttributeValue("IsNull", var.Value.IsNull);
-                
-                if (var.Value.IsConst)
-                {
-                    varNode.Value = var.Value.Value;
-                }
-                else
-                {
-                    varNode.Value = "";
-                }
+                varNode.SetAttributeValue("ID", id);
+                varNode.SetAttributeValue("Name", var.Name);
+                varNode.SetAttributeValue("Type", var.Type);
+                varNode.SetAttributeValue("IsNull", nullVars.ContainsValue(var));
+                varNode.Value = var.Value;
 
                 varsNode.Add(varNode);
             }
         }
-        private static void WriteTriggers(XElement triggersNode, Triggerscript script)
+        private static void WriteTriggers(XElement triggersNode, Triggerscript script, Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
         {
-            foreach(var trigger in script.Triggers)
+            foreach (var trigger in script.Triggers)
             {
                 XElement triggerNode = new XElement("Trigger");
                 triggerNode.SetAttributeValue("ID", trigger.Key);
@@ -217,15 +227,15 @@ namespace Chef.HW1.Script
                 triggerNode.SetAttributeValue("Y", trigger.Value.Y / TriggerscriptParams.TriggerSpacingMultiplier);
                 triggerNode.SetAttributeValue("GroupID", trigger.Value.GroupID);
 
-                WriteTriggerConditions(triggerNode, trigger.Value);
-                WriteTriggerEffectsTrue(triggerNode, trigger.Value);
-                WriteTriggerEffectsFalse(triggerNode, trigger.Value);
+                WriteTriggerConditions(triggerNode, trigger.Value, varIds, nullVars);
+                WriteTriggerEffectsTrue(triggerNode, trigger.Value, varIds, nullVars);
+                WriteTriggerEffectsFalse(triggerNode, trigger.Value, varIds, nullVars);
 
                 triggersNode.Add(triggerNode);
             }
         }
-        
-        private static void WriteTriggerConditions(XElement triggerNode, Trigger trigger)
+        private static void WriteTriggerConditions(XElement triggerNode, Trigger trigger,
+            Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
         {
             XElement triggerConditions = new XElement("TriggerConditions");
             triggerNode.Add(triggerConditions);
@@ -236,14 +246,15 @@ namespace Chef.HW1.Script
             foreach (var cnd in trigger.Conditions)
             {
                 XElement cndNode = new XElement("Condition");
-                WriteTriggerLogicBase(cndNode, cnd, TriggerscriptHelpers.LogicParamInfos(LogicType.Condition, cnd.DBID, cnd.Version));
+                WriteTriggerLogicBase(cndNode, cnd, TriggerscriptHelpers.LogicParamInfos(LogicType.Condition, cnd.DBID, cnd.Version), varIds, nullVars);
                 cndNode.SetAttributeValue("Async", cnd.Async);
                 cndNode.SetAttributeValue("AsyncParameterKey", cnd.AsyncParameterKey);
                 cndNode.SetAttributeValue("Invert", cnd.Invert);
                 andOr.Add(cndNode);
             }
         }
-        private static void WriteTriggerEffectsTrue(XElement triggerNode, Trigger trigger)
+        private static void WriteTriggerEffectsTrue(XElement triggerNode, Trigger trigger,
+            Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
         {
             XElement effTrue = new XElement("TriggerEffectsOnTrue");
             triggerNode.Add(effTrue);
@@ -251,11 +262,12 @@ namespace Chef.HW1.Script
             foreach (var eff in trigger.TriggerEffectsOnTrue)
             {
                 XElement effNode = new XElement("Effect");
-                WriteTriggerLogicBase(effNode, eff, TriggerscriptHelpers.LogicParamInfos(LogicType.Effect, eff.DBID, eff.Version));
+                WriteTriggerLogicBase(effNode, eff, TriggerscriptHelpers.LogicParamInfos(LogicType.Effect, eff.DBID, eff.Version), varIds, nullVars);
                 effTrue.Add(effNode);
             }
         }
-        private static void WriteTriggerEffectsFalse(XElement triggerNode, Trigger trigger)
+        private static void WriteTriggerEffectsFalse(XElement triggerNode, Trigger trigger,
+            Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
         {
             XElement effTrue = new XElement("TriggerEffectsOnFalse");
             triggerNode.Add(effTrue);
@@ -263,12 +275,12 @@ namespace Chef.HW1.Script
             foreach (var eff in trigger.TriggerEffectsOnFalse)
             {
                 XElement effNode = new XElement("Effect");
-                WriteTriggerLogicBase(effNode, eff, TriggerscriptHelpers.LogicParamInfos(LogicType.Effect, eff.DBID, eff.Version));
+                WriteTriggerLogicBase(effNode, eff, TriggerscriptHelpers.LogicParamInfos(LogicType.Effect, eff.DBID, eff.Version), varIds, nullVars);
                 effTrue.Add(effNode);
             }
         }
-
-        private static void WriteTriggerLogicBase(XElement logicNode, Logic logic, Dictionary<int, LogicParamInfo> pars)
+        private static void WriteTriggerLogicBase(XElement logicNode, Logic logic, Dictionary<int, LogicParamInfo> pars,
+            Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
         {
             logicNode.SetAttributeValue("Type", "");
             logicNode.SetAttributeValue("DBID", logic.DBID);
@@ -276,11 +288,41 @@ namespace Chef.HW1.Script
             logicNode.SetAttributeValue("ID", 0);
             logicNode.SetAttributeValue("Comment", logic.Comment);
 
-            foreach (var param in pars)
+            foreach (var (sigid, par) in pars)
             {
-                XElement paramNode = new XElement(param.Value.Output ? "Output" : "Input");
-                paramNode.SetAttributeValue("SigID", param.Key);
-                paramNode.Value = logic.Params[param.Key].ToString();
+                XElement paramNode = new XElement(par.Output ? "Output" : "Input");
+                paramNode.SetAttributeValue("SigID", sigid);
+
+                //if the logic does not have a value for this sigid, or its value is null...
+                if (!logic.Params.ContainsKey(sigid) || logic.Params[sigid] == null)
+                {
+                    //if we dont have a null var for this type add one...
+                    if (!nullVars.ContainsKey(par.Type))
+                    {
+                        Var newNull = new Var()
+                        {
+                            Name = "NULL",
+                            Type = par.Type,
+                            Value = ""
+                        };
+                        int id = varIds.Values.Count == 0 ? 0 : varIds.Values.Max() + 1;
+                        nullVars.Add(par.Type, newNull);
+                        varIds.Add(newNull, id);
+                    }
+
+                    paramNode.Value = varIds[nullVars[par.Type]].ToString();
+                }
+                else
+                {
+                    //if we dont have an id for this var add one...
+                    if (!varIds.ContainsKey(logic.Params[sigid]))
+                    {
+                        int id = varIds.Values.Count == 0 ? 0 : varIds.Values.Max() + 1;
+                        varIds.Add(logic.Params[sigid], id);
+                    }
+
+                    paramNode.Value = varIds[logic.Params[sigid]].ToString();
+                }
                 
                 logicNode.Add(paramNode);
             }

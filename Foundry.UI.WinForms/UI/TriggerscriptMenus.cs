@@ -93,13 +93,13 @@ namespace Chef.Win.UI
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.MouseHover += (s, e) => { menu.Focus(); };
             var paramInfo = spi[sigid];
-            int currentId = l.Params[sigid];
+            Var currentVal = l.Params[sigid];
 
             //Info
             menu.Items.Add(new ToolStripLabel(paramInfo.Name + " [" + paramInfo.Type + "]"));
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(VarAddItem(script, paramInfo.Type, trigger.ID, slot, logic, sigid, onEdit));
-            menu.Items.Add(VarSetItem(script, "Set...", currentId, paramInfo.Type,
+            menu.Items.Add(VarSetItem(script, "Set...", currentVal, paramInfo.Type,
                 (s, e) =>
                 {
                     l.Params[sigid] = e;
@@ -136,15 +136,14 @@ namespace Chef.Win.UI
         }
 
         //Items
-        public static ToolStripItem VarSetItem(Triggerscript script, string text, int initialValue, VarType type, EventHandler<int> onEdit = null)
+        public static ToolStripItem VarSetItem(Triggerscript script, string text, Var currentVal, VarType type, EventHandler<Var> varChanged = null, EventHandler onEdit = null)
         {
             List<Var> selectionSet = script.TriggerVars.Values.Where(v => !v.IsNull && v.Type == type).ToList();
             selectionSet.Sort((l, r) =>
             {
                 return l.Name.CompareTo(r.Name);
             });
-            Var nullVar = GetOrAddNullVar(script, type);
-            selectionSet.Insert(0, nullVar);
+            selectionSet.Insert(0, null);
 
             ToolStripComboBox cb = new ToolStripComboBox();
 
@@ -152,12 +151,12 @@ namespace Chef.Win.UI
             cb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cb.AutoCompleteSource = AutoCompleteSource.ListItems;
 
-            Var curVar = script.TriggerVars[initialValue];
-            cb.SelectedIndex = selectionSet.IndexOf(curVar);
+            cb.SelectedIndex = selectionSet.IndexOf(currentVal);
 
             cb.SelectedIndexChanged += (s, e) =>
             {
-                onEdit?.Invoke(cb, ((Var)cb.Items[cb.SelectedIndex]).ID);
+                varChanged?.Invoke(cb, (Var)cb.Items[cb.SelectedIndex]);
+                onEdit?.Invoke(cb, EventArgs.Empty);
             };
             cb.KeyDown += (s, e) =>
             {
@@ -187,7 +186,7 @@ namespace Chef.Win.UI
 
                 if (setTrigger != -1 && setLogic != -1)
                 {
-                    Logics(script.Triggers[setTrigger], setSlot).ElementAt(setLogic).Params[setVar] = var.ID;
+                    Logics(script.Triggers[setTrigger], setSlot).ElementAt(setLogic).Params[setVar] = var;
                     onEdit?.Invoke(add, EventArgs.Empty);
                 }
             };

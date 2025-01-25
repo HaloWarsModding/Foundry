@@ -271,6 +271,7 @@ namespace Chef.Win.UI
                 AssetDatabase.SaveTriggerscript(ScriptName, Assets);
                 AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, false);
             }
+            Invalidate();
         }
         private void OnPaint(object o, PaintEventArgs e)
         {
