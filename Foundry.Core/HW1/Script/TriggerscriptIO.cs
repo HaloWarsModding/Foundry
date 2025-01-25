@@ -139,7 +139,7 @@ namespace Chef.HW1.Script
             {
                 Effect eff = new Effect();
                 ReadTriggerLogicBase(effNode, script, eff, vars);
-                t.TriggerEffectsOnTrue.Add(eff);
+                t.TriggerEffectsOnFalse.Add(eff);
             }
         }
         private static void ReadTriggerLogicBase(XElement r, Triggerscript script, Logic l, Dictionary<int, Var> vars)
@@ -267,14 +267,14 @@ namespace Chef.HW1.Script
         }
         private static void WriteTriggerEffectsFalse(XElement triggerNode, Trigger trigger, Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
         {
-            XElement effTrue = new XElement("TriggerEffectsOnFalse");
-            triggerNode.Add(effTrue);
+            XElement effFalse = new XElement("TriggerEffectsOnFalse");
+            triggerNode.Add(effFalse);
 
             foreach (var eff in trigger.TriggerEffectsOnFalse)
             {
                 XElement effNode = new XElement("Effect");
                 WriteTriggerLogicBase(effNode, eff, varIds, nullVars);
-                effTrue.Add(effNode);
+                effFalse.Add(effNode);
             }
         }
         private static void WriteTriggerLogicBase(XElement logicNode, Logic logic, Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
