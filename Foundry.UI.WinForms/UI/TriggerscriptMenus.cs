@@ -83,29 +83,25 @@ namespace Chef.Win.UI
             ).ToArray());
             menu.Show(point);
         }
-        public static void ShowSetVarMenu(Triggerscript script, Trigger trigger, TriggerLogicSlot slot, int logic, int sigid, Point point, EventHandler onEdit = null)
+        public static void ShowSetVarMenu(Triggerscript script, Logic logic, int sigid, Point point, EventHandler onEdit = null)
         {
-            Logic l = Logics(trigger, slot).ElementAt(logic);
-            var spi = LogicParamInfos(SlotType(slot), l.DBID, l.Version);
+            var spi = LogicParamInfos(logic.Type, logic.DBID, logic.Version);
 
             if (!spi.ContainsKey(sigid)) return;
 
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.MouseHover += (s, e) => { menu.Focus(); };
             var paramInfo = spi[sigid];
-            Var currentVal = l.Params[sigid];
 
             //Info
             menu.Items.Add(new ToolStripLabel(paramInfo.Name + " [" + paramInfo.Type + "]"));
             menu.Items.Add(new ToolStripSeparator());
-            menu.Items.Add(VarAddItem(script, paramInfo.Type, trigger.ID, slot, logic, sigid, onEdit));
-            menu.Items.Add(VarSetItem(script, "Set...", currentVal, paramInfo.Type,
-                (s, e) =>
-                {
-                    l.Params[sigid] = e;
-                    onEdit?.Invoke(menu, EventArgs.Empty);
-                    menu.Close();
-                }));
+            menu.Items.Add(VarSetItem(script, logic, sigid, (s, e) =>
+            {
+                logic.Params[sigid] = e;
+                onEdit?.Invoke(menu, EventArgs.Empty);
+                menu.Close();
+            }));
 
             menu.Show(point);
         }
@@ -136,27 +132,33 @@ namespace Chef.Win.UI
         }
 
         //Items
-        public static ToolStripItem VarSetItem(Triggerscript script, string text, Var currentVal, VarType type, EventHandler<Var> varChanged = null, EventHandler onEdit = null)
+        public static ToolStripItem VarSetItem(Triggerscript script, Logic logic, int sigid, EventHandler<Var> varChanged = null)
         {
-            List<Var> selectionSet = script.TriggerVars.Values.Where(v => !v.IsNull && v.Type == type).ToList();
-            selectionSet.Sort((l, r) =>
+            var paramInfos = LogicParamInfos(logic.Type, logic.DBID, logic.Version);
+            var paramInfo = paramInfos[sigid];
+            List<Var> selectionSet = Variables(script, paramInfo.Type).ToList();
+            selectionSet.Insert(0, new Var() { Name = "NULL" });
+
+            int curIndex = 0;
+            if (logic.Params.ContainsKey(sigid) && logic.Params[sigid] != null)
             {
-                return l.Name.CompareTo(r.Name);
-            });
-            selectionSet.Insert(0, null);
+                curIndex = selectionSet.IndexOf(logic.Params[sigid]);
+            }
 
             ToolStripComboBox cb = new ToolStripComboBox();
-
             cb.Items.AddRange(selectionSet.ToArray());
+            cb.SelectedIndex = curIndex;
+            cb.ComboBox.DisplayMember = "Name";
             cb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cb.AutoCompleteSource = AutoCompleteSource.ListItems;
-
-            cb.SelectedIndex = selectionSet.IndexOf(currentVal);
-
             cb.SelectedIndexChanged += (s, e) =>
             {
-                varChanged?.Invoke(cb, (Var)cb.Items[cb.SelectedIndex]);
-                onEdit?.Invoke(cb, EventArgs.Empty);
+                Var selVar = null;
+                if (cb.SelectedIndex != 0)
+                {
+                    selVar = (Var)cb.Items[cb.SelectedIndex];
+                }
+                varChanged?.Invoke(cb, selVar);
             };
             cb.KeyDown += (s, e) =>
             {

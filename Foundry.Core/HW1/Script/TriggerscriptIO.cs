@@ -59,6 +59,11 @@ namespace Chef.HW1.Script
                         Value = v.Value == null ? "" : v.Value
                     };
 
+                    if (newVar.Name == "")
+                    {
+                        newVar.Name = "unnamed" + newVar.Type;
+                    }
+
                     if (!newVar.IsNull)
                     {
                         vars.Add(id, newVar);

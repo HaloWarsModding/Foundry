@@ -121,7 +121,7 @@ namespace Chef.Win.UI
                 Trigger t = Triggerscript.Triggers[selTrigger];
                 if (selVar != -1)
                 {
-                    ShowSetVarMenu(Triggerscript, t, selSlot, selLogic, selVar, PointToScreen(e.Location), (s, e) =>
+                    ShowSetVarMenu(Triggerscript, Logics(t, selSlot).ElementAt(selLogic), selVar, PointToScreen(e.Location), (s, e) =>
                     {
                         AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
                     });

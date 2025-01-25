@@ -180,10 +180,12 @@ namespace Chef.HW1.Script
         public int DBID { get; set; }
         public string Comment { get; set; }
         public Dictionary<int, Var> Params { get; set; }
+        public abstract LogicType Type { get; }
     }
     public class Effect : Logic
     {
         public Effect() : base() { }
+        public override LogicType Type { get { return LogicType.Effect; } }
     }
     public class Condition : Logic
     {
@@ -191,6 +193,7 @@ namespace Chef.HW1.Script
         public bool Invert { get; set; }
         public bool Async { get; set; }
         public int AsyncParameterKey { get; set; }
+        public override LogicType Type { get { return LogicType.Condition; } }
     }
     public class Trigger
     {

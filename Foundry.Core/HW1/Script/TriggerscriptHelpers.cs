@@ -408,9 +408,27 @@ namespace Chef.HW1.Script
             else if (slot == TriggerLogicSlot.EffectTrue) return trigger.TriggerEffectsOnTrue;
             else return trigger.TriggerEffectsOnFalse;
         }
+        public static IEnumerable<Var> Variables(Triggerscript script)
+        {
+            List<Var> vars = new List<Var>();
+            foreach (var t in script.Triggers.Values)
+            {
+                foreach (var l in Logics(t))
+                {
+                    foreach (var (sigid, var) in l.Params)
+                    {
+                        if (var != null && !vars.Contains(var))
+                        {
+                            vars.Add(var);
+                        }
+                    }
+                }
+            }
+            return vars;
+        }
         public static IEnumerable<Var> Variables(Triggerscript script, VarType type)
         {
-            return script.TriggerVars.Values.Where(v => v.Type == type);
+            return Variables(script).Where(v => v.Type == type);
         }
 
 
