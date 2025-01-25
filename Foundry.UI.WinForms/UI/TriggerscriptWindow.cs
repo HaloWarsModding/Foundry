@@ -116,57 +116,43 @@ namespace Chef.Win.UI
                 selVar = -1;
             }
 
+            //what to do when a menu edits something in the script:
+            EventHandler onEdit = (s, e) =>
+            {
+                AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
+                Invalidate();
+            };
+
             if (e.Button == MouseButtons.Right && selTrigger != -1)
             {
                 Trigger t = Triggerscript.Triggers[selTrigger];
                 if (selVar != -1)
                 {
-                    ShowSetVarMenu(Triggerscript, Logics(t, selSlot).ElementAt(selLogic), selVar, PointToScreen(e.Location), (s, e) =>
-                    {
-                        AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
-                    });
+                    ShowSetVarMenu(Triggerscript, Logics(t, selSlot).ElementAt(selLogic), selVar, PointToScreen(e.Location), onEdit);
                 }
                 else if (dropLogic != -1)
                 {
-                        ShowLogicAddMenu(Triggerscript, dropTrigger, dropSlot, dropLogic, PointToScreen(e.Location), (s, e) =>
-                        {
-                            AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
-                        });
+                        ShowLogicAddMenu(Triggerscript, dropTrigger, dropSlot, dropLogic, PointToScreen(e.Location), onEdit);
                 }
                 else if (selLogic != -1)
                 {
                     if (selSlot == TriggerLogicSlot.Condition)
-                        ShowConditionOptionsMenu((Condition)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location), (s, e) =>
-                        {
-                            AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
-                        });
+                        ShowConditionOptionsMenu((Condition)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location), onEdit);
                     else
-                        ShowEffectOptionsMenu((Effect)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location), (s, e) =>
-                        {
-                            AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
-                        });
+                        ShowEffectOptionsMenu((Effect)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location), onEdit);
                 }
                 else
                 {
-                    ShowTriggerOptionsMenu(t, e.Location, (s, e) =>
-                    {
-                        AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
-                    });
+                    ShowTriggerOptionsMenu(t, e.Location, onEdit);
                 }
             }
             else if (e.Button == MouseButtons.Right && dropTrigger != -1 && dropLogic != -1)
             {
-                ShowLogicAddMenu(Triggerscript, dropTrigger, dropSlot, dropLogic, PointToScreen(e.Location), (s, e) =>
-                {
-                    AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
-                });
+                ShowLogicAddMenu(Triggerscript, dropTrigger, dropSlot, dropLogic, PointToScreen(e.Location), onEdit);
             }
             else if (e.Button == MouseButtons.Right)
             {
-                ShowVarList(Triggerscript, PointToScreen(e.Location), (s, e) =>
-                {
-                    AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
-                });
+                ShowVarList(Triggerscript, PointToScreen(e.Location), onEdit);
             }
 
             MouseLast = e.Location;
