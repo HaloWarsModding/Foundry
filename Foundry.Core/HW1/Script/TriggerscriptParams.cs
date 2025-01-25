@@ -30,8 +30,8 @@ namespace Chef.HW1.Script
 
         public static Color TextColor { get; } = Color.White;
         public static Color BodyColor { get; } = Color.FromArgb(90, 90, 90);
-        public static Color TrimColor { get; } = Color.FromArgb(70, 70, 70);
-        public static Color UnitColor { get; } = Color.FromArgb(60, 60, 60);
+        public static Color TrimColor { get; } = Color.FromArgb(60, 60, 60);
+        public static Color UnitColor { get; } = Color.FromArgb(70, 70, 70);
         public static Color TriggerHeaderColor { get; } = Color.CadetBlue;
         public static Color TriggerActiveColor { get; } = Color.Yellow;
         public static Color EffectHeaderColor { get; } = Color.RebeccaPurple;
