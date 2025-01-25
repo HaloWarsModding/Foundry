@@ -250,7 +250,7 @@ namespace Chef.HW1.Script
             foreach (var cnd in trigger.Conditions)
             {
                 XElement cndNode = new XElement("Condition");
-                WriteTriggerLogicBase(cndNode, cnd, TriggerscriptHelpers.LogicParamInfos(LogicType.Condition, cnd.DBID, cnd.Version), varIds, nullVars);
+                WriteTriggerLogicBase(cndNode, cnd, varIds, nullVars);
                 cndNode.SetAttributeValue("Async", cnd.Async);
                 cndNode.SetAttributeValue("AsyncParameterKey", cnd.AsyncParameterKey);
                 cndNode.SetAttributeValue("Invert", cnd.Invert);
@@ -266,7 +266,7 @@ namespace Chef.HW1.Script
             foreach (var eff in trigger.TriggerEffectsOnTrue)
             {
                 XElement effNode = new XElement("Effect");
-                WriteTriggerLogicBase(effNode, eff, TriggerscriptHelpers.LogicParamInfos(LogicType.Effect, eff.DBID, eff.Version), varIds, nullVars);
+                WriteTriggerLogicBase(effNode, eff, varIds, nullVars);
                 effTrue.Add(effNode);
             }
         }
@@ -279,12 +279,11 @@ namespace Chef.HW1.Script
             foreach (var eff in trigger.TriggerEffectsOnFalse)
             {
                 XElement effNode = new XElement("Effect");
-                WriteTriggerLogicBase(effNode, eff, TriggerscriptHelpers.LogicParamInfos(LogicType.Effect, eff.DBID, eff.Version), varIds, nullVars);
+                WriteTriggerLogicBase(effNode, eff, varIds, nullVars);
                 effTrue.Add(effNode);
             }
         }
-        private static void WriteTriggerLogicBase(XElement logicNode, Logic logic, Dictionary<int, LogicParamInfo> pars,
-            Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
+        private static void WriteTriggerLogicBase(XElement logicNode, Logic logic, Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
         {
             logicNode.SetAttributeValue("Type", "");
             logicNode.SetAttributeValue("DBID", logic.DBID);
@@ -292,7 +291,7 @@ namespace Chef.HW1.Script
             logicNode.SetAttributeValue("ID", 0);
             logicNode.SetAttributeValue("Comment", logic.Comment);
 
-            foreach (var (sigid, par) in pars)
+            foreach (var (sigid, par) in TriggerscriptHelpers.LogicParamInfos(logic.Type, logic.DBID, logic.Version))
             {
                 XElement paramNode = new XElement(par.Output ? "Output" : "Input");
                 paramNode.SetAttributeValue("SigID", sigid);
