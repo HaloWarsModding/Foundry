@@ -530,8 +530,11 @@ namespace Chef.HW1.Script
                     {
                         foreach (int sigid in LogicParamInfos(SlotType(slot), logic.DBID, logic.Version).Keys)
                         {
-                            var v = logic.Params[sigid];
-                            if (v == null) continue;
+                            //if (logic.Params.ContainsKey(sigid))
+                            //{
+                            //    var v = logic.Params[sigid];
+                            //    if (v == null) continue;
+                            //}
                         }
                     }
                 }
