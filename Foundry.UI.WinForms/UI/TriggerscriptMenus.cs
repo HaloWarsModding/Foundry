@@ -206,13 +206,28 @@ namespace Chef.Win.UI
                 ToolStripMenuItem b = new ToolStripMenuItem(LogicName(t, i));
                 b.Click += (s, e) =>
                 {
-                    var logic = LogicFromId(t, i, LogicVersions(t, i).First());
                     if (slot == TriggerLogicSlot.Condition)
-                        trigger.Conditions.Insert(index, (Condition)logic);
-                    if (slot == TriggerLogicSlot.EffectTrue)
-                        trigger.TriggerEffectsOnTrue.Insert(index, (Effect)logic);
-                    if (slot == TriggerLogicSlot.EffectFalse)
-                        trigger.TriggerEffectsOnFalse.Insert(index, (Effect)logic);
+                    {
+                        Condition cnd = new Condition()
+                        {
+                            DBID = i,
+                            Version = LogicVersions(t, i).First()
+                        };
+                        trigger.Conditions.Insert(index, cnd);
+                    }
+                    else
+                    {
+                        Effect eff = new Effect()
+                        {
+                            DBID = i,
+                            Version = LogicVersions(t, i).First()
+                        };
+                        if (slot == TriggerLogicSlot.EffectTrue)
+                            trigger.TriggerEffectsOnTrue.Insert(index, eff);
+                        if (slot == TriggerLogicSlot.EffectFalse)
+                            trigger.TriggerEffectsOnFalse.Insert(index, eff);
+                    }
+
                     onEdit?.Invoke(b, EventArgs.Empty);
                 };
 

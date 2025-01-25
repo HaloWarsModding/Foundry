@@ -751,26 +751,6 @@ namespace Chef.HW1.Script
             return slot == TriggerLogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
         }
 
-        public static Logic LogicFromId(LogicType type, int dbid, int version)
-        {
-            if (LogicIds(type).Contains(dbid)
-                &&
-                LogicVersions(type, dbid).Contains(version))
-            {
-                Logic l;
-
-                if (type == LogicType.Effect) l = new Effect();
-                else if (type == LogicType.Condition) l = new Condition();
-                else return null;
-
-                l.DBID = dbid;
-                l.Version = version;
-                l.Comment = "";
-                return l;
-            }
-            return null;
-        }
-
         public static bool VarTypeIsEnum(VarType type)
         {
             if (!VarTypeIsEnumFor(type, LogicType.Condition)) return false;
