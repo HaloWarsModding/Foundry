@@ -488,7 +488,14 @@ namespace Chef.HW1.Script
         {
             LogicDatabase db = TableForType(type);
 
-            return db.Types.GetValueOrDefault(dbid, new LogicTypeInfo() { Name = "" }).Name;
+            if (db.Types.ContainsKey(dbid))
+            {
+                return db.Types[dbid].Name;
+            }
+            else
+            {
+                return "Uknown" + type + dbid;
+            }
         }
         public static string LogicCategory(LogicType type, int dbid)
         {
