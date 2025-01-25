@@ -96,11 +96,14 @@ namespace Chef.Win.UI
             //Info
             menu.Items.Add(new ToolStripLabel(paramInfo.Name + " [" + paramInfo.Type + "]"));
             menu.Items.Add(new ToolStripSeparator());
+            menu.Items.Add(VarNewItem(script, logic, sigid, (s, e) =>
+            {
+                onEdit?.Invoke(menu, EventArgs.Empty);
+
+            }));
             menu.Items.Add(VarSetItem(script, logic, sigid, (s, e) =>
             {
-                logic.Params[sigid] = e;
                 onEdit?.Invoke(menu, EventArgs.Empty);
-                menu.Close();
             }));
 
             menu.Show(point);
@@ -132,7 +135,7 @@ namespace Chef.Win.UI
         }
 
         //Items
-        public static ToolStripItem VarSetItem(Triggerscript script, Logic logic, int sigid, EventHandler<Var> varChanged = null)
+        public static ToolStripItem VarSetItem(Triggerscript script, Logic logic, int sigid, EventHandler onEdit = null)
         {
             var paramInfos = LogicParamInfos(logic.Type, logic.DBID, logic.Version);
             var paramInfo = paramInfos[sigid];
@@ -141,7 +144,7 @@ namespace Chef.Win.UI
             int curIndex = 0;
             if (logic.Params.ContainsKey(sigid) && logic.Params[sigid] != null)
             {
-                curIndex = selectionSet.IndexOf(logic.Params[sigid]);
+                curIndex = selectionSet.IndexOf(logic.Params[sigid]) + 1; //+1 because NULL is index 0.
             }
 
             ToolStripComboBox cb = new ToolStripComboBox();
@@ -158,7 +161,8 @@ namespace Chef.Win.UI
                 {
                     selVar = (Var)cb.Items[cb.SelectedIndex];
                 }
-                varChanged?.Invoke(cb, selVar);
+                logic.Params[sigid] = selVar; //set the param value
+                onEdit?.Invoke(cb, EventArgs.Empty);
             };
             cb.KeyDown += (s, e) =>
             {
@@ -167,30 +171,29 @@ namespace Chef.Win.UI
 
             return cb;
         }
-        public static ToolStripItem VarAddItem(Triggerscript script, VarType type, int setTrigger = -1, TriggerLogicSlot setSlot = TriggerLogicSlot.Condition, int setLogic = -1, int setVar = -1, EventHandler onEdit = null)
+        public static ToolStripItem VarNewItem(Triggerscript script, Logic logic, int sigid, EventHandler onEdit = null)
         {
+            var paramInfos = LogicParamInfos(logic.Type, logic.DBID, logic.Version);
+            var paramInfo = paramInfos[sigid];
+
             ToolStripMenuItem add = new ToolStripMenuItem();
 
-            add.Text = "Add...";
+            add.Text = "New...";
             add.Click += (s, e) =>
             {
                 Var var = new Var()
                 {
-                    Name = "new" + type,
+                    Name = "new" + paramInfo.Type,
                     ID = NextVarId(script),
                     IsNull = false,
-                    Type = type,
+                    Type = paramInfo.Type,
                     Value = "",
                     Refs = new List<int>()
                 };
-                script.TriggerVars.Add(var.ID, var);
-                ShowVarOptionsMenu(var, add.Owner.Location);
 
-                if (setTrigger != -1 && setLogic != -1)
-                {
-                    Logics(script.Triggers[setTrigger], setSlot).ElementAt(setLogic).Params[setVar] = var;
-                    onEdit?.Invoke(add, EventArgs.Empty);
-                }
+                logic.Params[sigid] = var; //set the param value
+
+                onEdit?.Invoke(add, EventArgs.Empty);
             };
 
             return add;
