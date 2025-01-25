@@ -166,7 +166,7 @@ namespace Chef.HW1.Script
                 }
             }
         }
-    
+
 
         public static void WriteXml(Stream stream, Triggerscript script)
         {
@@ -279,7 +279,7 @@ namespace Chef.HW1.Script
         }
         private static void WriteTriggerLogicBase(XElement logicNode, Logic logic, Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
         {
-            logicNode.SetAttributeValue("Type", "");
+            logicNode.SetAttributeValue("Type", TriggerscriptHelpers.LogicName(logic.Type, logic.DBID));
             logicNode.SetAttributeValue("DBID", logic.DBID);
             logicNode.SetAttributeValue("Version", logic.Version);
             logicNode.SetAttributeValue("ID", 0);
@@ -289,6 +289,8 @@ namespace Chef.HW1.Script
             {
                 XElement paramNode = new XElement(par.Output ? "Output" : "Input");
                 paramNode.SetAttributeValue("SigID", sigid);
+                paramNode.SetAttributeValue("Name", par.Name);
+                paramNode.SetAttributeValue("Type", par.Type);
 
                 //if the logic does not have a value for this sigid, or its value is null...
                 if (!logic.Params.ContainsKey(sigid) || logic.Params[sigid] == null)

@@ -70,7 +70,7 @@ namespace Chef.Win
             window.Browser.Update(window.Assets, window.GpuAssets, window.DockPanel);
 
             TriggerscriptWindow ts = new TriggerscriptWindow(window.Assets, window.GpuAssets);
-            ts.ScriptName = "civilianpanic";
+            ts.ScriptName = "skirmishplayer2";
             ts.Show(window.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
             //AssetDatabase.SaveTriggerscript("ammo2", window.Assets, true);
 #endif
