@@ -41,7 +41,6 @@ namespace Chef.HW1.Script
                 }
             }
         }
-
         private static void ReadVars(XElement r, Triggerscript script, Dictionary<int, Var> vars)
         {
             foreach(var v in r.Elements())
@@ -96,7 +95,6 @@ namespace Chef.HW1.Script
                 script.Triggers.Add(id, trigger);
             }
         }
-
         private static void ReadTriggerConditions(XElement r, Triggerscript script, Trigger t, Dictionary<int, Var> vars)
         {
             XElement conditions = null;
@@ -144,7 +142,6 @@ namespace Chef.HW1.Script
                 t.TriggerEffectsOnTrue.Add(eff);
             }
         }
-
         private static void ReadTriggerLogicBase(XElement r, Triggerscript script, Logic l, Dictionary<int, Var> vars)
         {
             XAttribute comment = r.Attribute("Comment");
@@ -238,8 +235,7 @@ namespace Chef.HW1.Script
                 triggersNode.Add(triggerNode);
             }
         }
-        private static void WriteTriggerConditions(XElement triggerNode, Trigger trigger,
-            Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
+        private static void WriteTriggerConditions(XElement triggerNode, Trigger trigger, Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
         {
             XElement triggerConditions = new XElement("TriggerConditions");
             triggerNode.Add(triggerConditions);
@@ -257,8 +253,7 @@ namespace Chef.HW1.Script
                 andOr.Add(cndNode);
             }
         }
-        private static void WriteTriggerEffectsTrue(XElement triggerNode, Trigger trigger,
-            Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
+        private static void WriteTriggerEffectsTrue(XElement triggerNode, Trigger trigger, Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
         {
             XElement effTrue = new XElement("TriggerEffectsOnTrue");
             triggerNode.Add(effTrue);
@@ -270,8 +265,7 @@ namespace Chef.HW1.Script
                 effTrue.Add(effNode);
             }
         }
-        private static void WriteTriggerEffectsFalse(XElement triggerNode, Trigger trigger,
-            Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
+        private static void WriteTriggerEffectsFalse(XElement triggerNode, Trigger trigger, Dictionary<Var, int> varIds, Dictionary<VarType, Var> nullVars)
         {
             XElement effTrue = new XElement("TriggerEffectsOnFalse");
             triggerNode.Add(effTrue);

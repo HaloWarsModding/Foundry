@@ -12,7 +12,7 @@ using static Chef.HW1.Script.TriggerscriptParams;
 
 namespace Chef.HW1.Script
 {
-    public enum TriggerLogicSlot
+    public enum LogicSlot
     {
         Condition,
         EffectTrue,
@@ -137,12 +137,6 @@ namespace Chef.HW1.Script
         UserClassType,
     }
 
-    public class Group
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public List<int> Values { get; set; }
-    }
     public class Var
     {
         public VarType Type { get; set; }
@@ -215,10 +209,8 @@ namespace Chef.HW1.Script
     {
         public Triggerscript()
         {
-            TriggerGroups = new Dictionary<int, Group>();
             Triggers = new Dictionary<int, Trigger>();
         }
-        public Dictionary<int, Group> TriggerGroups { get; set; }
         public Dictionary<int, Trigger> Triggers { get; set; }
     }
 }

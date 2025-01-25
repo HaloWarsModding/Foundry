@@ -16,7 +16,7 @@ namespace Chef.HW1.Script
         public Selection()
         {
             TriggerId = -1;
-            LogicType = TriggerLogicSlot.Condition;
+            LogicType = LogicSlot.Condition;
             LogicIndex = -1;
             InsertIndex = -1;
             VarSigId = -1;
@@ -24,7 +24,7 @@ namespace Chef.HW1.Script
         }
 
         public int TriggerId { get; set; }
-        public TriggerLogicSlot LogicType { get; set; }
+        public LogicSlot LogicType { get; set; }
         public int LogicIndex { get; set; }
         public int InsertIndex { get; set; }
         public int VarSigId { get; set; }
@@ -134,14 +134,14 @@ namespace Chef.HW1.Script
         }
         public static Rectangle BoundsTrigger(Trigger trigger)
         {
-            Rectangle bounds = BoundsLogicSlot(trigger, TriggerLogicSlot.EffectFalse);
+            Rectangle bounds = BoundsLogicSlot(trigger, LogicSlot.EffectFalse);
             bounds.Width = bounds.Right - (int)trigger.X;
             bounds.X = (int)trigger.X;
             bounds.Y = (int)trigger.Y;
             bounds.Inflate(Margin * 5, Margin * 5);
             return bounds;
         }
-        public static Rectangle BoundsLogicSlot(Trigger trigger, TriggerLogicSlot type)
+        public static Rectangle BoundsLogicSlot(Trigger trigger, LogicSlot type)
         {
             Rectangle bounds = new Rectangle();
             bounds.X = (int)trigger.X;
@@ -171,7 +171,7 @@ namespace Chef.HW1.Script
             bounds.Width = trigger.Conditions.Count != 0
                 ? (trigger.Conditions.Count * (DefaultWidth + LogicSpacing)) - LogicSpacing
                 : DefaultWidth;
-            if (type == TriggerLogicSlot.Condition) 
+            if (type == LogicSlot.Condition) 
                 return bounds;
 
             bounds.X += bounds.Width;
@@ -179,14 +179,14 @@ namespace Chef.HW1.Script
             bounds.Width = trigger.TriggerEffectsOnTrue.Count != 0 
                 ? (trigger.TriggerEffectsOnTrue.Count * (DefaultWidth + LogicSpacing)) - LogicSpacing 
                 : DefaultWidth;
-            if (type == TriggerLogicSlot.EffectTrue)
+            if (type == LogicSlot.EffectTrue)
                 return bounds;
 
             bounds.X += bounds.Width;
             bounds.Width = trigger.TriggerEffectsOnFalse.Count != 0
                 ? (trigger.TriggerEffectsOnFalse.Count * (DefaultWidth + LogicSpacing)) - LogicSpacing
                 : DefaultWidth;
-            if (type == TriggerLogicSlot.EffectFalse)
+            if (type == LogicSlot.EffectFalse)
             {
                 if (!trigger.ConditionalTrigger && trigger.TriggerEffectsOnFalse.Count == 0)
                 {
@@ -201,7 +201,7 @@ namespace Chef.HW1.Script
 
             return bounds;
         }
-        public static Rectangle BoundsLogicBody(Trigger trigger, TriggerLogicSlot type, int index)
+        public static Rectangle BoundsLogicBody(Trigger trigger, LogicSlot type, int index)
         {
             IEnumerable<Logic> logics = Logics(trigger, type);
 
@@ -214,7 +214,7 @@ namespace Chef.HW1.Script
             }
 
             Logic cur = logics.ElementAt(index);
-            int varCount = LogicParamInfos(type == TriggerLogicSlot.Condition ? LogicType.Condition : LogicType.Effect, cur.DBID, cur.Version).Count;
+            int varCount = LogicParamInfos(type == LogicSlot.Condition ? LogicType.Condition : LogicType.Effect, cur.DBID, cur.Version).Count;
 
             return new Rectangle(
                 loc.X,
@@ -223,9 +223,9 @@ namespace Chef.HW1.Script
                 HeaderHeight + (varCount * (VarHeight + VarSpacing)) + VarHeight
                 );
         }
-        public static Rectangle BoundsLogicInsert(Trigger trigger, TriggerLogicSlot type, int index)
+        public static Rectangle BoundsLogicInsert(Trigger trigger, LogicSlot type, int index)
         {
-            if (type == TriggerLogicSlot.EffectFalse && !trigger.ConditionalTrigger)
+            if (type == LogicSlot.EffectFalse && !trigger.ConditionalTrigger)
             {
                 return Rectangle.Empty;
             }
@@ -234,10 +234,10 @@ namespace Chef.HW1.Script
             var logics = Logics(trigger, type);
 
             Rectangle ubounds = BoundsLogicSlot(trigger, type);
-            if (type != TriggerLogicSlot.EffectFalse)
+            if (type != LogicSlot.EffectFalse)
             {
                 //grab the height from this, if we dont already have it.
-                ubounds.Height = BoundsLogicSlot(trigger, TriggerLogicSlot.EffectFalse).Height;
+                ubounds.Height = BoundsLogicSlot(trigger, LogicSlot.EffectFalse).Height;
             }
 
             if (logics.Count() == 0)
@@ -255,7 +255,7 @@ namespace Chef.HW1.Script
 
             return nbounds;
         }
-        public static Rectangle BoundsParamName(Trigger trigger, TriggerLogicSlot type, int index, int paramIndex)
+        public static Rectangle BoundsParamName(Trigger trigger, LogicSlot type, int index, int paramIndex)
         {
             Rectangle logicBounds = BoundsLogicBody(trigger, type, index);
             Rectangle ret = new Rectangle(
@@ -265,7 +265,7 @@ namespace Chef.HW1.Script
                 VarNameHeight);
             return ret;
         }
-        public static Rectangle BoundsParamValue(Trigger trigger, TriggerLogicSlot type, int index, int paramIndex)
+        public static Rectangle BoundsParamValue(Trigger trigger, LogicSlot type, int index, int paramIndex)
         {
             Rectangle logicBounds = BoundsLogicBody(trigger, type, index);
             Rectangle ret = new Rectangle(
@@ -278,10 +278,10 @@ namespace Chef.HW1.Script
 
 
         //Selection
-        public static void SelectBoundsBody(Triggerscript script, Point point, out int trigger, out TriggerLogicSlot slot, out int logic)
+        public static void SelectBoundsBody(Triggerscript script, Point point, out int trigger, out LogicSlot slot, out int logic)
         {
             trigger = -1;
-            slot = TriggerLogicSlot.Condition;
+            slot = LogicSlot.Condition;
             logic = -1;
 
             foreach (var t in script.Triggers.Values.Reverse())
@@ -290,7 +290,7 @@ namespace Chef.HW1.Script
                 {
                     trigger = t.ID;
 
-                    foreach (var s in Enum.GetValues<TriggerLogicSlot>())
+                    foreach (var s in Enum.GetValues<LogicSlot>())
                     {
                         var l = Logics(t, s);
                         for (int i = 0; i < l.Count(); i++)
@@ -307,15 +307,15 @@ namespace Chef.HW1.Script
             }
             return;
         }
-        public static void SelectBoundsInsert(Triggerscript script, Point point, out int trigger, out TriggerLogicSlot slot, out int logic)
+        public static void SelectBoundsInsert(Triggerscript script, Point point, out int trigger, out LogicSlot slot, out int logic)
         {
             trigger = -1;
-            slot = TriggerLogicSlot.Condition;
+            slot = LogicSlot.Condition;
             logic = -1;
 
             foreach (var (tid, t) in script.Triggers.Reverse())
             {
-                foreach (var s in Enum.GetValues<TriggerLogicSlot>())
+                foreach (var s in Enum.GetValues<LogicSlot>())
                 {
                     if (BoundsLogicSlot(t, s).Contains(point))
                     {
@@ -334,7 +334,7 @@ namespace Chef.HW1.Script
             }
             return;
         }
-        public static void SelectBoundsParamValue(Triggerscript script, Point point, out int trigger, out TriggerLogicSlot slot, out int logic, out int param)
+        public static void SelectBoundsParamValue(Triggerscript script, Point point, out int trigger, out LogicSlot slot, out int logic, out int param)
         {
             param = -1;
             SelectBoundsBody(script, point, out trigger, out slot, out logic);
@@ -345,9 +345,7 @@ namespace Chef.HW1.Script
             var paramInfos = LogicParamInfos(SlotType(slot), l.DBID, l.Version);
             for (int i = 0; i < paramInfos.Count; i++)
             {
-                if (//ParamNameBounds(t, slot, logic, i).Contains(point)
-                    //||
-                    BoundsParamValue(t, slot, logic, i).Contains(point))
+                if (BoundsParamValue(t, slot, logic, i).Contains(point))
                 {
                     param = paramInfos.ElementAt(i).Key;
                     return;
@@ -361,15 +359,15 @@ namespace Chef.HW1.Script
         {
             return
             [
-                ..Logics(trigger, TriggerLogicSlot.Condition),
-                ..Logics(trigger, TriggerLogicSlot.EffectTrue),
-                ..Logics(trigger, TriggerLogicSlot.EffectFalse),
+                ..Logics(trigger, LogicSlot.Condition),
+                ..Logics(trigger, LogicSlot.EffectTrue),
+                ..Logics(trigger, LogicSlot.EffectFalse),
             ];
         }
-        public static IEnumerable<Logic> Logics(Trigger trigger, TriggerLogicSlot slot)
+        public static IEnumerable<Logic> Logics(Trigger trigger, LogicSlot slot)
         {
-            if (slot == TriggerLogicSlot.Condition) return trigger.Conditions;
-            else if (slot == TriggerLogicSlot.EffectTrue) return trigger.TriggerEffectsOnTrue;
+            if (slot == LogicSlot.Condition) return trigger.Conditions;
+            else if (slot == LogicSlot.EffectTrue) return trigger.TriggerEffectsOnTrue;
             else return trigger.TriggerEffectsOnFalse;
         }
         public static IEnumerable<Var> Variables(Triggerscript script)
@@ -397,13 +395,13 @@ namespace Chef.HW1.Script
 
 
         //Transformations
-        public static bool TransferLogic(Trigger fromTrigger, TriggerLogicSlot fromType, int fromIndex, Trigger toTrigger, TriggerLogicSlot toType, int toIndex)
+        public static bool TransferLogic(Trigger fromTrigger, LogicSlot fromType, int fromIndex, Trigger toTrigger, LogicSlot toType, int toIndex)
         {
             if (!CanTransfer(fromType, toType)) return false;
             //if (fromIndex >= TriggerLogicCount(fromTrigger, fromType)) return false;
             //if (toIndex >= TriggerLogicCount(toTrigger, toType)) return false;
 
-            if (fromType == TriggerLogicSlot.Condition && toType == TriggerLogicSlot.Condition)
+            if (fromType == LogicSlot.Condition && toType == LogicSlot.Condition)
             {
                 Condition move = fromTrigger.Conditions[fromIndex];
                 fromTrigger.Conditions.Remove(move);
@@ -413,24 +411,24 @@ namespace Chef.HW1.Script
 
 
             Effect eff = null;
-            if (fromType == TriggerLogicSlot.EffectTrue)
+            if (fromType == LogicSlot.EffectTrue)
             {
                 eff = fromTrigger.TriggerEffectsOnTrue[fromIndex];
                 fromTrigger.TriggerEffectsOnTrue.Remove(eff);
             }
-            if (fromType == TriggerLogicSlot.EffectFalse)
+            if (fromType == LogicSlot.EffectFalse)
             {
                 eff = fromTrigger.TriggerEffectsOnFalse[fromIndex];
                 fromTrigger.TriggerEffectsOnFalse.Remove(eff);
             }
             if (eff == null) return false;
 
-            if (toType == TriggerLogicSlot.EffectTrue)
+            if (toType == LogicSlot.EffectTrue)
             {
                 toTrigger.TriggerEffectsOnTrue.Insert(toIndex, eff);
                 return true;
             }
-            if (toType == TriggerLogicSlot.EffectFalse)
+            if (toType == LogicSlot.EffectFalse)
             {
                 toTrigger.TriggerEffectsOnFalse.Insert(toIndex, eff);
                 return true;
@@ -438,16 +436,13 @@ namespace Chef.HW1.Script
 
             return false;
         }
-        public static bool CanTransfer(TriggerLogicSlot from, TriggerLogicSlot to)
+        public static bool CanTransfer(LogicSlot from, LogicSlot to)
         {
             if (from == to) return true;
-            if (from == TriggerLogicSlot.EffectTrue && to == TriggerLogicSlot.EffectFalse) return true;
-            if (from == TriggerLogicSlot.EffectFalse && to == TriggerLogicSlot.EffectTrue) return true;
+            if (from == LogicSlot.EffectTrue && to == LogicSlot.EffectFalse) return true;
+            if (from == LogicSlot.EffectFalse && to == LogicSlot.EffectTrue) return true;
             return false;
         }
-
-        
-        //Validation
 
 
         //Static param info
@@ -746,9 +741,9 @@ namespace Chef.HW1.Script
 
             return varTypeEnum;
         }
-        public static LogicType SlotType(TriggerLogicSlot slot)
+        public static LogicType SlotType(LogicSlot slot)
         {
-            return slot == TriggerLogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
+            return slot == LogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
         }
 
         public static bool VarTypeIsEnum(VarType type)

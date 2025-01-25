@@ -116,7 +116,7 @@ namespace Chef.Win.UI
 
             menu.Show(point);
         }
-        public static void ShowLogicAddMenu(Triggerscript script, int triggerId, TriggerLogicSlot slot, int logicIndex, Point point, EventHandler onEdit = null)
+        public static void ShowLogicAddMenu(Triggerscript script, int triggerId, LogicSlot slot, int logicIndex, Point point, EventHandler onEdit = null)
         {
             Trigger trigger = script.Triggers[triggerId];
             ContextMenuStrip menu = new ContextMenuStrip();
@@ -194,10 +194,10 @@ namespace Chef.Win.UI
 
             return add;
         }
-        public static ToolStripItem LogicAddItem(Trigger trigger, TriggerLogicSlot slot, int index, EventHandler onEdit = null)
+        public static ToolStripItem LogicAddItem(Trigger trigger, LogicSlot slot, int index, EventHandler onEdit = null)
         {
             ToolStripMenuItem root = new ToolStripMenuItem("Add...");
-            LogicType t = slot == TriggerLogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
+            LogicType t = slot == LogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
 
             Dictionary<string, ToolStripMenuItem> categories = new Dictionary<string, ToolStripMenuItem>();
 
@@ -206,7 +206,7 @@ namespace Chef.Win.UI
                 ToolStripMenuItem b = new ToolStripMenuItem(LogicName(t, i));
                 b.Click += (s, e) =>
                 {
-                    if (slot == TriggerLogicSlot.Condition)
+                    if (slot == LogicSlot.Condition)
                     {
                         Condition cnd = new Condition()
                         {
@@ -222,9 +222,9 @@ namespace Chef.Win.UI
                             DBID = i,
                             Version = LogicVersions(t, i).First()
                         };
-                        if (slot == TriggerLogicSlot.EffectTrue)
+                        if (slot == LogicSlot.EffectTrue)
                             trigger.TriggerEffectsOnTrue.Insert(index, eff);
-                        if (slot == TriggerLogicSlot.EffectFalse)
+                        if (slot == LogicSlot.EffectFalse)
                             trigger.TriggerEffectsOnFalse.Insert(index, eff);
                     }
 

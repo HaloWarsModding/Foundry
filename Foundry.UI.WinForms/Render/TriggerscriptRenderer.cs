@@ -43,9 +43,9 @@ namespace Chef.Win.Render
         {
             DrawBackdrop(g, trigger, sel.TriggerId, sel.LogicIndex, drawDetail);
             DrawLogicHeaders(g, script, trigger, drawDetail);
-            DrawLogicBases(g, script, trigger, TriggerLogicSlot.Condition, sel, drawDetail);
-            DrawLogicBases(g, script, trigger, TriggerLogicSlot.EffectTrue, sel, drawDetail);
-            DrawLogicBases(g, script, trigger, TriggerLogicSlot.EffectFalse, sel, drawDetail);
+            DrawLogicBases(g, script, trigger, LogicSlot.Condition, sel, drawDetail);
+            DrawLogicBases(g, script, trigger, LogicSlot.EffectTrue, sel, drawDetail);
+            DrawLogicBases(g, script, trigger, LogicSlot.EffectFalse, sel, drawDetail);
         }
         private static void DrawBackdrop(Graphics g, Trigger trigger, int selectedTrigger, int selectedLogic, bool detail)
         {
@@ -72,12 +72,12 @@ namespace Chef.Win.Render
                 });
             }
         }
-        private static void DrawLogicBases(Graphics g, Triggerscript script, Trigger trigger, TriggerLogicSlot slot, Selection sel, bool detail)
+        private static void DrawLogicBases(Graphics g, Triggerscript script, Trigger trigger, LogicSlot slot, Selection sel, bool detail)
         {
             if (!detail) return;
 
             IEnumerable<Logic> logics = Logics(trigger, slot);
-            Color headerColor = slot == TriggerLogicSlot.Condition ? ConditionHeaderColor : EffectHeaderColor;
+            Color headerColor = slot == LogicSlot.Condition ? ConditionHeaderColor : EffectHeaderColor;
 
             for (int i = 0; i < logics.Count(); i++)
             {
@@ -243,7 +243,7 @@ namespace Chef.Win.Render
             bounds.Y += HeaderHeight;
             Rectangle lbounds;
 
-            lbounds = BoundsLogicSlot(trigger, TriggerLogicSlot.Condition);
+            lbounds = BoundsLogicSlot(trigger, LogicSlot.Condition);
             lbounds.Height = bounds.Height;
             lbounds.Y = bounds.Y;
             lbounds.Inflate(0, -2);
@@ -258,7 +258,7 @@ namespace Chef.Win.Render
                 LineAlignment = StringAlignment.Center,
             });
 
-            lbounds = BoundsLogicSlot(trigger, TriggerLogicSlot.EffectTrue);
+            lbounds = BoundsLogicSlot(trigger, LogicSlot.EffectTrue);
             lbounds.Height = bounds.Height;
             lbounds.Y = bounds.Y;
             lbounds.Inflate(0, -2);
@@ -272,7 +272,7 @@ namespace Chef.Win.Render
                 LineAlignment = StringAlignment.Center,
             });
 
-            lbounds = BoundsLogicSlot(trigger, TriggerLogicSlot.EffectFalse);
+            lbounds = BoundsLogicSlot(trigger, LogicSlot.EffectFalse);
             lbounds.Height = bounds.Height;
             lbounds.Y = bounds.Y;
             lbounds.Inflate(0, -2);

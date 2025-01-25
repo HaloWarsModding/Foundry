@@ -67,9 +67,9 @@ namespace Chef.Win.UI
         private Point MouseLast { get; set; }
 
         private int selTrigger, selLogic, selVar;
-        private TriggerLogicSlot selSlot;
+        private LogicSlot selSlot;
         private int dropTrigger, dropLogic;
-        private TriggerLogicSlot dropSlot;
+        private LogicSlot dropSlot;
 
         public TriggerscriptWindow(AssetCache assets, GpuCache gassets)
         {
@@ -136,7 +136,7 @@ namespace Chef.Win.UI
                 }
                 else if (selLogic != -1)
                 {
-                    if (selSlot == TriggerLogicSlot.Condition)
+                    if (selSlot == LogicSlot.Condition)
                         ShowConditionOptionsMenu((Condition)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location), onEdit);
                     else
                         ShowEffectOptionsMenu((Effect)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location), onEdit);
