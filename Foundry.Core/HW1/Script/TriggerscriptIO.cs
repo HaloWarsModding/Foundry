@@ -117,7 +117,13 @@ namespace Chef.HW1.Script
                 cnd.Async = bool.Parse(cndNode.Attribute("Async").Value);
                 cnd.AsyncParameterKey = int.Parse(cndNode.Attribute("AsyncParameterKey").Value);
                 ReadTriggerLogicBase(cndNode, script, cnd, vars);
-                t.Conditions.Add(cnd);
+
+                if (TriggerscriptHelpers.LogicIds(LogicType.Condition).Contains(cnd.DBID)
+                   &&
+                   TriggerscriptHelpers.LogicVersions(LogicType.Condition, cnd.DBID).Contains(cnd.Version))
+                {
+                    t.Conditions.Add(cnd);
+                }
             }
         }
         private static void ReadTriggerEffectsTrue(XElement r, Triggerscript script, Trigger t, Dictionary<int, Var> vars)
@@ -128,7 +134,13 @@ namespace Chef.HW1.Script
             {
                 Effect eff = new Effect();
                 ReadTriggerLogicBase(effNode, script, eff, vars);
-                t.TriggerEffectsOnTrue.Add(eff);
+
+                if (TriggerscriptHelpers.LogicIds(LogicType.Effect).Contains(eff.DBID)
+                   &&
+                   TriggerscriptHelpers.LogicVersions(LogicType.Effect, eff.DBID).Contains(eff.Version))
+                {
+                    t.TriggerEffectsOnTrue.Add(eff);
+                }
             }
         }
         private static void ReadTriggerEffectsFalse(XElement r, Triggerscript script, Trigger t, Dictionary<int, Var> vars)
@@ -139,7 +151,13 @@ namespace Chef.HW1.Script
             {
                 Effect eff = new Effect();
                 ReadTriggerLogicBase(effNode, script, eff, vars);
-                t.TriggerEffectsOnFalse.Add(eff);
+
+                if (TriggerscriptHelpers.LogicIds(LogicType.Effect).Contains(eff.DBID)
+                    && 
+                    TriggerscriptHelpers.LogicVersions(LogicType.Effect, eff.DBID).Contains(eff.Version))
+                {
+                    t.TriggerEffectsOnFalse.Add(eff);
+                }
             }
         }
         private static void ReadTriggerLogicBase(XElement r, Triggerscript script, Logic l, Dictionary<int, Var> vars)
