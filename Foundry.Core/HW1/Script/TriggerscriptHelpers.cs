@@ -105,6 +105,7 @@ namespace Chef.HW1.Script
         public Dictionary<int, LogicTypeInfo> Types { get; set; } = new Dictionary<int, LogicTypeInfo>();
     }
 
+
     public static class TriggerscriptHelpers
     {
         //Bounds
@@ -502,6 +503,39 @@ namespace Chef.HW1.Script
             LogicDatabase db = TableForType(type);
             return db.Types[dbid].Category;
         }
+
+        public static LogicType SlotType(LogicSlot slot)
+        {
+            return slot == LogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
+        }
+
+        public static bool VarTypeIsEnum(VarType type)
+        {
+            if (!VarTypeIsEnumFor(type, LogicType.Condition)) return false;
+            if (!VarTypeIsEnumFor(type, LogicType.Effect)) return false;
+            return true;
+        }
+        private static bool VarTypeIsEnumFor(VarType type, LogicType ltype)
+        {
+            foreach (var l in TableForType(ltype).Types.Values)
+            {
+                foreach (var v in l.Versions)
+                {
+                    if (v.Value.Params == null) continue; //once again, I hate YAX.
+                    foreach (var p in v.Value.Params)
+                    {
+                        //if its ever written to, its not an enum.
+                        if (p.Value.Output && p.Value.Type == type)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
         public static VarType TypeFromString(string varTypeName)
         {
             //some strings map to the same type, so its not a 1:1 translation. TODO: put this in a dict?
@@ -748,38 +782,6 @@ namespace Chef.HW1.Script
 
             return varTypeEnum;
         }
-        public static LogicType SlotType(LogicSlot slot)
-        {
-            return slot == LogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
-        }
-
-        public static bool VarTypeIsEnum(VarType type)
-        {
-            if (!VarTypeIsEnumFor(type, LogicType.Condition)) return false;
-            if (!VarTypeIsEnumFor(type, LogicType.Effect)) return false;
-            return true;
-        }
-        private static bool VarTypeIsEnumFor(VarType type, LogicType ltype)
-        {
-            foreach (var l in TableForType(ltype).Types.Values)
-            {
-                foreach (var v in l.Versions)
-                {
-                    if (v.Value.Params == null) continue; //once again, I hate YAX.
-                    foreach (var p in v.Value.Params)
-                    {
-                        //if its ever written to, its not an enum.
-                        if (p.Value.Output && p.Value.Type == type)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-
-            return true;
-        }
-
         private static LogicDatabase TableForType(LogicType type)
         {
             if (type == LogicType.Condition) return ConditionItems;
