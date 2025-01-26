@@ -2045,7 +2045,7 @@
             <Value Name="ChildrenObjectTypeList" Type="ObjectTypeList" Optional="true" Output="false" />
           </Param>
           <Param sigid="7">
-            <Value Name="Diplomacy" Type="RelationType" Optional="true" Output="false" />
+            <Value Name="Diplomacy" Type="Diplomacy" Optional="true" Output="false" />
           </Param>
           <Param sigid="8">
             <Value Name="Power" Type="Power" Optional="true" Output="false" />
@@ -3646,7 +3646,7 @@
             <Value Name="EntityFilterSet" Type="EntityFilterSet" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
-            <Value Name="RelationType" Type="RelationType" Optional="false" Output="false" />
+            <Value Name="Diplomacy" Type="Diplomacy" Optional="false" Output="false" />
           </Param>
           <Param sigid="3">
             <Value Name="Player" Type="Player" Optional="true" Output="false" />
@@ -4181,7 +4181,7 @@
             <Value Name="TestPlayer" Type="Player" Optional="false" Output="false" />
           </Param>
           <Param sigid="6">
-            <Value Name="RelationType" Type="RelationType" Optional="false" Output="false" />
+            <Value Name="Diplomacy" Type="Diplomacy" Optional="false" Output="false" />
           </Param>
           <Param sigid="7">
             <Value Name="PlayerState" Type="PlayerState" Optional="true" Output="false" />
@@ -8715,7 +8715,7 @@
             <Value Name="SourceTeamList" Type="TeamList" Optional="true" Output="false" />
           </Param>
           <Param sigid="3">
-            <Value Name="Diplomacy" Type="RelationType" Optional="false" Output="false" />
+            <Value Name="Diplomacy" Type="Diplomacy" Optional="false" Output="false" />
           </Param>
           <Param sigid="4">
             <Value Name="TargetTeam" Type="Team" Optional="true" Output="false" />
@@ -11025,7 +11025,7 @@
             <Value Name="ParmPlayer" Type="Player" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
-            <Value Name="ParmRelation" Type="RelationType" Optional="false" Output="false" />
+            <Value Name="ParmRelation" Type="Diplomacy" Optional="false" Output="false" />
           </Param>
           <Param sigid="3">
             <Value Name="KBBaseQuery" Type="KBBaseQuery" Optional="false" Output="false" />
@@ -11038,7 +11038,7 @@
             <Value Name="ParmPlayer" Type="Player" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
-            <Value Name="ParmRelation" Type="RelationType" Optional="false" Output="false" />
+            <Value Name="ParmRelation" Type="Diplomacy" Optional="false" Output="false" />
           </Param>
           <Param sigid="3">
             <Value Name="KBBaseQuery" Type="KBBaseQuery" Optional="false" Output="false" />
@@ -11287,7 +11287,7 @@
             <Value Name="ParmPlayer" Type="Player" Optional="true" Output="false" />
           </Param>
           <Param sigid="5">
-            <Value Name="ParmPlayerRelation" Type="RelationType" Optional="true" Output="false" />
+            <Value Name="ParmPlayerRelation" Type="Diplomacy" Optional="true" Output="false" />
           </Param>
           <Param sigid="6">
             <Value Name="ParmObjectType" Type="ObjectType" Optional="true" Output="false" />
@@ -11426,7 +11426,7 @@
             <Value Name="Player" Type="Player" Optional="false" Output="false" />
           </Param>
           <Param sigid="3">
-            <Value Name="RelationType" Type="RelationType" Optional="false" Output="false" />
+            <Value Name="Diplomacy" Type="Diplomacy" Optional="false" Output="false" />
           </Param>
           <Param sigid="4">
             <Value Name="Invert" Type="Bool" Optional="true" Output="false" />
@@ -11442,7 +11442,7 @@
             <Value Name="Player" Type="Player" Optional="false" Output="false" />
           </Param>
           <Param sigid="3">
-            <Value Name="RelationType" Type="RelationType" Optional="false" Output="false" />
+            <Value Name="Diplomacy" Type="Diplomacy" Optional="false" Output="false" />
           </Param>
           <Param sigid="4">
             <Value Name="Invert" Type="Bool" Optional="true" Output="false" />
@@ -11643,7 +11643,7 @@
             <Value Name="ParmPlayer" Type="Player" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
-            <Value Name="ParmRelation" Type="RelationType" Optional="false" Output="false" />
+            <Value Name="ParmRelation" Type="Diplomacy" Optional="false" Output="false" />
           </Param>
           <Param sigid="3">
             <Value Name="KBSquadQuery" Type="KBSquadQuery" Optional="false" Output="false" />
@@ -11656,7 +11656,7 @@
             <Value Name="ParmPlayer" Type="Player" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
-            <Value Name="ParmRelation" Type="RelationType" Optional="false" Output="false" />
+            <Value Name="ParmRelation" Type="Diplomacy" Optional="false" Output="false" />
           </Param>
           <Param sigid="3">
             <Value Name="KBSquadQuery" Type="KBSquadQuery" Optional="false" Output="false" />

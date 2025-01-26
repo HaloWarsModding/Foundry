@@ -82,7 +82,7 @@ namespace Chef.HW1.Script
         EntityFilterSet,
         PopBucket,
         ListPosition,
-        RelationType,
+        Diplomacy,
         ExposedAction,
         SquadMode,
         ExposedScript,

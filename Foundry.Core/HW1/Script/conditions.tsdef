@@ -1449,7 +1449,7 @@
             <Value Name="SquadList" Type="SquadList" Optional="true" Output="false" />
           </Param>
           <Param sigid="5">
-            <Value Name="RelationType" Type="RelationType" Optional="false" Output="false" />
+            <Value Name="Diplomacy" Type="Diplomacy" Optional="false" Output="false" />
           </Param>
           <Param sigid="6">
             <Value Name="Player" Type="Player" Optional="true" Output="false" />

@@ -632,9 +632,9 @@ namespace Chef.HW1.Script
             else if (varTypeName == "ListPosition")
                 varTypeEnum = VarType.ListPosition;
             else if (varTypeName == "RelationType")
-                varTypeEnum = VarType.RelationType;
+                varTypeEnum = VarType.Diplomacy;
             else if (varTypeName == "Diplomacy")
-                varTypeEnum = VarType.RelationType;
+                varTypeEnum = VarType.Diplomacy;
             else if (varTypeName == "ExposedAction")
                 varTypeEnum = VarType.ExposedAction;
             else if (varTypeName == "SquadMode")
