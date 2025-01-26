@@ -73,7 +73,7 @@ namespace Chef.Win
             TriggerscriptWindow ts = new TriggerscriptWindow(window.Assets, window.GpuAssets);
             ts.ScriptName = "skirmishplayer";
             ts.Show(window.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
-            AssetDatabase.SaveTriggerscript("skirmishplayer", window.Assets, true);
+            //AssetDatabase.SaveTriggerscript("skirmishplayer", window.Assets, true);
 #endif
 
             Application.Run(window);

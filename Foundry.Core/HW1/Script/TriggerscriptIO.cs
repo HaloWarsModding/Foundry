@@ -54,7 +54,7 @@ namespace Chef.HW1.Script
                     {
                         Name = v.Attribute("Name").Value,
                         Type = TriggerscriptHelpers.TypeFromString(v.Attribute("Type").Value),
-                        Value = v.Value == null ? "" : v.Value
+                        //Value = v.Value == null ? "" : v.Value
                     };
 
                     if (newVar.Name == "")
@@ -226,7 +226,7 @@ namespace Chef.HW1.Script
                 varNode.SetAttributeValue("Name", var.Name);
                 varNode.SetAttributeValue("Type", var.Type);
                 varNode.SetAttributeValue("IsNull", nullVars.ContainsValue(var));
-                varNode.Value = var.Value;
+                //varNode.Value = var;
 
                 varsNode.Add(varNode);
             }
@@ -320,7 +320,7 @@ namespace Chef.HW1.Script
                         {
                             Name = "NULL",
                             Type = par.Type,
-                            Value = ""
+
                         };
                         int id = varIds.Values.Count == 0 ? 0 : varIds.Values.Max() + 1;
                         nullVars.Add(par.Type, newNull);

@@ -184,7 +184,7 @@ namespace Chef.Win.UI
                 Var var = new Var()
                 {
                     Name = "new" + paramInfo.Type,
-                    Value = "",
+                    Type = paramInfo.Type
                 };
 
                 logic.Params[sigid] = var; //set the param value
@@ -391,11 +391,11 @@ namespace Chef.Win.UI
             //Value
             items.Add(new ToolStripLabel("Value:"));
             ToolStripTextBox val = new ToolStripTextBox();
-            val.Text = var.Value;
+            //val.Text = var.Value;
             val.BorderStyle = BorderStyle.FixedSingle;
             val.TextChanged += (s, e) =>
             {
-                var.Value = val.Text;
+                //var.Value = val.Text;
                 onEdit?.Invoke(name, EventArgs.Empty);
             };
             items.Add(val);

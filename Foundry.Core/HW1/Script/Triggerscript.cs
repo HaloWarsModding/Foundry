@@ -141,7 +141,6 @@ namespace Chef.HW1.Script
     {
         public VarType Type { get; set; }
         public string Name { get; set; }
-        public string Value { get; set; }
     }
     public abstract class Logic
     {
