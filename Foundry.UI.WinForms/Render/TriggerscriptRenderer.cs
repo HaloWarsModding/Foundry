@@ -47,14 +47,14 @@ namespace Chef.Win.Render
             DrawLogicBases(g, script, trigger, LogicSlot.EffectTrue, sel, drawDetail);
             DrawLogicBases(g, script, trigger, LogicSlot.EffectFalse, sel, drawDetail);
         }
-        private static void DrawBackdrop(Graphics g, Trigger trigger, int selectedTrigger, int selectedLogic, bool detail)
+        private static void DrawBackdrop(Graphics g, Trigger trigger, Trigger selectedTrigger, int selectedLogic, bool detail)
         {
             Rectangle bounds = BoundsTrigger(trigger);
             g.FillRectangle(new SolidBrush(UnitColor), bounds);
 
             g.DrawRectangle(new Pen(trigger.Active ? TriggerActiveColor : TrimColor), bounds);
 
-            if (selectedTrigger == trigger.ID && selectedLogic == -1)
+            if (selectedTrigger == trigger && selectedLogic == -1)
             {
                 Rectangle sel = bounds;
                 sel.Inflate(1, 1);
@@ -102,7 +102,7 @@ namespace Chef.Win.Render
                     g.DrawRectangle(new Pen(TrimColor, Margin), bounds);
                 }
                 //always draw selection outline.
-                if (sel.TriggerId == trigger.ID
+                if (sel.TriggerId == trigger
                     && sel.LogicType == slot
                     && sel.LogicIndex == i)
                 {
@@ -138,7 +138,7 @@ namespace Chef.Win.Render
                         }
 
                         //outline var value box when selected.
-                        if (sel.TriggerId == trigger.ID
+                        if (sel.TriggerId == trigger
                             && sel.LogicType == slot
                             && sel.LogicIndex == i
                             && sel.VarSigId == sigid)

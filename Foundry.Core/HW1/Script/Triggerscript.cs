@@ -181,24 +181,13 @@ namespace Chef.HW1.Script
             ConditionsAreAND = true;
         }
 
-        public int ID { get; set; }
         public string Name { get; set; }
         public bool Active { get; set; }
         public float EvaluateFrequency { get; set; }
         public float EvalLimit { get; set; }
         public bool ConditionalTrigger { get; set; }
-        public int GroupID { get; set; }
-
-        //[YAXAttributeForClass()]
-        //[YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
-        //public float X { get; set; }
-        //[YAXAttributeForClass()]
-        //[YAXErrorIfMissed(YAXExceptionTypes.Ignore)]
-        //public float Y { get; set; }
-
         public float X { get; set; }
         public float Y { get; set; }
-
         public bool ConditionsAreAND { get; set; }
         public List<Condition> Conditions { get; set; }
         public List<Effect> TriggerEffectsOnTrue { get; set; }
@@ -208,8 +197,8 @@ namespace Chef.HW1.Script
     {
         public Triggerscript()
         {
-            Triggers = new Dictionary<int, Trigger>();
+            Triggers = new Dictionary<Var, Trigger>();
         }
-        public Dictionary<int, Trigger> Triggers { get; set; }
+        public Dictionary<Var, Trigger> Triggers { get; set; }
     }
 }

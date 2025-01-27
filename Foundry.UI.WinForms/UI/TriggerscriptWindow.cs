@@ -66,10 +66,9 @@ namespace Chef.Win.UI
 
         private Point MouseLast { get; set; }
 
-        private int selTrigger, selLogic, selVar;
-        private LogicSlot selSlot;
-        private int dropTrigger, dropLogic;
-        private LogicSlot dropSlot;
+        private Trigger selTrigger, dropTrigger;
+        private int selLogic, selVar, dropLogic;
+        private LogicSlot selSlot, dropSlot;
 
         public TriggerscriptWindow(AssetCache assets, GpuCache gassets)
         {
@@ -123,12 +122,11 @@ namespace Chef.Win.UI
                 Invalidate();
             };
 
-            if (e.Button == MouseButtons.Right && selTrigger != -1)
+            if (e.Button == MouseButtons.Right && selTrigger != null)
             {
-                Trigger t = Triggerscript.Triggers[selTrigger];
                 if (selVar != -1)
                 {
-                    ShowSetVarMenu(Triggerscript, Logics(t, selSlot).ElementAt(selLogic), selVar, PointToScreen(e.Location), onEdit);
+                    ShowSetVarMenu(Triggerscript, Logics(selTrigger, selSlot).ElementAt(selLogic), selVar, PointToScreen(e.Location), onEdit);
                 }
                 else if (dropLogic != -1)
                 {
@@ -137,16 +135,16 @@ namespace Chef.Win.UI
                 else if (selLogic != -1)
                 {
                     if (selSlot == LogicSlot.Condition)
-                        ShowConditionOptionsMenu((Condition)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location), onEdit);
+                        ShowConditionOptionsMenu((Condition)Logics(selTrigger, selSlot).ElementAt(selLogic), PointToScreen(e.Location), onEdit);
                     else
-                        ShowEffectOptionsMenu((Effect)Logics(t, selSlot).ElementAt(selLogic), PointToScreen(e.Location), onEdit);
+                        ShowEffectOptionsMenu((Effect)Logics(selTrigger, selSlot).ElementAt(selLogic), PointToScreen(e.Location), onEdit);
                 }
                 else
                 {
-                    ShowTriggerOptionsMenu(t, e.Location, onEdit);
+                    ShowTriggerOptionsMenu(selTrigger, e.Location, onEdit);
                 }
             }
-            else if (e.Button == MouseButtons.Right && dropTrigger != -1 && dropLogic != -1)
+            else if (e.Button == MouseButtons.Right && dropTrigger != null && dropLogic != -1)
             {
                 ShowLogicAddMenu(Triggerscript, dropTrigger, dropSlot, dropLogic, PointToScreen(e.Location), onEdit);
             }
@@ -187,22 +185,18 @@ namespace Chef.Win.UI
 
             if ((MouseButtons & MouseButtons.Left) > 0)
             {
-                if (selTrigger != -1 && selLogic == -1)
+                if (selTrigger != null && selLogic == -1)
                 {
-                    Trigger selected = Triggerscript.Triggers[selTrigger];
-                    if (selected != null)
+                    if (selTrigger != null)
                     {
-                        selected.X += (e.Location.X - MouseLast.X) * (1 / ViewScale);
-                        selected.Y += (e.Location.Y - MouseLast.Y) * (1 / ViewScale);
+                        selTrigger.X += (e.Location.X - MouseLast.X) * (1 / ViewScale);
+                        selTrigger.Y += (e.Location.Y - MouseLast.Y) * (1 / ViewScale);
                         AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
                     }
                 }
-                if (selTrigger != -1 && selLogic != -1 && dropLogic != -1 && CanTransfer(selSlot, dropSlot))
+                if (selTrigger != null && selLogic != -1 && dropLogic != -1 && CanTransfer(selSlot, dropSlot))
                 {
-                    Trigger from = Triggerscript.Triggers[selTrigger];
-                    Trigger to = Triggerscript.Triggers[dropTrigger];
-
-                    if (from == to && selSlot == dropSlot)
+                    if (selTrigger == dropTrigger && selSlot == dropSlot)
                     {
                         if (dropLogic > selLogic)
                         {
@@ -210,7 +204,7 @@ namespace Chef.Win.UI
                         }
                     }
 
-                    TransferLogic(from, selSlot, selLogic, to, dropSlot, dropLogic);
+                    TransferLogic(selTrigger, selSlot, selLogic, dropTrigger, dropSlot, dropLogic);
                     selTrigger = dropTrigger;
                     selSlot = dropSlot;
                     selLogic = dropLogic;
@@ -231,18 +225,17 @@ namespace Chef.Win.UI
             Point ViewMouse = ViewMatrix.Inverted().TransformPoint(e.Location);
 
             if ((MouseButtons & MouseButtons.Left) > 0
-                && selTrigger != -1
+                && selTrigger != null
                 && selLogic == -1)
             {
-                Trigger selected = Triggerscript.Triggers[selTrigger];
                 SizeF offset = new SizeF(
-                    selected.X - ViewMousePre.X,
-                    selected.Y - ViewMousePre.Y
+                    selTrigger.X - ViewMousePre.X,
+                    selTrigger.Y - ViewMousePre.Y
                     );
-                if (selected != null)
+                if (selTrigger != null)
                 {
-                    selected.X = ViewMouse.X + offset.Width; //(offset.Width * (1 / ViewZoom));
-                    selected.Y = ViewMouse.Y + offset.Height; //(offset.Height * (1 / ViewZoom));
+                    selTrigger.X = ViewMouse.X + offset.Width; //(offset.Width * (1 / ViewZoom));
+                    selTrigger.Y = ViewMouse.Y + offset.Height; //(offset.Height * (1 / ViewZoom));
                     AssetDatabase.TriggerscriptMarkEdited(ScriptName, Assets, true);
                 }
             }

@@ -15,7 +15,7 @@ namespace Chef.HW1.Script
     {
         public Selection()
         {
-            TriggerId = -1;
+            TriggerId = null;
             LogicType = LogicSlot.Condition;
             LogicIndex = -1;
             InsertIndex = -1;
@@ -23,7 +23,7 @@ namespace Chef.HW1.Script
             UnitId = -1;
         }
 
-        public int TriggerId { get; set; }
+        public Trigger TriggerId { get; set; }
         public LogicSlot LogicType { get; set; }
         public int LogicIndex { get; set; }
         public int InsertIndex { get; set; }
@@ -279,17 +279,17 @@ namespace Chef.HW1.Script
 
 
         //Selection
-        public static void SelectBoundsBody(Triggerscript script, Point point, out int trigger, out LogicSlot slot, out int logic)
+        public static void SelectBoundsBody(Triggerscript script, Point point, out Trigger trigger, out LogicSlot slot, out int logic)
         {
-            trigger = -1;
+            trigger = null;
             slot = LogicSlot.Condition;
             logic = -1;
 
-            foreach (var t in script.Triggers.Values.Reverse())
+            foreach (var (v, t) in script.Triggers.Reverse())
             {
                 if (BoundsTrigger(t).Contains(point))
                 {
-                    trigger = t.ID;
+                    trigger = t;
 
                     foreach (var s in Enum.GetValues<LogicSlot>())
                     {
@@ -308,13 +308,13 @@ namespace Chef.HW1.Script
             }
             return;
         }
-        public static void SelectBoundsInsert(Triggerscript script, Point point, out int trigger, out LogicSlot slot, out int logic)
+        public static void SelectBoundsInsert(Triggerscript script, Point point, out Trigger trigger, out LogicSlot slot, out int index)
         {
-            trigger = -1;
+            trigger = null;
             slot = LogicSlot.Condition;
-            logic = -1;
+            index = -1;
 
-            foreach (var (tid, t) in script.Triggers.Reverse())
+            foreach (var (v, t) in script.Triggers.Reverse())
             {
                 foreach (var s in Enum.GetValues<LogicSlot>())
                 {
@@ -324,9 +324,9 @@ namespace Chef.HW1.Script
                         {
                             if (BoundsLogicInsert(t, s, i).Contains(point))
                             {
-                                trigger = tid;
+                                trigger = t;
                                 slot = s;
-                                logic = i;
+                                index = i;
                                 return;
                             }
                         }
@@ -335,18 +335,18 @@ namespace Chef.HW1.Script
             }
             return;
         }
-        public static void SelectBoundsParamValue(Triggerscript script, Point point, out int trigger, out LogicSlot slot, out int logic, out int param)
+        public static void SelectBoundsParamValue(Triggerscript script, Point point, out Trigger trigger, out LogicSlot slot, out int logic, out int param)
         {
             param = -1;
             SelectBoundsBody(script, point, out trigger, out slot, out logic);
-            if (trigger == -1 || logic == -1) return;
 
-            Trigger t = script.Triggers[trigger];
-            Logic l = Logics(t, slot).ElementAt(logic);
+            if (trigger == null) return;
+
+            Logic l = Logics(trigger, slot).ElementAt(logic);
             var paramInfos = LogicParamInfos(SlotType(slot), l.DBID, l.Version);
             for (int i = 0; i < paramInfos.Count; i++)
             {
-                if (BoundsParamValue(t, slot, logic, i).Contains(point))
+                if (BoundsParamValue(trigger, slot, logic, i).Contains(point))
                 {
                     param = paramInfos.ElementAt(i).Key;
                     return;

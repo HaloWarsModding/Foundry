@@ -116,9 +116,8 @@ namespace Chef.Win.UI
 
             menu.Show(point);
         }
-        public static void ShowLogicAddMenu(Triggerscript script, int triggerId, LogicSlot slot, int logicIndex, Point point, EventHandler onEdit = null)
+        public static void ShowLogicAddMenu(Triggerscript script, Trigger trigger, LogicSlot slot, int logicIndex, Point point, EventHandler onEdit = null)
         {
-            Trigger trigger = script.Triggers[triggerId];
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.Closing += (s, e) =>
             {

@@ -22,8 +22,9 @@ namespace Chef.HW1.Script
             XElement root = doc.Root;
 
             Dictionary<int, Var> vars = new Dictionary<int, Var>();
+            Dictionary<int, Trigger> triggers = new Dictionary<int, Trigger>();
 
-            foreach(var e in root.Elements())
+            foreach (var e in root.Elements())
             {
                 if (e.Name == "TriggerGroups")
                 {
@@ -32,16 +33,16 @@ namespace Chef.HW1.Script
 
                 if (e.Name == "TriggerVars")
                 {
-                    ReadVars(e, script, vars);
+                    ReadVars(e, script, vars, triggers);
                 }
 
                 if (e.Name == "Triggers")
                 {
-                    ReadTriggers(e, script, vars);
+                    ReadTriggers(e, script, vars, triggers);
                 }
             }
         }
-        private static void ReadVars(XElement r, Triggerscript script, Dictionary<int, Var> vars)
+        private static void ReadVars(XElement r, Triggerscript script, Dictionary<int, Var> vars, Dictionary<int, Trigger> triggers)
         {
             foreach(var v in r.Elements())
             {
@@ -65,34 +66,46 @@ namespace Chef.HW1.Script
                     if (!isNull)
                     {
                         vars.Add(id, newVar);
+                        if (newVar.Type == VarType.Trigger)
+                        {
+                            int triggerId = int.Parse(v.Value);
+                            if (!triggers.ContainsKey(triggerId))
+                            {
+                                triggers.Add(triggerId, new Trigger());
+                            }
+
+                            Trigger curTrigger = triggers[triggerId];
+
+                            script.Triggers.Add(newVar, curTrigger);
+                        }
                     }
                 }
             }
         }
-        private static void ReadTriggers(XElement r, Triggerscript script, Dictionary<int, Var> vars)
+        private static void ReadTriggers(XElement r, Triggerscript script, Dictionary<int, Var> vars, Dictionary<int, Trigger> triggers)
         {
             foreach (var triggerNode in r.Elements().Where(node => node.Name == "Trigger"))
             {
                 int id = int.Parse(triggerNode.Attribute("ID").Value);
 
-                Trigger trigger = new Trigger()
+                if (!triggers.ContainsKey(id))
                 {
-                    ID = id,
-                    Name = triggerNode.Attribute("Name").Value,
-                    Active = bool.Parse(triggerNode.Attribute("Active").Value),
-                    ConditionalTrigger = bool.Parse(triggerNode.Attribute("ConditionalTrigger").Value),
-                    EvalLimit = float.Parse(triggerNode.Attribute("EvalLimit").Value),
-                    EvaluateFrequency = float.Parse(triggerNode.Attribute("EvaluateFrequency").Value),
-                    X = float.Parse(triggerNode.Attribute("X").Value) * TriggerscriptParams.TriggerSpacingMultiplier,
-                    Y = float.Parse(triggerNode.Attribute("Y").Value) * TriggerscriptParams.TriggerSpacingMultiplier,
-                    GroupID = int.Parse(triggerNode.Attribute("GroupID").Value)
-                };
+                    triggers.Add(id, new Trigger());
+                }
+
+                Trigger trigger = triggers[id];
+
+                trigger.Name = triggerNode.Attribute("Name").Value;
+                trigger.Active = bool.Parse(triggerNode.Attribute("Active").Value);
+                trigger.ConditionalTrigger = bool.Parse(triggerNode.Attribute("ConditionalTrigger").Value);
+                trigger.EvalLimit = float.Parse(triggerNode.Attribute("EvalLimit").Value);
+                trigger.EvaluateFrequency = float.Parse(triggerNode.Attribute("EvaluateFrequency").Value);
+                trigger.X = float.Parse(triggerNode.Attribute("X").Value) * TriggerscriptParams.TriggerSpacingMultiplier;
+                trigger.Y = float.Parse(triggerNode.Attribute("Y").Value) * TriggerscriptParams.TriggerSpacingMultiplier;
 
                 ReadTriggerConditions(triggerNode, script, trigger, vars);
                 ReadTriggerEffectsTrue(triggerNode, script, trigger, vars);
                 ReadTriggerEffectsFalse(triggerNode, script, trigger, vars);
-
-                script.Triggers.Add(id, trigger);
             }
         }
         private static void ReadTriggerConditions(XElement r, Triggerscript script, Trigger t, Dictionary<int, Var> vars)
@@ -185,7 +198,6 @@ namespace Chef.HW1.Script
             }
         }
 
-
         public static void WriteXml(Stream stream, Triggerscript script)
         {
             XDocument doc = new XDocument();
@@ -244,7 +256,7 @@ namespace Chef.HW1.Script
                 triggerNode.SetAttributeValue("ConditionalTrigger", trigger.Value.ConditionalTrigger);
                 triggerNode.SetAttributeValue("X", trigger.Value.X / TriggerscriptParams.TriggerSpacingMultiplier);
                 triggerNode.SetAttributeValue("Y", trigger.Value.Y / TriggerscriptParams.TriggerSpacingMultiplier);
-                triggerNode.SetAttributeValue("GroupID", trigger.Value.GroupID);
+                triggerNode.SetAttributeValue("GroupID", 0);
 
                 WriteTriggerConditions(triggerNode, trigger.Value, varIds, nullVars);
                 WriteTriggerEffectsTrue(triggerNode, trigger.Value, varIds, nullVars);
