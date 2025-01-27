@@ -49,7 +49,7 @@ namespace Chef.Win.Render
         }
         private static void DrawBackdrop(Graphics g, Trigger trigger, Trigger selectedTrigger, int selectedLogic, bool detail)
         {
-            Rectangle bounds = BoundsTrigger(trigger);
+            Rectangle bounds = BoundsTriggerMargin(trigger);
             g.FillRectangle(new SolidBrush(UnitColor), bounds);
 
             g.DrawRectangle(new Pen(trigger.Active ? TriggerActiveColor : TrimColor), bounds);
@@ -227,15 +227,13 @@ namespace Chef.Win.Render
         private static void DrawLogicHeaders(Graphics g, Triggerscript script, Trigger trigger, bool detail)
         {
             if (!detail) return;
+            //TODO: offset nightmare. yeesh...
 
             Rectangle bounds = BoundsTrigger(trigger);
 
             bounds.Height = HeaderHeight;
             g.FillRectangle(new SolidBrush(TriggerHeaderColor), bounds);
-            g.DrawLine(new Pen(TrimColor, Margin), bounds.X, bounds.Bottom, bounds.Right, bounds.Bottom); //bottom, always trim
-            g.DrawLine(new Pen(trigger.Active ? Color.Yellow : TrimColor, Margin), bounds.X, bounds.Top, bounds.Right, bounds.Top); //top
-            g.DrawLine(new Pen(trigger.Active ? Color.Yellow : TrimColor, Margin), bounds.X, bounds.Top, bounds.X, bounds.Bottom + 1); //left
-            g.DrawLine(new Pen(trigger.Active ? Color.Yellow : TrimColor, Margin), bounds.Right, bounds.Top, bounds.Right, bounds.Bottom + 1); //right
+            g.DrawRectangle(new Pen(TrimColor, Margin), bounds);
             g.DrawString(trigger.Name, TitleFont, new SolidBrush(TextColor), bounds, new StringFormat()
             {
                 Alignment = StringAlignment.Center,
@@ -246,7 +244,7 @@ namespace Chef.Win.Render
             Rectangle lbounds;
 
             lbounds = BoundsLogicSlot(trigger, LogicSlot.Condition);
-            lbounds.Height = bounds.Height;
+            lbounds.Height = HeaderHeight;
             lbounds.Y = bounds.Y;
             lbounds.Inflate(0, -2);
             g.FillRectangle(new SolidBrush(ConditionHeaderColor), lbounds);
@@ -261,7 +259,7 @@ namespace Chef.Win.Render
             });
 
             lbounds = BoundsLogicSlot(trigger, LogicSlot.EffectTrue);
-            lbounds.Height = bounds.Height;
+            lbounds.Height = HeaderHeight;
             lbounds.Y = bounds.Y;
             lbounds.Inflate(0, -2);
             g.FillRectangle(new SolidBrush(EffectHeaderColor), lbounds);
@@ -275,7 +273,7 @@ namespace Chef.Win.Render
             });
 
             lbounds = BoundsLogicSlot(trigger, LogicSlot.EffectFalse);
-            lbounds.Height = bounds.Height;
+            lbounds.Height = HeaderHeight;
             lbounds.Y = bounds.Y;
             lbounds.Inflate(0, -2);
             g.FillRectangle(new SolidBrush(EffectHeaderColor), lbounds);

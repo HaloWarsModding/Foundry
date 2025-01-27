@@ -37,6 +37,8 @@ namespace Chef.HW1.Script
         public static Color EffectHeaderColor { get; } = Color.RebeccaPurple;
         public static Color ConditionHeaderColor { get; } = Color.Crimson;
         public static Color BackgroundColor { get; } = Color.FromArgb(50, 50, 50);
+        public static Color VarColor { get; } = Color.Green;
+        public static Color VarOptColor { get; } = Color.GreenYellow;
     }
 
 }

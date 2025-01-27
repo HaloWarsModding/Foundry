@@ -139,6 +139,11 @@ namespace Chef.HW1.Script
             bounds.Width = bounds.Right - (int)trigger.X;
             bounds.X = (int)trigger.X;
             bounds.Y = (int)trigger.Y;
+            return bounds;
+        }
+        public static Rectangle BoundsTriggerMargin(Trigger trigger)
+        {
+            Rectangle bounds = BoundsTrigger(trigger);
             bounds.Inflate(Margin * 5, Margin * 5);
             return bounds;
         }
@@ -287,7 +292,7 @@ namespace Chef.HW1.Script
 
             foreach (var (v, t) in script.Triggers.Reverse())
             {
-                if (BoundsTrigger(t).Contains(point))
+                if (BoundsTriggerMargin(t).Contains(point))
                 {
                     trigger = t;
 
@@ -340,7 +345,7 @@ namespace Chef.HW1.Script
             param = -1;
             SelectBoundsBody(script, point, out trigger, out slot, out logic);
 
-            if (trigger == null) return;
+            if (trigger == null || logic <= 0) return;
 
             Logic l = Logics(trigger, slot).ElementAt(logic);
             var paramInfos = LogicParamInfos(SlotType(slot), l.DBID, l.Version);
