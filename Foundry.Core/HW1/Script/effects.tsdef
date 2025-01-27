@@ -86,7 +86,7 @@
   </Logic>
   <Logic dbid="31" Name="TriggerActivate" Category="Setup">
     <Type>
-      <Version v="0">
+      <Version v="1">
         <Params>
           <Param sigid="1">
             <Value Name="Trigger" Type="Trigger" Optional="false" Output="false" />
@@ -97,7 +97,7 @@
   </Logic>
   <Logic dbid="32" Name="TriggerDeactivate" Category="Setup">
     <Type>
-      <Version v="0">
+      <Version v="1">
         <Params>
           <Param sigid="1">
             <Value Name="Trigger" Type="Trigger" Optional="false" Output="false" />
