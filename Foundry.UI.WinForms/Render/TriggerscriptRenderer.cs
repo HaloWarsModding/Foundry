@@ -63,12 +63,13 @@ namespace Chef.Win.Render
 
             if (!detail)
             {
-                bounds.Inflate(-1, -1);
+                bounds.Inflate(50, 50);
                 g.DrawString(trigger.Name, HugeFont, new SolidBrush(TextColor), bounds, new StringFormat()
                 {
                     Alignment = StringAlignment.Center,
                     LineAlignment = StringAlignment.Center,
-                    FormatFlags = StringFormatFlags.NoClip
+                    FormatFlags = StringFormatFlags.NoClip | StringFormatFlags.FitBlackBox,
+                    Trimming = StringTrimming.EllipsisWord,
                 });
             }
         }
