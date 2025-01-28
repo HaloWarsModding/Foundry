@@ -262,8 +262,6 @@ namespace Chef.Win.UI
             ClampView();
 
             //e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
-            //e.Graphics.InterpolationMode = InterpolationMode.High;
-            //e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
             e.Graphics.Clear(BackgroundColor);

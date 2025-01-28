@@ -8,7 +8,7 @@ namespace Chef.HW1.Script
 {
     public static class TriggerscriptParams
     {
-        public static int DefaultWidth { get; set; } = 42;
+        public static int DefaultWidth { get; set; } = 45;
         public static int HeaderHeight { get; } = 11;
         public static int FooterHeight { get; } = 2;
         public static int CommentHeight { get; } = 18;
@@ -37,8 +37,8 @@ namespace Chef.HW1.Script
         public static Color EffectHeaderColor { get; } = Color.RebeccaPurple;
         public static Color ConditionHeaderColor { get; } = Color.Crimson;
         public static Color BackgroundColor { get; } = Color.FromArgb(50, 50, 50);
-        public static Color VarColor { get; } = Color.Green;
-        public static Color VarOptColor { get; } = Color.GreenYellow;
+        public static Color VarColor { get; } = Color.FromArgb(65, 90, 70);
+        public static Color VarOptColor { get; } = Color.FromArgb(80, 85, 65);
     }
 
 }

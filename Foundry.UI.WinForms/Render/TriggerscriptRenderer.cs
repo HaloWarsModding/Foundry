@@ -11,14 +11,15 @@ using static Chef.HW1.Script.TriggerscriptHelpers;
 using static Chef.HW1.Script.TriggerscriptParams;
 using Chef.HW1.Script;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using System.Drawing.Drawing2D;
 
 namespace Chef.Win.Render
 {
     public static class TriggerscriptRenderer
     {
-        public static Font TitleFont { get; } = new Font("Consolas", 2.4f, FontStyle.Regular);
+        public static Font TitleFont { get; } = new Font("Consolas", 2.5f, FontStyle.Regular);
         public static Font SubtitleFont { get; } = new Font("Consolas", 2.3f, FontStyle.Regular);
-        public static Font TextFont { get; } = new Font("Consolas", 2.2f, FontStyle.Regular);
+        public static Font TextFont { get; } = new Font("Consolas", 2.3f, FontStyle.Regular);
         public static Font HugeFont { get; } = new Font("Consolas", 20.0f, FontStyle.Regular);
 
         public static void DrawScript(Graphics g, Rectangle clip, Triggerscript script, Selection sel, Selection hover, bool lod)
@@ -32,13 +33,11 @@ namespace Chef.Win.Render
                 DrawUnit(g, script, trigger, sel, hover, lod);
             }
         }
-
         private static void DrawBackground(Graphics g, Rectangle clip, Triggerscript script)
         {
             Rectangle bounds = BoundsScript(script);
             g.DrawRectangle(new Pen(Color.Red, 4), bounds);
         }
-
         private static void DrawUnit(Graphics g, Triggerscript script, Trigger trigger, Selection sel, Selection hover, bool drawDetail)
         {
             DrawBackdrop(g, trigger, sel.TriggerId, sel.LogicIndex, drawDetail);
@@ -51,14 +50,11 @@ namespace Chef.Win.Render
         {
             Rectangle bounds = BoundsTriggerMargin(trigger);
             g.FillRectangle(new SolidBrush(UnitColor), bounds);
-
-            g.DrawRectangle(new Pen(trigger.Active ? TriggerActiveColor : TrimColor), bounds);
+            g.DrawRectangle(new Pen(trigger.Active ? TriggerActiveColor : TrimColor, Margin), bounds);
 
             if (selectedTrigger == trigger && selectedLogic == -1)
             {
-                Rectangle sel = bounds;
-                sel.Inflate(1, 1);
-                g.DrawRectangle(new Pen(Color.White), sel);
+                g.DrawRectangle(new Pen(Color.White), bounds);
             }
 
             if (!detail)
@@ -120,17 +116,24 @@ namespace Chef.Win.Render
                         Rectangle varNameBounds = BoundsParamName(trigger, slot, i, paramIndex);
 
                         g.DrawString(
-                            param.Name + " [" + param.Type + "]",
-                            TextFont, new SolidBrush(TextColor),
+                            param.Name,// + " [" + param.Type + "]",
+                            TextFont, 
+                            new SolidBrush(TextColor),
                             varNameBounds,
-                            new StringFormat() { LineAlignment = StringAlignment.Center }
+                            new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center }
                         );
 
                         //value
                         var var = cur.Params[sigid];
 
                         Rectangle varValBounds = BoundsParamValue(trigger, slot, i, paramIndex);
-                        g.FillRectangle(new SolidBrush(TrimColor), varValBounds);
+                        g.FillRectangle(new SolidBrush(param.Optional ? VarOptColor : VarColor), varValBounds);
+
+                        g.InterpolationMode = InterpolationMode.High;
+                        g.SmoothingMode = SmoothingMode.HighQuality;
+                        g.DrawRectangle(new Pen(TrimColor, Margin/1.5f), varValBounds);
+                        g.InterpolationMode = InterpolationMode.Default;
+                        g.SmoothingMode = SmoothingMode.Default;
 
                         if (var == null)
                         {
@@ -206,18 +209,21 @@ namespace Chef.Win.Render
                     //draw text and outline if high quality only
                     if (detail)
                     {
-                        g.DrawRectangle(new Pen(TrimColor, .25f),
-                        bounds.X,
-                        bounds.Y - CommentHeight - LogicSpacing - FooterHeight,
-                        bounds.Width,
-                        CommentHeight + FooterHeight);
+                        g.DrawRectangle(
+                            new Pen(TrimColor, .25f),
+                            bounds.X,
+                            bounds.Y - CommentHeight - LogicSpacing - FooterHeight,
+                            bounds.Width,
+                            CommentHeight + FooterHeight
+                            );
 
                         g.DrawString(logics.ElementAt(i).Comment, TextFont, new SolidBrush(TextColor),
                             new Rectangle(
                                 bounds.X + Margin,
                                 bounds.Y + Margin - CommentHeight - LogicSpacing - FooterHeight,
                                 bounds.Width - Margin * 2,
-                                CommentHeight - Margin * 2));
+                                CommentHeight - Margin * 2)
+                            );
                     }
                 }
 

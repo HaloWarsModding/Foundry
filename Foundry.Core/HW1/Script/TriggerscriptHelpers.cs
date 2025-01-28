@@ -144,7 +144,7 @@ namespace Chef.HW1.Script
         public static Rectangle BoundsTriggerMargin(Trigger trigger)
         {
             Rectangle bounds = BoundsTrigger(trigger);
-            bounds.Inflate(Margin * 5, Margin * 5);
+            bounds.Inflate(LogicSectionSpacing, LogicSectionSpacing);
             return bounds;
         }
         public static Rectangle BoundsLogicSlot(Trigger trigger, LogicSlot type)
@@ -265,20 +265,22 @@ namespace Chef.HW1.Script
         {
             Rectangle logicBounds = BoundsLogicBody(trigger, type, index);
             Rectangle ret = new Rectangle(
-                logicBounds.X + Margin,
+                logicBounds.X,
                 logicBounds.Y + HeaderHeight + paramIndex * VarSpacing + paramIndex * VarHeight + VarHeight / 2,
-                logicBounds.Width - Margin * 2,
+                logicBounds.Width,
                 VarNameHeight);
+            ret.Inflate(-Margin * 2, 0);
             return ret;
         }
         public static Rectangle BoundsParamValue(Trigger trigger, LogicSlot type, int index, int paramIndex)
         {
             Rectangle logicBounds = BoundsLogicBody(trigger, type, index);
             Rectangle ret = new Rectangle(
-                logicBounds.X + Margin,
+                logicBounds.X,
                 logicBounds.Y + HeaderHeight + paramIndex * VarSpacing + paramIndex * VarHeight + VarHeight / 2 + VarNameHeight,
-                logicBounds.Width - Margin * 2,
+                logicBounds.Width,
                 VarValHeight);
+            ret.Inflate(-Margin * 2, 0);
             return ret;
         }
 
