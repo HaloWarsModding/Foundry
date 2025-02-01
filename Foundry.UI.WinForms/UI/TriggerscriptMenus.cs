@@ -60,7 +60,7 @@ namespace Chef.Win.UI
             menu.Items.AddRange(EffectOptionItems(effect, onEdit).ToArray());
             menu.Show(point);
         }
-        public static void ShowVarOptionsMenu(/*Var var, */Point point, EventHandler onEdit = null)
+        public static void ShowVarOptionsMenu(Logic logic, int sigid, Point point, EventHandler onEdit = null)
         {
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.Closing += (s, e) =>

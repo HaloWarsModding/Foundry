@@ -127,14 +127,21 @@ namespace Chef.Win.UI
             {
                 if (selLogic >= 0)
                 {
-                    if (selSlot == LogicSlot.Condition)
+                    if (selVar >= 0)
                     {
-                        ShowConditionOptionsMenu(selTrigger.Conditions[selLogic], ClientMouse, onEdit);
+                        ShowVarOptionsMenu(Logics(selTrigger, selSlot).ElementAt(selLogic), selVar, ClientMouse, onEdit);
                     }
                     else
                     {
-                        List<Effect> effects = selSlot == LogicSlot.EffectTrue ? selTrigger.TriggerEffectsOnTrue : selTrigger.TriggerEffectsOnFalse;
-                        ShowEffectOptionsMenu(effects[selLogic], ClientMouse, onEdit);
+                        if (selSlot == LogicSlot.Condition)
+                        {
+                            ShowConditionOptionsMenu(selTrigger.Conditions[selLogic], ClientMouse, onEdit);
+                        }
+                        else
+                        {
+                            List<Effect> effects = selSlot == LogicSlot.EffectTrue ? selTrigger.TriggerEffectsOnTrue : selTrigger.TriggerEffectsOnFalse;
+                            ShowEffectOptionsMenu(effects[selLogic], ClientMouse, onEdit);
+                        }
                     }
                 }
                 else if (dropLogic >= 0)
