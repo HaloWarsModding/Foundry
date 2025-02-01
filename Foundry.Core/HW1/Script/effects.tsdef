@@ -741,9 +741,6 @@
           <Param sigid="5">
             <Value Name="DropoffLoc" Type="Vector" Optional="false" Output="false" />
           </Param>
-          <Param sigid="6">
-            <Value Name="NumTransports" Type="Invalid" Optional="false" Output="false" />
-          </Param>
         </Params>
       </Version>
       <Version v="5">
@@ -755,19 +752,6 @@
             <Value Name="SquadList" Type="SquadList" Optional="false" Output="false" />
           </Param>
           <Param sigid="5">
-            <Value Name="Dropoff" Type="Vector" Optional="false" Output="false" />
-          </Param>
-        </Params>
-      </Version>
-      <Version v="2">
-        <Params>
-          <Param sigid="1">
-            <Value Name="Player" Type="Player" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="2">
-            <Value Name="SquadList" Type="SquadList" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="3">
             <Value Name="Dropoff" Type="Vector" Optional="false" Output="false" />
           </Param>
         </Params>
@@ -1088,7 +1072,7 @@
       <Version v="0">
         <Params>
           <Param sigid="1">
-            <Value Name="PlayerList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="PlayerList" Type="PlayerList" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
@@ -1102,7 +1086,7 @@
       <Version v="0">
         <Params>
           <Param sigid="1">
-            <Value Name="TeamList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="TeamList" Type="TeamList" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
@@ -1838,7 +1822,7 @@
       <Version v="0">
         <Params>
           <Param sigid="1">
-            <Value Name="UnitList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="UnitList" Type="UnitList" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
@@ -1852,7 +1836,7 @@
       <Version v="0">
         <Params>
           <Param sigid="1">
-            <Value Name="SquadList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="SquadList" Type="SquadList" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
@@ -1978,7 +1962,7 @@
             <Value Name="UnitProtoObject" Type="ProtoObject" Optional="true" Output="false" />
           </Param>
           <Param sigid="4">
-            <Value Name="UIUnit" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="UIUnit" Type="UIUnit" Optional="false" Output="false" />
           </Param>
         </Params>
       </Version>
@@ -1991,7 +1975,7 @@
             <Value Name="UnitPlayer" Type="Player" Optional="true" Output="false" />
           </Param>
           <Param sigid="4">
-            <Value Name="UIUnit" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="UIUnit" Type="UIUnit" Optional="false" Output="false" />
           </Param>
           <Param sigid="5">
             <Value Name="UnitObjectType" Type="ObjectType" Optional="true" Output="false" />
@@ -2017,7 +2001,7 @@
             <Value Name="SquadProtoSquad" Type="ProtoSquad" Optional="true" Output="false" />
           </Param>
           <Param sigid="4">
-            <Value Name="UISquad" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="UISquad" Type="UISquad" Optional="false" Output="false" />
           </Param>
           <Param sigid="5">
             <Value Name="ChildrenObjectType" Type="ObjectType" Optional="true" Output="false" />
@@ -2036,7 +2020,7 @@
             <Value Name="SquadProtoSquad" Type="ProtoSquad" Optional="true" Output="false" />
           </Param>
           <Param sigid="4">
-            <Value Name="UISquad" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="UISquad" Type="UISquad" Optional="false" Output="false" />
           </Param>
           <Param sigid="5">
             <Value Name="ChildrenObjectType" Type="ObjectType" Optional="true" Output="false" />
@@ -2704,7 +2688,7 @@
       <Version v="0">
         <Params>
           <Param sigid="1">
-            <Value Name="ObjectList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="ObjectList" Type="ObjectList" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
@@ -2843,7 +2827,7 @@
       <Version v="0">
         <Params>
           <Param sigid="1">
-            <Value Name="LocationList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="LocationList" Type="VectorList" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
@@ -4109,9 +4093,6 @@
           <Param sigid="7">
             <Value Name="Adjust" Type="Bool" Optional="true" Output="false" />
           </Param>
-          <Param sigid="8">
-            <Value Name="NegativeAdjust" Type="Invalid" Optional="false" Output="false" />
-          </Param>
         </Params>
       </Version>
       <Version v="2">
@@ -4595,7 +4576,7 @@
       <Version v="0">
         <Params>
           <Param sigid="1">
-            <Value Name="ProtoObjectList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="ProtoObjectList" Type="ProtoObjectList" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
@@ -4609,7 +4590,7 @@
       <Version v="0">
         <Params>
           <Param sigid="1">
-            <Value Name="ProtoSquadList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="ProtoSquadList" Type="ProtoSquadList" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
@@ -4623,7 +4604,7 @@
       <Version v="0">
         <Params>
           <Param sigid="1">
-            <Value Name="ObjectTypeList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="ObjectTypeList" Type="ObjectTypeList" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
@@ -4637,7 +4618,7 @@
       <Version v="0">
         <Params>
           <Param sigid="1">
-            <Value Name="TechList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="TechList" Type="TechList" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
@@ -5078,10 +5059,10 @@
             <Value Name="ContainerUnit" Type="Unit" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
-            <Value Name="GarrisonedUnits" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="GarrisonedUnits" Type="UnitList" Optional="false" Output="false" />
           </Param>
           <Param sigid="3">
-            <Value Name="NumGarrisoned" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="NumGarrisoned" Type="Integer" Optional="false" Output="false" />
           </Param>
         </Params>
       </Version>
@@ -5093,9 +5074,6 @@
         <Params>
           <Param sigid="1">
             <Value Name="Player" Type="Player" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="2">
-            <Value Name="DifficultyLevel" Type="Invalid" Optional="false" Output="false" />
           </Param>
           <Param sigid="3">
             <Value Name="DifficultyFloat" Type="Float" Optional="false" Output="false" />
@@ -5956,7 +5934,7 @@
             <Value Name="UserPlayer" Type="Player" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
-            <Value Name="UISquadList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="UISquadList" Type="UISquadList" Optional="false" Output="false" />
           </Param>
           <Param sigid="3">
             <Value Name="SelectionRadius" Type="Float" Optional="false" Output="false" />
@@ -6826,10 +6804,10 @@
             <Value Name="ContainerUnit" Type="Unit" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
-            <Value Name="GarrisonedSquads" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="GarrisonedSquads" Type="SquadList" Optional="false" Output="false" />
           </Param>
           <Param sigid="3">
-            <Value Name="NumGarrisoned" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="NumGarrisoned" Type="Integer" Optional="false" Output="false" />
           </Param>
           <Param sigid="4">
             <Value Name="OnlyCompletelyGarrisoned" Type="Bool" Optional="true" Output="false" />
@@ -7294,7 +7272,7 @@
       <Version v="2">
         <Params>
           <Param sigid="4">
-            <Value Name="PlayerList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="PlayerList" Type="PlayerList" Optional="false" Output="false" />
           </Param>
           <Param sigid="6">
             <Value Name="Object" Type="Object" Optional="false" Output="false" />
@@ -7336,7 +7314,7 @@
       <Version v="0">
         <Params>
           <Param sigid="1">
-            <Value Name="PlayerList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="PlayerList" Type="PlayerList" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="LocStringID" Type="LocStringID" Optional="false" Output="false" />
@@ -7396,12 +7374,6 @@
           </Param>
           <Param sigid="3">
             <Value Name="Player" Type="Player" Optional="true" Output="false" />
-          </Param>
-          <Param sigid="4">
-            <Value Name="SourceEntity" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="5">
-            <Value Name="TargetEntity" Type="Invalid" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="EventID" Type="Integer" Optional="false" Output="true" />
@@ -7511,87 +7483,6 @@
           </Param>
           <Param sigid="12">
             <Value Name="AllActions" Type="Bool" Optional="true" Output="false" />
-          </Param>
-        </Params>
-      </Version>
-    </Type>
-  </Logic>
-  <Logic dbid="832" Name="SetScenarioScore" Category="Game|Scenario">
-    <Type>
-      <Version v="1">
-        <Params>
-          <Param sigid="1">
-            <Value Name="Player" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="2">
-            <Value Name="KillLossRatio" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="3">
-            <Value Name="ParTime" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="4">
-            <Value Name="CompletionTime" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="5">
-            <Value Name="Difficulty" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="6">
-            <Value Name="OptObjectiveCount" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="7">
-            <Value Name="OptObjectiveScore" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="8">
-            <Value Name="TotalScore" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="9">
-            <Value Name="MedalEarned" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="10">
-            <Value Name="BaseScore" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-        </Params>
-      </Version>
-      <Version v="2">
-        <Params>
-          <Param sigid="1">
-            <Value Name="Player" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="2">
-            <Value Name="MilitaryModifier" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="3">
-            <Value Name="ParTime" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="4">
-            <Value Name="CompletionTime" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="5">
-            <Value Name="Difficulty" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="6">
-            <Value Name="OptObjectiveCount" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="7">
-            <Value Name="OptObjectiveScore" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="8">
-            <Value Name="TotalScore" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="9">
-            <Value Name="MedalEarned" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="10">
-            <Value Name="BaseScore" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="11">
-            <Value Name="HiddenFound" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="12">
-            <Value Name="HiddenBonus" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="13">
-            <Value Name="TimeModifier" Type="Invalid" Optional="false" Output="false" />
           </Param>
         </Params>
       </Version>
@@ -9671,7 +9562,7 @@
       <Version v="0">
         <Params>
           <Param sigid="1">
-            <Value Name="Player" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="Player" Type="Player" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="TargetIDs" Type="IntegerList" Optional="false" Output="false" />
@@ -9833,12 +9724,6 @@
           </Param>
           <Param sigid="6">
             <Value Name="TicketInterval" Type="Time" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="7">
-            <Value Name="CommitmentTime" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="8">
-            <Value Name="ServiceInterval" Type="Invalid" Optional="false" Output="false" />
           </Param>
           <Param sigid="9">
             <Value Name="AITopicID" Type="Integer" Optional="false" Output="false" />
@@ -10134,57 +10019,6 @@
       </Version>
     </Type>
   </Logic>
-  <Logic dbid="666" Name="AICalculations" Category="AI">
-    <Type>
-      <Version v="0">
-        <Params>
-          <Param sigid="5">
-            <Value Name="CalculationNumber" Type="Integer" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="1">
-            <Value Name="ickwhichcalculationtorun13cSquadList" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="2">
-            <Value Name="KBSquadList" Type="Invalid" Optional="true" Output="false" />
-          </Param>
-          <Param sigid="4">
-            <Value Name="Unarmored" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="6">
-            <Value Name="Vehicle" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="7">
-            <Value Name="Air" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="8">
-            <Value Name="Building" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-        </Params>
-      </Version>
-      <Version v="2">
-        <Params>
-          <Param sigid="1">
-            <Value Name="SquadListA" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="2">
-            <Value Name="KBSquadListA" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="3">
-            <Value Name="SquadListB" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="4">
-            <Value Name="KBSquadListB" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="5">
-            <Value Name="AvsB" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="6">
-            <Value Name="BvsA" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-        </Params>
-      </Version>
-    </Type>
-  </Logic>
   <Logic dbid="668" Name="AIAnalyzeSquadList" Category="AI">
     <Type>
       <Version v="0">
@@ -10342,9 +10176,6 @@
     <Type>
       <Version v="0">
         <Params>
-          <Param sigid="6">
-            <Value Name="Sender" Type="Invalid" Optional="false" Output="false" />
-          </Param>
           <Param sigid="5">
             <Value Name="PlayerList" Type="PlayerList" Optional="false" Output="false" />
           </Param>
@@ -10929,7 +10760,7 @@
       <Version v="0">
         <Params>
           <Param sigid="1">
-            <Value Name="KBBaseList" Type="Invalid" Optional="false" Output="false" />
+            <Value Name="KBBaseList" Type="KBBaseList" Optional="false" Output="false" />
           </Param>
           <Param sigid="2">
             <Value Name="Iterator" Type="Iterator" Optional="false" Output="false" />
@@ -11788,43 +11619,8 @@
           <Param sigid="3">
             <Value Name="TableName" Type="String" Optional="false" Output="false" />
           </Param>
-          <Param sigid="4">
-            <Value Name="Shared" Type="Invalid" Optional="false" Output="false" />
-          </Param>
           <Param sigid="5">
             <Value Name="ID" Type="Integer" Optional="false" Output="true" />
-          </Param>
-        </Params>
-      </Version>
-    </Type>
-  </Logic>
-  <Logic dbid="957" Name="AIGetMemory" Category="AI">
-    <Type>
-      <Version v="0">
-        <Params>
-          <Param sigid="1">
-            <Value Name="DidPlayerWin" Type="Bool" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="2">
-            <Value Name="Player" Type="Player" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="3">
-            <Value Name="Cost" Type="Invalid" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="4">
-            <Value Name="NumGamesPlayed" Type="Integer" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="5">
-            <Value Name="NumGamesWon" Type="Integer" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="6">
-            <Value Name="TimePlayerAttacked" Type="Time" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="7">
-            <Value Name="TimeAIAttacked" Type="Time" Optional="false" Output="false" />
-          </Param>
-          <Param sigid="8">
-            <Value Name="PreviousStratsUsed" Type="IntegerList" Optional="false" Output="false" />
           </Param>
         </Params>
       </Version>
@@ -11908,9 +11704,6 @@
     <Type>
       <Version v="0">
         <Params>
-          <Param sigid="1">
-            <Value Name="PlayerID" Type="Invalid" Optional="false" Output="false" />
-          </Param>
           <Param sigid="2">
             <Value Name="MissionID" Type="Integer" Optional="false" Output="false" />
           </Param>
