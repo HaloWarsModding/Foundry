@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing; //cross platform System.Drawing.Primitives is used.
 using System.Linq;
+using System.Reflection;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
@@ -286,76 +287,46 @@ namespace Chef.HW1.Script
 
 
         //Selection
-        public static void SelectBoundsBody(Triggerscript script, Point point, out Trigger trigger, out LogicSlot slot, out int logic)
+        public static void SelectBoundsBody(Triggerscript script, Point point, out Trigger trigger, out LogicSlot slot, out int logic, out int param, out int insert)
         {
             trigger = null;
             slot = LogicSlot.Condition;
             logic = -1;
+            insert = -1;
+            param = -1;
 
             foreach (var (v, t) in script.Triggers.Reverse())
             {
                 if (BoundsTriggerMargin(t).Contains(point))
                 {
                     trigger = t;
-
                     foreach (var s in Enum.GetValues<LogicSlot>())
                     {
                         var l = Logics(t, s);
-                        for (int i = 0; i < l.Count(); i++)
+                        //num logics + 1 to allow getting insert index of empty slot.
+                        for (int i = 0; i < l.Count() + 1; i++)
                         {
-                            if (BoundsLogicBody(t, s, i).Contains(point))
+                            //only check node bodies whose indices are less than num logics.
+                            if (i < l.Count() && BoundsLogicBody(t, s, i).Contains(point))
                             {
                                 slot = s;
                                 logic = i;
+                                var paramInfos = LogicParamInfos(SlotType(slot), l.ElementAt(i).DBID, l.ElementAt(i).Version);
+                                for (int p = 0; p < paramInfos.Count; p++)
+                                {
+                                    if (BoundsParamValue(trigger, slot, logic, p).Contains(point))
+                                    {
+                                        param = paramInfos.ElementAt(p).Key;
+                                    }
+                                }
                             }
-                        }
-                    }
-                    return;
-                }
-            }
-            return;
-        }
-        public static void SelectBoundsInsert(Triggerscript script, Point point, out Trigger trigger, out LogicSlot slot, out int index)
-        {
-            trigger = null;
-            slot = LogicSlot.Condition;
-            index = -1;
-
-            foreach (var (v, t) in script.Triggers.Reverse())
-            {
-                foreach (var s in Enum.GetValues<LogicSlot>())
-                {
-                    if (BoundsLogicSlot(t, s).Contains(point))
-                    {
-                        for (int i = 0; i < Logics(t, s).Count() + 1; i++)
-                        {
                             if (BoundsLogicInsert(t, s, i).Contains(point))
                             {
-                                trigger = t;
                                 slot = s;
-                                index = i;
-                                return;
+                                insert = i;
                             }
                         }
                     }
-                }
-            }
-            return;
-        }
-        public static void SelectBoundsParamValue(Triggerscript script, Point point, out Trigger trigger, out LogicSlot slot, out int logic, out int param)
-        {
-            param = -1;
-            SelectBoundsBody(script, point, out trigger, out slot, out logic);
-
-            if (trigger == null || logic <= 0) return;
-
-            Logic l = Logics(trigger, slot).ElementAt(logic);
-            var paramInfos = LogicParamInfos(SlotType(slot), l.DBID, l.Version);
-            for (int i = 0; i < paramInfos.Count; i++)
-            {
-                if (BoundsParamValue(trigger, slot, logic, i).Contains(point))
-                {
-                    param = paramInfos.ElementAt(i).Key;
                     return;
                 }
             }
@@ -377,28 +348,6 @@ namespace Chef.HW1.Script
             if (slot == LogicSlot.Condition) return trigger.Conditions;
             else if (slot == LogicSlot.EffectTrue) return trigger.TriggerEffectsOnTrue;
             else return trigger.TriggerEffectsOnFalse;
-        }
-        public static IEnumerable<Var> Variables(Triggerscript script)
-        {
-            List<Var> vars = new List<Var>();
-            foreach (var t in script.Triggers.Values)
-            {
-                foreach (var l in Logics(t))
-                {
-                    foreach (var (sigid, var) in l.Params)
-                    {
-                        if (var != null && !vars.Contains(var))
-                        {
-                            vars.Add(var);
-                        }
-                    }
-                }
-            }
-            return vars;
-        }
-        public static IEnumerable<Var> Variables(Triggerscript script, VarType type)
-        {
-            return Variables(script).Where(v => v.Type == type);
         }
 
 

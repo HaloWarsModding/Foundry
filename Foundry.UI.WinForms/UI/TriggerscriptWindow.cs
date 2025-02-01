@@ -101,12 +101,13 @@ namespace Chef.Win.UI
             if (Triggerscript == null) return;
 
             Point ViewMouse = ViewMatrix.Inverted().TransformPoint(e.Location);
+            Point ClientMouse = PointToScreen(e.Location);
 
-            SelectBoundsBody(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic);
+            SelectBoundsBody(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic, out selVar, out dropLogic);
             if (ViewScale > ViewScaleLOD)
             {
-                SelectBoundsInsert(Triggerscript, ViewMouse, out dropTrigger, out dropSlot, out dropLogic);
-                SelectBoundsParamValue(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic, out selVar);
+                //SelectBoundsInsert(Triggerscript, ViewMouse, out dropTrigger, out dropSlot, out dropLogic);
+                //SelectBoundsParamValue(Triggerscript, ViewMouse, out selTrigger, out selSlot, out selLogic, out selVar);
             }
             else
             {
@@ -124,33 +125,26 @@ namespace Chef.Win.UI
 
             if (e.Button == MouseButtons.Right && selTrigger != null)
             {
-                if (selVar != -1)
-                {
-                    ShowSetVarMenu(Triggerscript, Logics(selTrigger, selSlot).ElementAt(selLogic), selVar, PointToScreen(e.Location), onEdit);
-                }
-                else if (dropLogic != -1)
-                {
-                        ShowLogicAddMenu(Triggerscript, dropTrigger, dropSlot, dropLogic, PointToScreen(e.Location), onEdit);
-                }
-                else if (selLogic != -1)
+                if (selLogic >= 0)
                 {
                     if (selSlot == LogicSlot.Condition)
-                        ShowConditionOptionsMenu((Condition)Logics(selTrigger, selSlot).ElementAt(selLogic), PointToScreen(e.Location), onEdit);
+                    {
+                        ShowConditionOptionsMenu(selTrigger.Conditions[selLogic], ClientMouse, onEdit);
+                    }
                     else
-                        ShowEffectOptionsMenu((Effect)Logics(selTrigger, selSlot).ElementAt(selLogic), PointToScreen(e.Location), onEdit);
+                    {
+                        List<Effect> effects = selSlot == LogicSlot.EffectTrue ? selTrigger.TriggerEffectsOnTrue : selTrigger.TriggerEffectsOnFalse;
+                        ShowEffectOptionsMenu(effects[selLogic], ClientMouse, onEdit);
+                    }
+                }
+                else if (dropLogic >= 0)
+                {
+                    ShowLogicAddMenu(Triggerscript, selTrigger, selSlot, dropLogic, ClientMouse, onEdit);
                 }
                 else
                 {
-                    ShowTriggerOptionsMenu(selTrigger, e.Location, onEdit);
+                    ShowTriggerOptionsMenu(selTrigger, ClientMouse, onEdit);
                 }
-            }
-            else if (e.Button == MouseButtons.Right && dropTrigger != null && dropLogic != -1)
-            {
-                ShowLogicAddMenu(Triggerscript, dropTrigger, dropSlot, dropLogic, PointToScreen(e.Location), onEdit);
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                //ShowVarList(Triggerscript, PointToScreen(e.Location), onEdit);
             }
 
             MouseLast = e.Location;
@@ -173,7 +167,7 @@ namespace Chef.Win.UI
             if (Triggerscript == null) return;
 
             Point ViewMouse = ViewMatrix.Inverted().TransformPoint(e.Location);
-            SelectBoundsInsert(Triggerscript, ViewMouse, out dropTrigger, out dropSlot, out dropLogic);
+            SelectBoundsBody(Triggerscript, ViewMouse, out dropTrigger, out dropSlot, out _, out _, out dropLogic);
 
             if (MouseButtons == MouseButtons.Middle)
             {
@@ -261,9 +255,7 @@ namespace Chef.Win.UI
 
             ClampView();
 
-            //e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
-            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-
+            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             e.Graphics.Clear(BackgroundColor);
 
             Rectangle viewClip = new Rectangle(

@@ -137,16 +137,11 @@ namespace Chef.HW1.Script
         UserClassType,
     }
 
-    public class Var
-    {
-        public VarType Type { get; set; }
-        public string Name { get; set; }
-    }
     public abstract class Logic
     {
         public Logic()
         {
-            Params = new Dictionary<int, Var>();
+            Params = new Dictionary<int, string>();
             Comment = "";
             DBID = -1;
             Version = -1;
@@ -155,7 +150,7 @@ namespace Chef.HW1.Script
         public int Version { get; set; }
         public int DBID { get; set; }
         public string Comment { get; set; }
-        public Dictionary<int, Var> Params { get; set; }
+        public Dictionary<int, string> Params { get; set; }
         public abstract LogicType Type { get; }
     }
     public class Effect : Logic
@@ -197,8 +192,10 @@ namespace Chef.HW1.Script
     {
         public Triggerscript()
         {
-            Triggers = new Dictionary<Var, Trigger>();
+            Triggers = new Dictionary<string, Trigger>();
+            Constants = new Dictionary<VarType, Dictionary<string, string>>();
         }
-        public Dictionary<Var, Trigger> Triggers { get; set; }
+        public Dictionary<string, Trigger> Triggers { get; set; }
+        public Dictionary<VarType, Dictionary<string, string>> Constants { get; set; }
     }
 }

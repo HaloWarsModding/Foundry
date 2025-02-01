@@ -150,7 +150,7 @@ namespace Chef.Win.Render
                             g.DrawRectangle(new Pen(Color.White, .125f), varValBounds);
                         }
 
-                        string varValStr = var.Name;
+                        string varValStr = var;
                         if (varValStr == "") varValStr = "NO NAME";
 
                         //shrink it by a margin for the string

@@ -60,7 +60,7 @@ namespace Chef.Win.UI
             menu.Items.AddRange(EffectOptionItems(effect, onEdit).ToArray());
             menu.Show(point);
         }
-        public static void ShowVarOptionsMenu(Var var, Point point, EventHandler onEdit = null)
+        public static void ShowVarOptionsMenu(/*Var var, */Point point, EventHandler onEdit = null)
         {
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.Closing += (s, e) =>
@@ -71,16 +71,16 @@ namespace Chef.Win.UI
                     //e.Cancel = true;
                 }
             };
-            menu.Items.AddRange(VarOptionItems(var, 
-                (s, e) =>
-            {
-                onEdit?.Invoke(menu, EventArgs.Empty);
-            },
-                (s, e) =>
-            {
-                onEdit?.Invoke(menu, EventArgs.Empty);
-            }
-            ).ToArray());
+            //menu.Items.AddRange(VarOptionItems(var, 
+            //    (s, e) =>
+            //{
+            //    onEdit?.Invoke(menu, EventArgs.Empty);
+            //},
+            //    (s, e) =>
+            //{
+            //    onEdit?.Invoke(menu, EventArgs.Empty);
+            //}
+            //).ToArray());
             menu.Show(point);
         }
         public static void ShowSetVarMenu(Triggerscript script, Logic logic, int sigid, Point point, EventHandler onEdit = null)
@@ -138,29 +138,29 @@ namespace Chef.Win.UI
         {
             var paramInfos = LogicParamInfos(logic.Type, logic.DBID, logic.Version);
             var paramInfo = paramInfos[sigid];
-            List<Var> selectionSet = Variables(script, paramInfo.Type).ToList();
+            //List<string> selectionSet = Variables(script, paramInfo.Type).ToList();
 
             int curIndex = 0;
             if (logic.Params.ContainsKey(sigid) && logic.Params[sigid] != null)
             {
-                curIndex = selectionSet.IndexOf(logic.Params[sigid]) + 1; //+1 because NULL is index 0.
+                //curIndex = selectionSet.IndexOf(logic.Params[sigid]) + 1; //+1 because NULL is index 0.
             }
 
             ToolStripComboBox cb = new ToolStripComboBox();
             cb.Items.Add("NULL");
-            cb.Items.AddRange(selectionSet.ToArray());
+            //cb.Items.AddRange(selectionSet.ToArray());
             cb.SelectedIndex = curIndex;
             cb.ComboBox.DisplayMember = "Name";
             cb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cb.AutoCompleteSource = AutoCompleteSource.ListItems;
             cb.SelectedIndexChanged += (s, e) =>
             {
-                Var selVar = null;
-                if (cb.SelectedIndex != 0)
-                {
-                    selVar = (Var)cb.Items[cb.SelectedIndex];
-                }
-                logic.Params[sigid] = selVar; //set the param value
+                //Var selVar = null;
+                //if (cb.SelectedIndex != 0)
+                //{
+                //    selVar = (Var)cb.Items[cb.SelectedIndex];
+                //}
+                //logic.Params[sigid] = selVar; //set the param value
                 onEdit?.Invoke(cb, EventArgs.Empty);
             };
             cb.KeyDown += (s, e) =>
@@ -180,13 +180,13 @@ namespace Chef.Win.UI
             add.Text = "New...";
             add.Click += (s, e) =>
             {
-                Var var = new Var()
-                {
-                    Name = "new" + paramInfo.Type,
-                    Type = paramInfo.Type
-                };
+                //Var var = new Var()
+                //{
+                //    Name = "new" + paramInfo.Type,
+                //    Type = paramInfo.Type
+                //};
 
-                logic.Params[sigid] = var; //set the param value
+                //logic.Params[sigid] = var; //set the param value
 
                 onEdit?.Invoke(add, EventArgs.Empty);
             };
@@ -365,39 +365,39 @@ namespace Chef.Win.UI
 
             return types.Values;
         }
-        public static IEnumerable<ToolStripItem> VarOptionItems(Var var, EventHandler<string> textChanged = null, EventHandler onEdit = null)
+        public static IEnumerable<ToolStripItem> VarOptionItems(/*Var var,*/ EventHandler<string> textChanged = null, EventHandler onEdit = null)
         {
             List<ToolStripItem> items = new List<ToolStripItem>();
 
-            //Info
-            ToolStripLabel varLabel = new ToolStripLabel(var.Type + " Variable");
-            items.Add(varLabel);
-            items.Add(new ToolStripSeparator());
+            ////Info
+            //ToolStripLabel varLabel = new ToolStripLabel(var.Type + " Variable");
+            //items.Add(varLabel);
+            //items.Add(new ToolStripSeparator());
 
-            //Name
-            items.Add(new ToolStripLabel("Name:"));
-            ToolStripTextBox name = new ToolStripTextBox();
-            name.Text = var.Name;
-            name.BorderStyle = BorderStyle.FixedSingle;
-            name.TextChanged += (s, e) =>
-            {
-                var.Name = name.Text;
-                textChanged?.Invoke(name, name.Text);
-                onEdit?.Invoke(name, EventArgs.Empty);
-            };
-            items.Add(name);
+            ////Name
+            //items.Add(new ToolStripLabel("Name:"));
+            //ToolStripTextBox name = new ToolStripTextBox();
+            //name.Text = var.Name;
+            //name.BorderStyle = BorderStyle.FixedSingle;
+            //name.TextChanged += (s, e) =>
+            //{
+            //    var.Name = name.Text;
+            //    textChanged?.Invoke(name, name.Text);
+            //    onEdit?.Invoke(name, EventArgs.Empty);
+            //};
+            //items.Add(name);
 
-            //Value
-            items.Add(new ToolStripLabel("Value:"));
-            ToolStripTextBox val = new ToolStripTextBox();
-            //val.Text = var.Value;
-            val.BorderStyle = BorderStyle.FixedSingle;
-            val.TextChanged += (s, e) =>
-            {
-                //var.Value = val.Text;
-                onEdit?.Invoke(name, EventArgs.Empty);
-            };
-            items.Add(val);
+            ////Value
+            //items.Add(new ToolStripLabel("Value:"));
+            //ToolStripTextBox val = new ToolStripTextBox();
+            ////val.Text = var.Value;
+            //val.BorderStyle = BorderStyle.FixedSingle;
+            //val.TextChanged += (s, e) =>
+            //{
+            //    //var.Value = val.Text;
+            //    onEdit?.Invoke(name, EventArgs.Empty);
+            //};
+            //items.Add(val);
 
             return items;
         }
