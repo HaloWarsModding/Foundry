@@ -12,7 +12,7 @@ class Program
     {
         if (args.Length < 2) return;
         string projectDir = args[0];
-        string outputDir = args[0] + "../../foundry/hw1/triggerscript/";
+        string outputDir = args[0] + "";
         //YAXSerializer ser = new YAXSerializer(typeof(Dictionary<int, Dictionary<int, ProtoLogic>>));
         YAXSerializer ser = new YAXSerializer(typeof(LogicDatabase));
 
@@ -154,10 +154,15 @@ class Program
 
                     string[] keyval = e.Split("=");
 
-                    string pname = keyval[0].Substring(1);
+                    string pname = keyval[0];
+
+                    if (pname.StartsWith("c")) pname = pname.Substring(1);
 
                     if (pname.StartsWith("Input")) pname = pname.Substring(5);
                     else if (pname.StartsWith("Output")) pname = pname.Substring(6);
+
+                    if (pname.StartsWith("in")) pname = pname.Substring(2);
+                    else if (pname.StartsWith("out")) pname = pname.Substring(3);
 
                     int pid = keyval.Length > 1 ? int.Parse(keyval[1]) : tracker;
                     tracker = pid + 1;
@@ -181,6 +186,10 @@ class Program
                             Output = poutput,
                             Type = TriggerscriptHelpers.TypeFromString(ptypestr),
                         });
+                        if (vinfo.Params[pid].Type == VarType.Invalid)
+                        {
+                            Console.WriteLine(pname + " " + ptypestr);
+                        }
                     }
                     catch (Exception ex) { Console.WriteLine(ex.Message); }
                 }
