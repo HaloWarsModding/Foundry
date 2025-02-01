@@ -21,7 +21,6 @@ namespace Chef.HW1
             Value = value;
             File = file;
         }
-
         public T Value { get; set; }
         public string File { get; set; }
         public bool Edited { get; set; }
@@ -37,7 +36,6 @@ namespace Chef.HW1
         public Dictionary<string, Asset<MissionEntry>> MissionEntries { get; set; } = new Dictionary<string, Asset<MissionEntry>>();
         public Dictionary<string, Asset<Scenario>> Scenarios { get; set; } = new Dictionary<string, Asset<Scenario>>();
         public Dictionary<string, Asset<TerrainVisual>> TerrainVisuals { get; set; } = new Dictionary<string, Asset<TerrainVisual>>();
-        public Dictionary<string, Asset<ScratchImage>> TerrainTextures { get; set; } = new Dictionary<string, Asset<ScratchImage>>();
     }
 
     public class AssetDatabase
@@ -69,7 +67,7 @@ namespace Chef.HW1
                     case ".ddx":
                     case ".dds":
                         if (cache.Textures.ContainsKey(name)) continue;
-                        cache.Textures.Add(name, new Asset<DirectXTexNet.Image>(null, f));
+                        cache.Textures.Add(name, new Asset<Image>(null, f));
                         break;
                 }
 
