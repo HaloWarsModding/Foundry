@@ -120,7 +120,11 @@ namespace Chef.Win.Render
                             TextFont, 
                             new SolidBrush(TextColor),
                             varNameBounds,
-                            new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center }
+                            new StringFormat() { 
+                                LineAlignment = StringAlignment.Center, 
+                                Alignment = StringAlignment.Center,
+                                Trimming = StringTrimming.EllipsisCharacter
+                            }
                         );
 
                         //value
@@ -160,7 +164,10 @@ namespace Chef.Win.Render
                             TextFont,
                             new SolidBrush(TextColor),
                             varValBounds,
-                            new StringFormat() { LineAlignment = StringAlignment.Center });
+                            new StringFormat() { 
+                                LineAlignment = StringAlignment.Center,
+                                Trimming = StringTrimming.EllipsisCharacter
+                            });
 
                         paramIndex++;
                     }
@@ -186,7 +193,8 @@ namespace Chef.Win.Render
                         new StringFormat()
                         {
                             Alignment = StringAlignment.Center,
-                            LineAlignment = StringAlignment.Center
+                            LineAlignment = StringAlignment.Center,
+                            Trimming = StringTrimming.EllipsisCharacter
                         }
                     );
                 }
@@ -245,6 +253,7 @@ namespace Chef.Win.Render
             {
                 Alignment = StringAlignment.Center,
                 LineAlignment = StringAlignment.Center,
+                Trimming = StringTrimming.EllipsisCharacter
             });
 
             bounds.Y += HeaderHeight;
@@ -263,6 +272,7 @@ namespace Chef.Win.Render
             {
                 Alignment = StringAlignment.Near,
                 LineAlignment = StringAlignment.Center,
+                Trimming = StringTrimming.EllipsisCharacter
             });
 
             lbounds = BoundsLogicSlot(trigger, LogicSlot.EffectTrue);
@@ -291,6 +301,7 @@ namespace Chef.Win.Render
             {
                 Alignment = StringAlignment.Near,
                 LineAlignment = StringAlignment.Center,
+                Trimming = StringTrimming.EllipsisCharacter
             });
         }
     }
