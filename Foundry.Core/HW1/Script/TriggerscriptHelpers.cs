@@ -465,6 +465,35 @@ namespace Chef.HW1.Script
             return slot == LogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
         }
 
+        public static bool VarTypeIsList(VarType type)
+        {
+            switch (type)
+            {
+                case VarType.ConceptList:
+                case VarType.DesignLineList:
+                case VarType.EntityList:
+                case VarType.FloatList:
+                case VarType.IntegerList:
+                case VarType.KBBaseList:
+                case VarType.KBSquadList:
+                case VarType.ObjectList:
+                case VarType.ObjectTypeList:
+                case VarType.PlayerList:
+                case VarType.ProtoObjectList:
+                case VarType.ProtoSquadList:
+                case VarType.SquadList:
+                case VarType.TeamList:
+                case VarType.TechList:
+                case VarType.TimeList:
+                case VarType.UISquadList:
+                case VarType.UnitList:
+                case VarType.VectorList:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
         public static bool VarTypeIsEnum(VarType type)
         {
             if (!VarTypeIsEnumFor(type, LogicType.Condition)) return false;
