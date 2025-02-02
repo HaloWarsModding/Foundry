@@ -110,7 +110,7 @@ namespace Chef.Win.Render
                 if (detail)
                 {
                     int paramIndex = 0;
-                    foreach (var (sigid, param) in LogicParamInfos(SlotType(slot), cur.DBID, cur.Version))
+                    foreach (var (sigid, param) in LogicParamInfos(LogicSlotType(slot), cur.DBID, cur.Version))
                     {
                         //name
                         Rectangle varNameBounds = BoundsParamName(trigger, slot, i, paramIndex);

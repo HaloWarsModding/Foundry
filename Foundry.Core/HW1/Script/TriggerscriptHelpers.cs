@@ -311,7 +311,7 @@ namespace Chef.HW1.Script
                             {
                                 slot = s;
                                 logic = i;
-                                var paramInfos = LogicParamInfos(SlotType(slot), l.ElementAt(i).DBID, l.ElementAt(i).Version);
+                                var paramInfos = LogicParamInfos(LogicSlotType(slot), l.ElementAt(i).DBID, l.ElementAt(i).Version);
                                 for (int p = 0; p < paramInfos.Count; p++)
                                 {
                                     if (BoundsParamValue(trigger, slot, logic, p).Contains(point))
@@ -459,8 +459,7 @@ namespace Chef.HW1.Script
             LogicDatabase db = TableForType(type);
             return db.Types[dbid].Category;
         }
-
-        public static LogicType SlotType(LogicSlot slot)
+        public static LogicType LogicSlotType(LogicSlot slot)
         {
             return slot == LogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
         }
@@ -493,32 +492,6 @@ namespace Chef.HW1.Script
                 default:
                     return false;
             }
-        }
-        public static bool VarTypeIsEnum(VarType type)
-        {
-            if (!VarTypeIsEnumFor(type, LogicType.Condition)) return false;
-            if (!VarTypeIsEnumFor(type, LogicType.Effect)) return false;
-            return true;
-        }
-        private static bool VarTypeIsEnumFor(VarType type, LogicType ltype)
-        {
-            foreach (var l in TableForType(ltype).Types.Values)
-            {
-                foreach (var v in l.Versions)
-                {
-                    if (v.Value.Params == null) continue; //once again, I hate YAX.
-                    foreach (var p in v.Value.Params)
-                    {
-                        //if its ever written to, its not an enum.
-                        if (p.Value.Output && p.Value.Type == type)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-
-            return true;
         }
 
         public static VarType TypeFromString(string varTypeName)
