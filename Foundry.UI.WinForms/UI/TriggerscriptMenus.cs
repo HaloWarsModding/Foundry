@@ -381,15 +381,17 @@ namespace Chef.Win.UI
             name.TextChanged += (s, e) =>
             {
                 logic.Params[sigid] = name.Text;
+                //does this name have a value? if so, update our value text box to reflect it.
                 if (script.Constants.ContainsKey(paramInfo[sigid].Type)
                     && script.Constants[paramInfo[sigid].Type].ContainsKey(name.Text))
                 {
-                    value.Enabled = true;
+                    //value.ReadOnly = false;
                     value.Text = script.Constants[paramInfo[sigid].Type][name.Text];
                 }
+                //if not, clear value box.
                 else
                 {
-                    value.Enabled = false;
+                    //value.ReadOnly = true;
                     value.Text = "";
                 }
                 onEdit?.Invoke(name, EventArgs.Empty);
@@ -400,6 +402,7 @@ namespace Chef.Win.UI
             value.Size = new Size(160, 0);
             value.TextChanged += (s, e) =>
             {
+                //does this name have a value? if so, update the value in the script.
                 if (script.Constants[paramInfo[sigid].Type].ContainsKey(name.Text))
                 {
                     script.Constants[paramInfo[sigid].Type][name.Text] = value.Text;
@@ -407,6 +410,7 @@ namespace Chef.Win.UI
                 onEdit?.Invoke(name, EventArgs.Empty);
             };
 
+            //set name text last so value can update properly.
             if (!logic.Params.ContainsKey(sigid))
                 name.Text = "";
             else
