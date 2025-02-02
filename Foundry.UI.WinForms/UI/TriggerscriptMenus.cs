@@ -60,7 +60,7 @@ namespace Chef.Win.UI
             menu.Items.AddRange(EffectOptionItems(effect, onEdit).ToArray());
             menu.Show(point);
         }
-        public static void ShowVarOptionsMenu(Logic logic, int sigid, Point point, EventHandler onEdit = null)
+        public static void ShowVarOptionsMenu(Triggerscript script, Logic logic, int sigid, Point point, EventHandler onEdit = null)
         {
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.Closing += (s, e) =>
@@ -71,16 +71,9 @@ namespace Chef.Win.UI
                     //e.Cancel = true;
                 }
             };
-            //menu.Items.AddRange(VarOptionItems(var, 
-            //    (s, e) =>
-            //{
-            //    onEdit?.Invoke(menu, EventArgs.Empty);
-            //},
-            //    (s, e) =>
-            //{
-            //    onEdit?.Invoke(menu, EventArgs.Empty);
-            //}
-            //).ToArray());
+
+            menu.Items.AddRange(VarOptionItems(script, logic, sigid, onEdit).ToArray());
+
             menu.Show(point);
         }
         public static void ShowSetVarMenu(Triggerscript script, Logic logic, int sigid, Point point, EventHandler onEdit = null)
@@ -365,27 +358,64 @@ namespace Chef.Win.UI
 
             return types.Values;
         }
-        public static IEnumerable<ToolStripItem> VarOptionItems(/*Var var,*/ EventHandler<string> textChanged = null, EventHandler onEdit = null)
+        public static IEnumerable<ToolStripItem> VarOptionItems(Triggerscript script, Logic logic, int sigid, EventHandler onEdit = null)
         {
             List<ToolStripItem> items = new List<ToolStripItem>();
 
+            var paramInfo = LogicParamInfos(logic.Type, logic.DBID, logic.Version);
+            if (!paramInfo.ContainsKey(sigid)) 
+                return items;
+
             ////Info
-            //ToolStripLabel varLabel = new ToolStripLabel(var.Type + " Variable");
-            //items.Add(varLabel);
-            //items.Add(new ToolStripSeparator());
+            items.Add(new ToolStripLabel(paramInfo[sigid].Name + " [" + paramInfo[sigid].Type + "]"));
+            items.Add(new ToolStripSeparator());
 
             ////Name
-            //items.Add(new ToolStripLabel("Name:"));
-            //ToolStripTextBox name = new ToolStripTextBox();
-            //name.Text = var.Name;
-            //name.BorderStyle = BorderStyle.FixedSingle;
-            //name.TextChanged += (s, e) =>
-            //{
-            //    var.Name = name.Text;
-            //    textChanged?.Invoke(name, name.Text);
-            //    onEdit?.Invoke(name, EventArgs.Empty);
-            //};
-            //items.Add(name);
+            var nameLabel = new ToolStripLabel("Name:");
+            ToolStripTextBox name = new ToolStripTextBox();
+            var valueLabel = new ToolStripLabel("Value:");
+            ToolStripTextBox value = new ToolStripTextBox();
+            name.BorderStyle = BorderStyle.FixedSingle;
+            name.AutoSize = true;
+            name.Size = new Size(160, 0);
+            name.TextChanged += (s, e) =>
+            {
+                logic.Params[sigid] = name.Text;
+                if (script.Constants.ContainsKey(paramInfo[sigid].Type)
+                    && script.Constants[paramInfo[sigid].Type].ContainsKey(name.Text))
+                {
+                    value.Enabled = true;
+                    value.Text = script.Constants[paramInfo[sigid].Type][name.Text];
+                }
+                else
+                {
+                    value.Enabled = false;
+                    value.Text = "";
+                }
+                onEdit?.Invoke(name, EventArgs.Empty);
+            };
+
+            value.BorderStyle = BorderStyle.FixedSingle;
+            value.AutoSize = true;
+            value.Size = new Size(160, 0);
+            value.TextChanged += (s, e) =>
+            {
+                if (script.Constants[paramInfo[sigid].Type].ContainsKey(name.Text))
+                {
+                    script.Constants[paramInfo[sigid].Type][name.Text] = value.Text;
+                }
+                onEdit?.Invoke(name, EventArgs.Empty);
+            };
+
+            if (!logic.Params.ContainsKey(sigid))
+                name.Text = "";
+            else
+                name.Text = logic.Params[sigid];
+
+            items.Add(nameLabel);
+            items.Add(name);
+            items.Add(valueLabel);
+            items.Add(value);
 
             ////Value
             //items.Add(new ToolStripLabel("Value:"));

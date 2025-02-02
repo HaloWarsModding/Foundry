@@ -46,8 +46,8 @@ namespace Chef.HW1.Script
                     ConditionalTrigger = bool.Parse(e.Attribute("ConditionalTrigger").Value),
                     EvalLimit = float.Parse(e.Attribute("EvalLimit").Value),
                     EvaluateFrequency = float.Parse(e.Attribute("EvaluateFrequency").Value),
-                    X = float.Parse(e.Attribute("X").Value),
-                    Y = float.Parse(e.Attribute("Y").Value),
+                    X = float.Parse(e.Attribute("X").Value) * TriggerscriptParams.TriggerSpacingMultiplier,
+                    Y = float.Parse(e.Attribute("Y").Value) * TriggerscriptParams.TriggerSpacingMultiplier,
                 };
 
                 triggers[id] = trigger;
@@ -205,8 +205,8 @@ namespace Chef.HW1.Script
                 triggerNode.SetAttributeValue("ConditionalTrigger", trigger.ConditionalTrigger);
                 triggerNode.SetAttributeValue("EvaluateFrequency", trigger.EvaluateFrequency);
                 triggerNode.SetAttributeValue("EvalLimit", trigger.EvalLimit);
-                triggerNode.SetAttributeValue("X", trigger.X);
-                triggerNode.SetAttributeValue("Y", trigger.Y);
+                triggerNode.SetAttributeValue("X", trigger.X / TriggerscriptParams.TriggerSpacingMultiplier);
+                triggerNode.SetAttributeValue("Y", trigger.Y / TriggerscriptParams.TriggerSpacingMultiplier);
                 triggerNode.SetAttributeValue("GroupID", -1);
 
                 XElement cndRoot = new XElement("TriggerConditions");

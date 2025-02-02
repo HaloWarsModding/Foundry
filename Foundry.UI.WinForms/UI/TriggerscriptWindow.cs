@@ -129,7 +129,7 @@ namespace Chef.Win.UI
                 {
                     if (selVar >= 0)
                     {
-                        ShowVarOptionsMenu(Logics(selTrigger, selSlot).ElementAt(selLogic), selVar, ClientMouse, onEdit);
+                        ShowVarOptionsMenu(Triggerscript, Logics(selTrigger, selSlot).ElementAt(selLogic), selVar, ClientMouse, onEdit);
                     }
                     else
                     {

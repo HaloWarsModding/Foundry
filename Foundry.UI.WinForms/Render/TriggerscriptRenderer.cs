@@ -166,6 +166,7 @@ namespace Chef.Win.Render
                             varValBounds,
                             new StringFormat() { 
                                 LineAlignment = StringAlignment.Center,
+                                FormatFlags = StringFormatFlags.NoWrap,
                                 Trimming = StringTrimming.EllipsisCharacter
                             });
 
