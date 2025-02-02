@@ -95,76 +95,6 @@ namespace Chef.Win.UI
         }
 
         //Items
-        public static IEnumerable<ToolStripItem> LogicAddItems(Trigger trigger, LogicSlot slot, int index, EventHandler onEdit = null)
-        {
-            List<ToolStripItem> items = new List<ToolStripItem>();
-
-            ToolStripLabel label = new ToolStripLabel("Add...");
-            items.Add(new ToolStripLabel("Add..."));
-            items.Add(new ToolStripSeparator());
-
-            LogicType t = slot == LogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
-
-            Dictionary<string, ToolStripMenuItem> categories = new Dictionary<string, ToolStripMenuItem>();
-
-            foreach (var i in LogicIds(t))
-            {
-                ToolStripMenuItem b = new ToolStripMenuItem(LogicName(t, i));
-                b.Click += (s, e) =>
-                {
-                    if (slot == LogicSlot.Condition)
-                    {
-                        Condition cnd = new Condition()
-                        {
-                            DBID = i,
-                            Version = LogicVersions(t, i).First()
-                        };
-                        trigger.Conditions.Insert(index, cnd);
-                    }
-                    else
-                    {
-                        Effect eff = new Effect()
-                        {
-                            DBID = i,
-                            Version = LogicVersions(t, i).First()
-                        };
-                        if (slot == LogicSlot.EffectTrue)
-                            trigger.TriggerEffectsOnTrue.Insert(index, eff);
-                        if (slot == LogicSlot.EffectFalse)
-                            trigger.TriggerEffectsOnFalse.Insert(index, eff);
-                    }
-
-                    onEdit?.Invoke(b, EventArgs.Empty);
-                };
-
-                //category menu items
-                string cat = "";
-                ToolStripMenuItem last = null;
-                foreach (string c in LogicCategory(t, i).Split("|"))
-                {
-                    if (c == "") break;
-
-                    cat += c;
-                    if (!categories.ContainsKey(cat))
-                    {
-                        categories.Add(cat, new ToolStripMenuItem(c));
-
-                        if (last != null)
-                            last.DropDownItems.Add(categories[cat]);
-                        else
-                            items.Add(categories[cat]);
-                    }
-
-                    last = categories[cat];
-                }
-
-                if (last != null)
-                    last.DropDownItems.Add(b);
-                else
-                    items.Add(b);
-            }
-            return items;
-        }
         public static IEnumerable<ToolStripItem> TriggerOptionItems(Trigger trigger, EventHandler onEdit = null)
         {
             List<ToolStripItem> items = new List<ToolStripItem>();
@@ -224,83 +154,6 @@ namespace Chef.Win.UI
                 onEdit?.Invoke(conditional, EventArgs.Empty);
             };
             items.Add(conditional);
-
-            return items;
-        }
-        public static IEnumerable<ToolStripItem> VarOptionItems(Triggerscript script, Logic logic, int sigid, EventHandler onEdit = null)
-        {
-            List<ToolStripItem> items = new List<ToolStripItem>();
-
-            var paramInfo = LogicParamInfos(logic.Type, logic.DBID, logic.Version);
-            if (!paramInfo.ContainsKey(sigid)) 
-                return items;
-
-            ////Info
-            items.Add(new ToolStripLabel(paramInfo[sigid].Name + " [" + paramInfo[sigid].Type + "]"));
-            items.Add(new ToolStripSeparator());
-
-            ////Name
-            var nameLabel = new ToolStripLabel("Name:");
-            ToolStripTextBox name = new ToolStripTextBox();
-            var valueLabel = new ToolStripLabel("Value:");
-            ToolStripTextBox value = new ToolStripTextBox();
-            name.BorderStyle = BorderStyle.FixedSingle;
-            name.AutoSize = true;
-            name.Size = new Size(160, 0);
-            name.TextChanged += (s, e) =>
-            {
-                logic.Params[sigid] = name.Text;
-                //does this name have a value? if so, update our value text box to reflect it.
-                if (script.Constants.ContainsKey(paramInfo[sigid].Type)
-                    && script.Constants[paramInfo[sigid].Type].ContainsKey(name.Text))
-                {
-                    //value.ReadOnly = false;
-                    value.Text = script.Constants[paramInfo[sigid].Type][name.Text];
-                }
-                //if not, clear value box.
-                else
-                {
-                    //value.ReadOnly = true;
-                    value.Text = "";
-                }
-                onEdit?.Invoke(name, EventArgs.Empty);
-            };
-
-            value.BorderStyle = BorderStyle.FixedSingle;
-            value.AutoSize = true;
-            value.Size = new Size(160, 0);
-            value.TextChanged += (s, e) =>
-            {
-                //does this name have a value? if so, update the value in the script.
-                if (script.Constants[paramInfo[sigid].Type].ContainsKey(name.Text))
-                {
-                    script.Constants[paramInfo[sigid].Type][name.Text] = value.Text;
-                }
-                onEdit?.Invoke(name, EventArgs.Empty);
-            };
-
-            //set name text last so value can update properly.
-            if (!logic.Params.ContainsKey(sigid))
-                name.Text = "";
-            else
-                name.Text = logic.Params[sigid];
-
-            items.Add(nameLabel);
-            items.Add(name);
-            items.Add(valueLabel);
-            items.Add(value);
-
-            ////Value
-            //items.Add(new ToolStripLabel("Value:"));
-            //ToolStripTextBox val = new ToolStripTextBox();
-            ////val.Text = var.Value;
-            //val.BorderStyle = BorderStyle.FixedSingle;
-            //val.TextChanged += (s, e) =>
-            //{
-            //    //var.Value = val.Text;
-            //    onEdit?.Invoke(name, EventArgs.Empty);
-            //};
-            //items.Add(val);
 
             return items;
         }
@@ -388,6 +241,153 @@ namespace Chef.Win.UI
             items.Add(comment);
             items.Add(commentSeparator);
 
+            return items;
+        }
+        public static IEnumerable<ToolStripItem> VarOptionItems(Triggerscript script, Logic logic, int sigid, EventHandler onEdit = null)
+        {
+            List<ToolStripItem> items = new List<ToolStripItem>();
+
+            var paramInfo = LogicParamInfos(logic.Type, logic.DBID, logic.Version);
+            if (!paramInfo.ContainsKey(sigid))
+                return items;
+
+            ////Info
+            items.Add(new ToolStripLabel(paramInfo[sigid].Name + " [" + paramInfo[sigid].Type + "]"));
+            items.Add(new ToolStripSeparator());
+
+            ////Name
+            var nameLabel = new ToolStripLabel("Name:");
+            ToolStripTextBox name = new ToolStripTextBox();
+            var valueLabel = new ToolStripLabel("Value:");
+            ToolStripTextBox value = new ToolStripTextBox();
+            name.BorderStyle = BorderStyle.FixedSingle;
+            name.AutoSize = true;
+            name.Size = new Size(160, 0);
+            name.TextChanged += (s, e) =>
+            {
+                logic.Params[sigid] = name.Text;
+                //does this name have a value? if so, update our value text box to reflect it.
+                if (script.Constants.ContainsKey(paramInfo[sigid].Type)
+                    && script.Constants[paramInfo[sigid].Type].ContainsKey(name.Text))
+                {
+                    //value.ReadOnly = false;
+                    value.Text = script.Constants[paramInfo[sigid].Type][name.Text];
+                }
+                //if not, clear value box.
+                else
+                {
+                    //value.ReadOnly = true;
+                    value.Text = "";
+                }
+                onEdit?.Invoke(name, EventArgs.Empty);
+            };
+
+            value.BorderStyle = BorderStyle.FixedSingle;
+            value.AutoSize = true;
+            value.Size = new Size(160, 0);
+            value.TextChanged += (s, e) =>
+            {
+                //does this name have a value? if so, update the value in the script.
+                if (script.Constants[paramInfo[sigid].Type].ContainsKey(name.Text))
+                {
+                    script.Constants[paramInfo[sigid].Type][name.Text] = value.Text;
+                }
+                onEdit?.Invoke(name, EventArgs.Empty);
+            };
+
+            //set name text last so value can update properly.
+            if (!logic.Params.ContainsKey(sigid))
+                name.Text = "";
+            else
+                name.Text = logic.Params[sigid];
+
+            items.Add(nameLabel);
+            items.Add(name);
+            items.Add(valueLabel);
+            items.Add(value);
+
+            ////Value
+            //items.Add(new ToolStripLabel("Value:"));
+            //ToolStripTextBox val = new ToolStripTextBox();
+            ////val.Text = var.Value;
+            //val.BorderStyle = BorderStyle.FixedSingle;
+            //val.TextChanged += (s, e) =>
+            //{
+            //    //var.Value = val.Text;
+            //    onEdit?.Invoke(name, EventArgs.Empty);
+            //};
+            //items.Add(val);
+
+            return items;
+        }
+        public static IEnumerable<ToolStripItem> LogicAddItems(Trigger trigger, LogicSlot slot, int index, EventHandler onEdit = null)
+        {
+            List<ToolStripItem> items = new List<ToolStripItem>();
+
+            ToolStripLabel label = new ToolStripLabel("Add...");
+            items.Add(new ToolStripLabel("Add..."));
+            items.Add(new ToolStripSeparator());
+
+            LogicType t = slot == LogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
+
+            Dictionary<string, ToolStripMenuItem> categories = new Dictionary<string, ToolStripMenuItem>();
+
+            foreach (var i in LogicIds(t))
+            {
+                ToolStripMenuItem b = new ToolStripMenuItem(LogicName(t, i));
+                b.Click += (s, e) =>
+                {
+                    if (slot == LogicSlot.Condition)
+                    {
+                        Condition cnd = new Condition()
+                        {
+                            DBID = i,
+                            Version = LogicVersions(t, i).First()
+                        };
+                        trigger.Conditions.Insert(index, cnd);
+                    }
+                    else
+                    {
+                        Effect eff = new Effect()
+                        {
+                            DBID = i,
+                            Version = LogicVersions(t, i).First()
+                        };
+                        if (slot == LogicSlot.EffectTrue)
+                            trigger.TriggerEffectsOnTrue.Insert(index, eff);
+                        if (slot == LogicSlot.EffectFalse)
+                            trigger.TriggerEffectsOnFalse.Insert(index, eff);
+                    }
+
+                    onEdit?.Invoke(b, EventArgs.Empty);
+                };
+
+                //category menu items
+                string cat = "";
+                ToolStripMenuItem last = null;
+                foreach (string c in LogicCategory(t, i).Split("|"))
+                {
+                    if (c == "") break;
+
+                    cat += c;
+                    if (!categories.ContainsKey(cat))
+                    {
+                        categories.Add(cat, new ToolStripMenuItem(c));
+
+                        if (last != null)
+                            last.DropDownItems.Add(categories[cat]);
+                        else
+                            items.Add(categories[cat]);
+                    }
+
+                    last = categories[cat];
+                }
+
+                if (last != null)
+                    last.DropDownItems.Add(b);
+                else
+                    items.Add(b);
+            }
             return items;
         }
     }
