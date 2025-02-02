@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -89,14 +90,19 @@ namespace Chef.Win.UI
             };
 
             menu.MouseHover += (s, e) => { menu.Focus(); };
-            menu.Items.Add(LogicAddItem(trigger, slot, logicIndex, onEdit));
+            menu.Items.AddRange(LogicAddItems(trigger, slot, logicIndex, onEdit).ToArray());
             menu.Show(point);
         }
 
         //Items
-        public static ToolStripItem LogicAddItem(Trigger trigger, LogicSlot slot, int index, EventHandler onEdit = null)
+        public static IEnumerable<ToolStripItem> LogicAddItems(Trigger trigger, LogicSlot slot, int index, EventHandler onEdit = null)
         {
-            ToolStripMenuItem root = new ToolStripMenuItem("Add...");
+            List<ToolStripItem> items = new List<ToolStripItem>();
+
+            ToolStripLabel label = new ToolStripLabel("Add...");
+            items.Add(new ToolStripLabel("Add..."));
+            items.Add(new ToolStripSeparator());
+
             LogicType t = slot == LogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
 
             Dictionary<string, ToolStripMenuItem> categories = new Dictionary<string, ToolStripMenuItem>();
@@ -133,7 +139,7 @@ namespace Chef.Win.UI
 
                 //category menu items
                 string cat = "";
-                ToolStripMenuItem last = root;
+                ToolStripMenuItem last = null;
                 foreach (string c in LogicCategory(t, i).Split("|"))
                 {
                     if (c == "") break;
@@ -142,18 +148,23 @@ namespace Chef.Win.UI
                     if (!categories.ContainsKey(cat))
                     {
                         categories.Add(cat, new ToolStripMenuItem(c));
-                        last.DropDownItems.Add(categories[cat]);
+
+                        if (last != null)
+                            last.DropDownItems.Add(categories[cat]);
+                        else
+                            items.Add(categories[cat]);
                     }
 
                     last = categories[cat];
                 }
 
-                last.DropDownItems.Add(b);
+                if (last != null)
+                    last.DropDownItems.Add(b);
+                else
+                    items.Add(b);
             }
-            return root;
+            return items;
         }
-
-        //Item collections
         public static IEnumerable<ToolStripItem> TriggerOptionItems(Trigger trigger, EventHandler onEdit = null)
         {
             List<ToolStripItem> items = new List<ToolStripItem>();
