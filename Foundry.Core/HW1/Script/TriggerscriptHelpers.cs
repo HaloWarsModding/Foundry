@@ -464,6 +464,16 @@ namespace Chef.HW1.Script
             return slot == LogicSlot.Condition ? LogicType.Condition : LogicType.Effect;
         }
 
+        public enum VarFormat
+        {
+            None,
+            Integer,
+            Float,
+            Float3,
+            Cost,
+            String,
+            Enum,
+        }
         public static bool VarTypeIsList(VarType type)
         {
             switch (type)
@@ -493,7 +503,67 @@ namespace Chef.HW1.Script
                     return false;
             }
         }
+        public static VarFormat VarTypeFormat(VarType type)
+        {
+            switch(type)
+            {
+                case VarType.ActionStatus:
+                case VarType.AnimType:
+                case VarType.Bool:
+                case VarType.Cinematic:
+                case VarType.HUDItem:
+                case VarType.IconType:
+                case VarType.Leader:
+                case VarType.LOSType:
+                case VarType.LocStringID:
+                case VarType.MathOperator:
+                case VarType.ObjectType:
+                case VarType.ObjectTypeList:
+                case VarType.Operator:
+                case VarType.Player:
+                case VarType.PlayerList:
+                case VarType.PlayerState:
+                case VarType.Power:
+                case VarType.ProtoObject:
+                case VarType.ProtoObjectList:
+                case VarType.ProtoSquad:
+                case VarType.ProtoSquadList:
+                case VarType.RefCountType:
+                case VarType.RumbleMotor:
+                case VarType.RumbleType:
+                case VarType.SquadMode:
+                case VarType.TalkingHead:
+                case VarType.Team:
+                case VarType.TeamList:
+                case VarType.Tech:
+                case VarType.TechList:
+                case VarType.TechDataCommandType:
+                case VarType.TechStatus:
+                case VarType.Trigger:
+                case VarType.UnitFlag:
+                case VarType.UserClassType:
+                    return VarFormat.Enum;
 
+                case VarType.String:
+                    return VarFormat.String;
+
+                case VarType.Float:
+                case VarType.FloatList:
+                case VarType.Color:
+                case VarType.Vector:
+                case VarType.VectorList:
+                    return VarFormat.Float;
+
+                case VarType.Time:
+                case VarType.TimeList:
+                case VarType.Integer:
+                case VarType.IntegerList:
+                    return VarFormat.Integer;
+
+                default:
+                    return VarFormat.None;
+            }
+        }
         public static VarType TypeFromString(string varTypeName)
         {
             //some strings map to the same type, so its not a 1:1 translation. TODO: put this in a dict?

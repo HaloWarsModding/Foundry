@@ -101,7 +101,7 @@ namespace Chef.HW1.Script
             foreach (var (id, val) in values)
             {
                 //if value is null or empty, it has no constant value.
-                if (!isnulls[id] && values[id] != "")
+                if (!isnulls[id]/* && values[id] != ""*/)
                 {
                     if (!script.Constants.ContainsKey(types[id]))
                         script.Constants[types[id]] = new Dictionary<string, string>();

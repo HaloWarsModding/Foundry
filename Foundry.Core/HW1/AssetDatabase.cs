@@ -6,6 +6,7 @@ using DirectXTexNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,14 +29,71 @@ namespace Chef.HW1
 
     public class AssetCache
     {
+        //art
         public Dictionary<string, Asset<Image>> Textures { get; set; } = new Dictionary<string, Asset<Image>>();
         public Dictionary<string, Asset<Model>> Models { get; set; } = new Dictionary<string, Asset<Model>>();
         public Dictionary<string, Asset<Visual>> Visuals { get; set; } = new Dictionary<string, Asset<Visual>>();
-        public Dictionary<string, Asset<ProtoObject>> ProtoObjects { get; set; } = new Dictionary<string, Asset<ProtoObject>>();
-        public Dictionary<string, Asset<Triggerscript>> Triggerscripts { get; set; } = new Dictionary<string, Asset<Triggerscript>>();
-        public Dictionary<string, Asset<MissionEntry>> MissionEntries { get; set; } = new Dictionary<string, Asset<MissionEntry>>();
+
+
+        //maps
         public Dictionary<string, Asset<Scenario>> Scenarios { get; set; } = new Dictionary<string, Asset<Scenario>>();
         public Dictionary<string, Asset<TerrainVisual>> TerrainVisuals { get; set; } = new Dictionary<string, Asset<TerrainVisual>>();
+        public Dictionary<string, object> TalkingHeads { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> Cinematics { get; set; } = new Dictionary<string, object>();
+
+
+        //gameplay
+        public Dictionary<string, Asset<MissionEntry>> MissionEntries { get; set; } = new Dictionary<string, Asset<MissionEntry>>();
+        public Dictionary<string, Asset<Triggerscript>> Triggerscripts { get; set; } = new Dictionary<string, Asset<Triggerscript>>();
+        public Dictionary<string, Asset<ProtoObject>> ProtoObjects { get; set; } = new Dictionary<string, Asset<ProtoObject>>();
+        public Dictionary<string, string> Techs { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, object> Leaders { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> Powers { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> Civs { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> PlacementRules { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> UserClasses { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> Sounds { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, string> RefCountTypes { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> ObjectTypes { get; set; } = new Dictionary<string, string>();
+
+
+        //string tables
+        public Dictionary<string, string> LocStringsCS { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> LocStringsDE { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> LocStringsEN { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> LocStringsES { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> LocStringsFR { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> LocStringsHU { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> LocStringsIT { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> LocStringsJA { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> LocStringsKO { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> LocStringsMX { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> LocStringsPL { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> LocStringsRU { get; set; } = new Dictionary<string, string>();
+
+
+        //hardcoded enums
+        public Dictionary<string, string> Teams { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> AnimTypes { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> PlayerStates { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> Operators { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> TechStatuses { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> LOSTypes { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> Diplomacies { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> SquadModes { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> ListPositions { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> EventTypes { get; set; } = new Dictionary<string, string>();
+
+
+        //value types
+        public Dictionary<string, int> Times { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> Integers { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, Vector4> Costs { get; set; } = new Dictionary<string, Vector4>();
+        public Dictionary<string, bool> Bools { get; set; } = new Dictionary<string, bool>();
+        public Dictionary<string, float> Floats { get; set; } = new Dictionary<string, float>();
+        public Dictionary<string, Vector3> Vectors { get; set; } = new Dictionary<string, Vector3>();
+        public Dictionary<string, string> Strings { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, Vector3> Colors { get; set; } = new Dictionary<string, Vector3>();
     }
 
     public class AssetDatabase
@@ -331,6 +389,17 @@ namespace Chef.HW1
             var script = cache.Triggerscripts[name];
 
             return script.Edited;
+        }
+        public static IEnumerable<string> TriggerscriptVarValEnums(VarType type, AssetCache cache)
+        {
+            switch(type)
+            {
+                case VarType.Vector:
+                    return cache.Vectors.Keys;
+
+                default:
+                    return [];
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

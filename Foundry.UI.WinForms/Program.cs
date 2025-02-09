@@ -71,7 +71,7 @@ namespace Chef.Win
             window.Browser.Update(window.Assets, window.GpuAssets, window.DockPanel);
 
             TriggerscriptWindow ts = new TriggerscriptWindow(window.Assets, window.GpuAssets);
-            ts.ScriptName = "skirmishplayer";
+            ts.ScriptName = "unscdoodst";
             ts.Show(window.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
             //AssetDatabase.SaveTriggerscript("skirmishplayer", window.Assets, true);
 #endif

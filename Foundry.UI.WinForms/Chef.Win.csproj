@@ -42,6 +42,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Update="TriggerscriptEditor.cs" />
+    <Compile Update="UI\EditorVector5.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UI\EditorVector4.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="UI\MainWindow.cs" />
   </ItemGroup>
 

@@ -129,7 +129,7 @@ namespace Chef.Win.UI
                 {
                     if (selVar >= 0)
                     {
-                        ShowVarOptionsMenu(Triggerscript, Logics(selTrigger, selSlot).ElementAt(selLogic), selVar, ClientMouse, onEdit);
+                        ShowVarOptionsMenu(Triggerscript, Logics(selTrigger, selSlot).ElementAt(selLogic), selVar, ClientMouse, Assets, onEdit);
                     }
                     else
                     {
@@ -146,7 +146,7 @@ namespace Chef.Win.UI
                 }
                 else if (dropLogic >= 0)
                 {
-                    ShowLogicAddMenu(Triggerscript, selTrigger, selSlot, dropLogic, ClientMouse, onEdit);
+                    ShowLogicAddMenu(selTrigger, selSlot, dropLogic, ClientMouse, onEdit);
                 }
                 else
                 {

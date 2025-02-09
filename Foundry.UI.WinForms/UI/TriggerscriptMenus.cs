@@ -1,4 +1,7 @@
-﻿using Chef.HW1.Script;
+﻿using Aga.Controls;
+using BrightIdeasSoftware;
+using Chef.HW1;
+using Chef.HW1.Script;
 using Microsoft.VisualBasic.Logging;
 using System;
 using System.Collections.Generic;
@@ -7,6 +10,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using static Chef.HW1.Script.TriggerscriptHelpers;
@@ -61,7 +65,7 @@ namespace Chef.Win.UI
             menu.Items.AddRange(EffectOptionItems(effect, onEdit).ToArray());
             menu.Show(point);
         }
-        public static void ShowVarOptionsMenu(Triggerscript script, Logic logic, int sigid, Point point, EventHandler onEdit = null)
+        public static void ShowVarOptionsMenu(Triggerscript script, Logic logic, int sigid, Point point, AssetCache cache, EventHandler onEdit = null)
         {
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.Closing += (s, e) =>
@@ -73,7 +77,9 @@ namespace Chef.Win.UI
                 }
             };
 
-            menu.Items.AddRange(VarOptionItems(script, logic, sigid, onEdit).ToArray());
+            menu.Items.Add(new ToolStripControlHost(new EditorScriptLogicParam(script, logic, sigid, cache)));
+
+            //menu.Items.AddRange(VarOptionItems(script, logic, sigid, values, onEdit).ToArray());
 
             menu.Show(point);
         }
@@ -243,83 +249,190 @@ namespace Chef.Win.UI
 
             return items;
         }
-        public static IEnumerable<ToolStripItem> VarOptionItems(Triggerscript script, Logic logic, int sigid, EventHandler onEdit = null)
+        public static IEnumerable<ToolStripItem> VarOptionItems(Triggerscript script, Logic logic, int sigid, IEnumerable<string> values, EventHandler onEdit = null)
         {
             List<ToolStripItem> items = new List<ToolStripItem>();
 
-            var paramInfo = LogicParamInfos(logic.Type, logic.DBID, logic.Version);
-            if (!paramInfo.ContainsKey(sigid))
+            var pinfos = LogicParamInfos(logic.Type, logic.DBID, logic.Version);
+            if (!pinfos.ContainsKey(sigid))
                 return items;
+            var pinfo = pinfos[sigid];
+            var ptype = pinfo.Type;
 
-            ////Info
-            items.Add(new ToolStripLabel(paramInfo[sigid].Name + " [" + paramInfo[sigid].Type + "]"));
+            if (!script.Constants.ContainsKey(ptype))
+                script.Constants[ptype] = new Dictionary<string, string>();
+            var pvars = script.Constants[ptype];
+            var pname = logic.Params[sigid];
+
+            //if (pname != null && pvars.ContainsKey(pname))
+
+            items.Add(new ToolStripLabel(pinfo.Name + " [" + pinfo.Type + "]"));
             items.Add(new ToolStripSeparator());
 
-            ////Name
-            var nameLabel = new ToolStripLabel("Name:");
-            ToolStripTextBox name = new ToolStripTextBox();
-            var valueLabel = new ToolStripLabel("Value:");
-            ToolStripTextBox value = new ToolStripTextBox();
-            name.BorderStyle = BorderStyle.FixedSingle;
-            name.AutoSize = true;
-            name.Size = new Size(160, 0);
-            name.TextChanged += (s, e) =>
-            {
-                logic.Params[sigid] = name.Text;
-                //does this name have a value? if so, update our value text box to reflect it.
-                if (script.Constants.ContainsKey(paramInfo[sigid].Type)
-                    && script.Constants[paramInfo[sigid].Type].ContainsKey(name.Text))
-                {
-                    //value.ReadOnly = false;
-                    value.Text = script.Constants[paramInfo[sigid].Type][name.Text];
-                }
-                //if not, clear value box.
-                else
-                {
-                    //value.ReadOnly = true;
-                    value.Text = "";
-                }
-                onEdit?.Invoke(name, EventArgs.Empty);
-            };
+            items.Add(new ToolStripLabel("Variable:"));
+            var varbox = new ToolStripComboBox();
+            varbox.Items.AddRange(pvars.Keys.ToArray());
+            varbox.ComboBox.SelectedItem = pname;
+            varbox.DropDownStyle = ComboBoxStyle.DropDownList;
+            varbox.FlatStyle = FlatStyle.Standard;
+            varbox.AutoSize = false;
+            varbox.Size = new Size(200, 0);
+            varbox.Margin = new Padding(2, 2, 2, 2);
+            items.Add(varbox);
 
-            value.BorderStyle = BorderStyle.FixedSingle;
-            value.AutoSize = true;
-            value.Size = new Size(160, 0);
-            value.TextChanged += (s, e) =>
-            {
-                //does this name have a value? if so, update the value in the script.
-                if (script.Constants[paramInfo[sigid].Type].ContainsKey(name.Text))
-                {
-                    script.Constants[paramInfo[sigid].Type][name.Text] = value.Text;
-                }
-                onEdit?.Invoke(name, EventArgs.Empty);
-            };
-
-            //set name text last so value can update properly.
-            if (!logic.Params.ContainsKey(sigid))
-                name.Text = "";
-            else
-                name.Text = logic.Params[sigid];
-
-            items.Add(nameLabel);
-            items.Add(name);
-            items.Add(valueLabel);
+            items.Add(new ToolStripLabel("Value:") { Margin = new Padding(2, 6, 2, 0)});
+            var value = VarValueItem(script, logic, sigid, values, onEdit);
+            value.Margin = new Padding(2, 2, 2, 2);
             items.Add(value);
 
-            ////Value
-            //items.Add(new ToolStripLabel("Value:"));
-            //ToolStripTextBox val = new ToolStripTextBox();
-            ////val.Text = var.Value;
-            //val.BorderStyle = BorderStyle.FixedSingle;
-            //val.TextChanged += (s, e) =>
-            //{
-            //    //var.Value = val.Text;
-            //    onEdit?.Invoke(name, EventArgs.Empty);
-            //};
-            //items.Add(val);
+            varbox.TextChanged += (s, e) =>
+            {
+                logic.Params[sigid] = varbox.Text;
+                items.Remove(value);
+                value = VarValueItem(script, logic, sigid, values, onEdit);
+                value.Margin = new Padding(2, 2, 2, 2);
+                items.Add(value);
+                onEdit?.Invoke(varbox, EventArgs.Empty);
+            };
 
             return items;
         }
+
+        private static IEnumerable<string> VarTypeHeaders(VarType type)
+        {
+            switch(type)
+            {
+                case VarType.Vector:
+                    return ["x", "y", "z"];
+                default:
+                    return [type.ToString()];
+            }
+        }
+        private static char VarTypeColumnSeparator(VarType type)
+        {
+            switch (type)
+            {
+                case VarType.Vector:
+                    return ',';
+                default:
+                    return '\0';
+            }
+        }
+        private static char VarTypeListSeparator(VarType type)
+        {
+            switch (type)
+            {
+                case VarType.Vector:
+                    return '|';
+                default:
+                    return ',';
+            }
+        }
+        private static string VarTypeDefault(VarType type)
+        {
+            switch(type)
+            {
+                case VarType.Vector:
+                    return "0.0,0.0,0.0";
+                default:
+                    return "";
+            }
+        }
+
+        public static ToolStripItem VarValueItem(Triggerscript script, Logic logic, int sigid, IEnumerable<string> values, EventHandler onEdit = null)
+        {
+            var pi = LogicParamInfos(logic.Type, logic.DBID, logic.Version);
+            if (!pi.ContainsKey(sigid))
+                return new ToolStripMenuItem();
+
+            if (!logic.Params.ContainsKey(sigid))
+                return new ToolStripMenuItem();
+
+            VarType ptype = pi[sigid].Type;
+
+            if (!script.Constants.ContainsKey(ptype))
+                script.Constants[ptype] = new Dictionary<string, string>();
+
+            string pname = logic.Params[sigid];
+            if (pname == null) return new ToolStripMenuItem();
+
+            string pval = VarTypeDefault(ptype);
+            if (script.Constants[ptype].ContainsKey(pname))
+                pval = script.Constants[ptype][pname];
+
+            if (pval == "") pval = VarTypeDefault(ptype);
+
+            var pheaders = VarTypeHeaders(ptype);
+            var pcolsep = VarTypeColumnSeparator(ptype);
+            var prowsep = VarTypeListSeparator(ptype);
+
+            bool islist = VarTypeIsList(ptype);
+
+
+            string[] rows = islist ? pval.Split(prowsep) : [pval];
+            int curIndex = 0;
+            string[] cols = rows[curIndex].Split(pcolsep);
+
+            TableLayoutPanel panel = new TableLayoutPanel();
+            panel.Height = 4;
+            panel.ColumnStyles.Add(new ColumnStyle() { SizeType = SizeType.Absolute, Width = 80 });
+            panel.ColumnStyles.Add(new ColumnStyle() { SizeType = SizeType.Absolute, Width = 120 });
+            for (int i = 0; i < pheaders.Count(); i++)
+            {
+                panel.RowStyles.Add(new RowStyle() { SizeType = SizeType.Absolute, Height = 24 });
+
+                //Control valueField;
+                //switch(VarTypeFormat(ptype))
+                //{
+                //    case VarFormat.Float:
+                //        valueField = new NumericUpDown();
+                //        ((NumericUpDown)valueField).DecimalPlaces = 3;
+                //        float fval = 0;
+                //        float.TryParse(cols[i], out fval);
+                //        ((NumericUpDown)valueField).Value = (decimal)fval;
+                //        break;
+                //    case VarFormat.Integer:
+                //        valueField = new NumericUpDown();
+                //        ((NumericUpDown)valueField).DecimalPlaces = 0;
+                //        int ival = 0;
+                //        int.TryParse(cols[i], out ival);
+                //        ((NumericUpDown)valueField).Value = ival;
+                //        break;
+                //    case VarFormat.Enum:
+                //        valueField = new ComboBox();
+                //        ((ComboBox)valueField).Items.AddRange(values.ToArray());
+                //        if (values.Contains(cols[i]))
+                //            ((ComboBox)valueField).SelectedItem = cols[i];
+                //        else
+                //            ((ComboBox)valueField).Items.Add(cols[i]);
+                //            ((ComboBox)valueField).SelectedItem = cols[i];
+                //        break;
+                //    default:
+                //        return new ToolStripMenuItem();
+                //}
+                Label valueField = new Label();
+                valueField.AutoSize = false;
+                valueField.Text = cols[i];
+                valueField.TextAlign = ContentAlignment.MiddleLeft;
+                valueField.Dock = DockStyle.Fill;
+                panel.Controls.Add(valueField, 1, i);
+
+                var label = new Label();
+                label.AutoSize = false;
+                label.Text = pheaders.ElementAt(i);
+                label.TextAlign = ContentAlignment.MiddleRight;
+                label.Dock = DockStyle.Fill;
+                panel.Controls.Add(label, 0, i);
+
+                panel.Height += 24;
+            }
+
+            panel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            var ret = new ToolStripControlHost(panel);
+            ret.AutoSize = false;
+            return ret;
+        }
+
         public static IEnumerable<ToolStripItem> LogicAddItems(Trigger trigger, LogicSlot slot, int index, EventHandler onEdit = null)
         {
             List<ToolStripItem> items = new List<ToolStripItem>();

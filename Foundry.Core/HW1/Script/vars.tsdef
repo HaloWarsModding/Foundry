@@ -1,0 +1,458 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Variables>
+	<VarType Name="Tech">
+	</VarType>
+	<VarType Name="TechStatus">
+		<Values>
+			<Value>Unobtainable</Value>
+			<Value>Obtainable</Value>
+			<Value>Available</Value>
+			<Value>Researching</Value>
+			<Value>Active</Value>
+			<Value>Disabled</Value>
+			<Value>CoopResearching</Value>
+		</Values>
+	</VarType>
+	<VarType Name="Operator">
+		<Values>
+			<Value>NotEqualTo</Value>
+			<Value>LessThan</Value>
+			<Value>LessThanOrEqualTo</Value>
+			<Value>EqualTo</Value>
+			<Value>GreaterThanOrEqualTo</Value>
+			<Value>GreaterThan</Value>
+		</Values>
+	</VarType>
+	<VarType Name="ProtoObject">
+	</VarType>
+	<VarType Name="ObjectType">
+	</VarType>
+	<VarType Name="ProtoSquad">
+	</VarType>
+	<VarType Name="Sound">
+	</VarType>
+	<VarType Name="Entity">
+	</VarType>
+	<VarType Name="EntityList" ListType="Entity">
+	</VarType>
+	<VarType Name="Trigger">
+	</VarType>
+	<VarType Name="Time">
+	</VarType>
+	<VarType Name="Player">
+	</VarType>
+	<VarType Name="UILocation">
+	</VarType>
+	<VarType Name="UIEntity">
+	</VarType>
+	<VarType Name="Cost">
+	</VarType>
+	<VarType Name="AnimType">
+		<Values>
+			<Value>Idle</Value>
+			<Value>Walk</Value>
+			<Value>Jog</Value>
+			<Value>Run</Value>
+			<Value>RangedAttack</Value>
+			<Value>Attack</Value>
+			<Value>Limber</Value>
+			<Value>Unlimber</Value>
+			<Value>Death</Value>
+			<Value>Work</Value>
+			<Value>Research</Value>
+			<Value>Train</Value>
+			<Value>Bored</Value>
+			<Value>PelicanGarrison</Value>
+			<Value>PelicanGarrison2</Value>
+			<Value>PelicanGarrison3</Value>
+			<Value>PelicanGarrison4</Value>
+			<Value>PelicanGarrison5</Value>
+			<Value>PelicanGarrison6</Value>
+			<Value>PelicanGarrison7</Value>
+			<Value>PelicanGarrison8</Value>
+			<Value>PelicanGarrison9</Value>
+			<Value>PelicanGarrison10</Value>
+			<Value>PelicanUngarrison</Value>
+			<Value>PelicanUngarrison2</Value>
+			<Value>PelicanUngarrison3</Value>
+			<Value>PelicanUngarrison4</Value>
+			<Value>PelicanUngarrison5</Value>
+			<Value>PelicanUngarrison6</Value>
+			<Value>PelicanUngarrison7</Value>
+			<Value>PelicanUngarrison8</Value>
+			<Value>PelicanUngarrison9</Value>
+			<Value>PelicanUngarrison10</Value>
+			<Value>Incoming</Value>
+			<Value>Landing</Value>
+			<Value>Takeoff</Value>
+			<Value>Outgoing</Value>
+			<Value>HoverIdle</Value>
+			<Value>ShadePlasmaAttack</Value>
+			<Value>Clamshell</Value>
+			<Value>ClamshellRocket</Value>
+			<Value>Cinematic</Value>
+			<Value>EvadeLeft</Value>
+			<Value>EvadeRight</Value>
+			<Value>EvadeFront</Value>
+			<Value>EvadeBack</Value>
+			<Value>Block</Value>
+			<Value>Cheer</Value>
+			<Value>Retreat</Value>
+			<Value>HandSignalGo</Value>
+			<Value>HandSignalStop</Value>
+			<Value>Reload</Value>
+			<Value>CombatAction</Value>
+			<Value>Flail</Value>
+			<Value>Stop</Value>
+			<Value>TurnAround</Value>
+			<Value>TurnLeft</Value>
+			<Value>TurnRight</Value>
+			<Value>TurnRight45Forward</Value>
+			<Value>TurnRight45Back</Value>
+			<Value>TurnLeft45Back</Value>
+			<Value>TurnLeft45Forward</Value>
+			<Value>TurnWalk</Value>
+			<Value>TurnJog</Value>
+			<Value>TurnRun</Value>
+			<Value>Repair</Value>
+			<Value>FloodDeathJog</Value>
+			<Value>FloodDeath</Value>
+			<Value>IdleWalk</Value>
+			<Value>IdleJog</Value>
+			<Value>IdleRun</Value>
+			<Value>WalkIdle</Value>
+			<Value>JogIdle</Value>
+			<Value>RunIdle</Value>
+			<Value>Hitch</Value>
+			<Value>Unhitch</Value>
+			<Value>Sprint</Value>
+			<Value>Recover</Value>
+			<Value>Heal</Value>
+			<Value>ArtilleryAttack</Value>
+			<Value>LockdownArtilleryAttack</Value>
+			<Value>Stasis</Value>
+			<Value>Roar</Value>
+			<Value>Cower</Value>
+			<Value>Kamikaze</Value>
+			<Value>Stunned</Value>
+			<Value>Detonated</Value>
+			<Value>ShatterDeath</Value>
+			<Value>RageLeap</Value>
+			<Value>HotDropDown</Value>
+			<Value>PowerIdle</Value>
+		</Values>
+	</VarType>
+	<VarType Name="ActionStatus" Format="Enum">
+		<Values>
+			<Value>NotDone</Value>
+			<Value>DoneSuccess</Value>
+			<Value>DoneFailure</Value>
+		</Values>
+	</VarType>
+	<VarType Name="Power">
+	</VarType>
+	<VarType Name="Bool" Format="Enum">
+		<Value>True</Value>
+		<Value>False</Value>
+	</VarType>
+	<VarType Name="Float" Format="Float">
+		<Aliases>
+			<Alias>Hitpoints</Alias>
+			<Alias>Percent</Alias>
+			<Alias>Distance</Alias>
+		</Aliases>
+	</VarType>
+	<VarType Name="Iterator" Format="None">
+	</VarType>
+	<VarType Name="Team" Format="Enum">
+		<Values>
+			<Value>0</Value>
+			<Value>1</Value>
+			<Value>2</Value>
+			<Value>3</Value>
+			<Value>4</Value>
+			<Value>5</Value>
+			<Value>6</Value>
+			<Value>7</Value>
+			<Value>8</Value>
+		</Values>
+	</VarType>
+	<VarType Name="PlayerList" ListType="Player">
+	</VarType>
+	<VarType Name="TeamList" ListType="Team">
+	</VarType>
+	<VarType Name="PlayerState" Format="Enum">
+	</VarType>
+	<VarType Name="Objective">
+	</VarType>
+	<VarType Name="Unit" Format="Enum">
+	</VarType>
+	<VarType Name="UnitList" ListType="Unit">
+	</VarType>
+	<VarType Name="Squad" Format="Enum">
+	</VarType>
+	<VarType Name="SquadList" ListType="Squad">
+	</VarType>
+	<VarType Name="UIUnit" Format="None">
+	</VarType>
+	<VarType Name="UISquad" Format="None">
+	</VarType>
+	<VarType Name="UISquadList" ListType="UISquad">
+	</VarType>
+	<VarType Name="String" Format="String">
+	</VarType>
+	<VarType Name="MessageIndex">
+	</VarType>
+	<VarType Name="MessageJustify">
+	</VarType>
+	<VarType Name="MessagePoint">
+	</VarType>
+	<VarType Name="Color" Format="Float3">
+	</VarType>
+	<VarType Name="ProtoObjectList" ListType="ProtoObject">
+	</VarType>
+	<VarType Name="ObjectTypeList" ListType="ObjectType">
+	</VarType>
+	<VarType Name="ProtoSquadList" ListType="ProtoSquad">
+	</VarType>
+	<VarType Name="TechList" ListType="Tech">
+	</VarType>
+	<VarType Name="MathOperator" Format="Enum">
+		<Values>
+			<Value>Add</Value>
+			<Value>Subtract</Value>
+			<Value>Multiply</Value>
+			<Value>Divide</Value>
+			<Value>Modulus</Value>
+		</Values>
+	</VarType>
+	<VarType Name="ObjectDataType">
+		<Values>
+			<Value>Enable</Value>
+			<Value>Hitpoints</Value>
+			<Value>Shieldpoints</Value>
+			<Value>AmmoMax</Value>
+			<Value>LOS</Value>
+			<Value>MaximumVelocity</Value>
+			<Value>MaximumRange</Value>
+			<Value>ResearchPoints</Value>
+			<Value>ResourceTrickleRate</Value>
+			<Value>MaximumResourceTrickleRate</Value>
+			<Value>RateAmount</Value>
+			<Value>RateMultiplier</Value>
+			<Value>Resource</Value>
+			<Value>Projectile</Value>
+			<Value>Damage</Value>
+			<Value>MinRange</Value>
+			<Value>AOERadius</Value>
+			<Value>AOEPrimaryTargetFactor</Value>
+			<Value>AOEDistanceFactor</Value>
+			<Value>AOEDamageFactor</Value>
+			<Value>Accuracy</Value>
+			<Value>MovingAccuracy</Value>
+			<Value>MaxDeviation</Value>
+			<Value>MovingMaxDeviation</Value>
+			<Value>DataAccuracyDistanceFactor</Value>
+			<Value>AccuracyDeviationFactor</Value>
+			<Value>MaxVelocityLead</Value>
+			<Value>WorkRate</Value>
+			<Value>BuildPoints</Value>
+			<Value>Cost</Value>
+			<Value>ActionEnable</Value>
+			<Value>CommandEnable</Value>
+			<Value>BountyResource</Value>
+			<Value>AutoCloak</Value>
+			<Value>MoveWhileCloaked</Value>
+			<Value>AttackWhileCloaked</Value>
+			<Value>TributeCost</Value>
+			<Value>ShieldRegenRate</Value>
+			<Value>ShieldRegenDelay</Value>
+			<Value>DamageModifier</Value>
+			<Value>PopCap</Value>
+			<Value>PopMax</Value>
+			<Value>UnitTrainLimit</Value>
+			<Value>SquadTrainLimit</Value>
+			<Value>RepairCost</Value>
+			<Value>RepairTime</Value>
+			<Value>PowerRechargeTime</Value>
+			<Value>PowerUseLimit</Value>
+			<Value>Level</Value>
+			<Value>Bounty</Value>
+			<Value>MaxContained</Value>
+			<Value>MaxDamagePerRam</Value>
+			<Value>ReflectDamageFactor</Value>
+			<Value>AbilityDisabled</Value>
+			<Value>DOTrate</Value>
+			<Value>DOTduration</Value>
+			<Value>ImpactEffect</Value>
+			<Value>AmmoRegenRate</Value>
+			<Value>CommandSelectable</Value>
+			<Value>DisplayNameID</Value>
+			<Value>Icon</Value>
+			<Value>Stasis</Value>
+			<Value>TurretYawRate</Value>
+			<Value>TurretPitchRate</Value>
+			<Value>PowerLevel</Value>
+			<Value>BoardTime</Value>
+			<Value>AbilityRecoverTime</Value>
+			<Value>TechLevel</Value>
+			<Value>HPBar</Value>
+			<Value>WeaponPhysicsMultiplier</Value>
+			<Value>DeathSpawn</Value>
+		</Values>
+	</VarType>
+	<VarType Name="ObjectDataRelative" Format="Enum">
+		<Values>
+			<Value>Absolute</Value>
+			<Value>BasePercent</Value>
+			<Value>Percent</Value>
+			<Value>Assign</Value>
+			<Value>BasePercentAssign</Value>
+		</Values>
+	</VarType>
+	<VarType Name="Civ">
+	</VarType>
+	<VarType Name="ProtoObjectCollection">
+	</VarType>
+	<VarType Name="Object">
+	</VarType>
+	<VarType Name="ObjectList" ListType="Object">
+	</VarType>
+	<VarType Name="Group">
+	</VarType>
+	<VarType Name="RefCountType">
+	</VarType>
+	<VarType Name="UnitFlag">
+	</VarType>
+	<VarType Name="LOSType">
+	</VarType>
+	<VarType Name="EntityFilterSet">
+	</VarType>
+	<VarType Name="PopBucket">
+	</VarType>
+	<VarType Name="ListPosition">
+	</VarType>
+	<VarType Name="Diplomacy">
+		<Aliases>
+			<Alias>RelationType</Alias>
+		</Aliases>
+	</VarType>
+	<VarType Name="ExposedAction">
+	</VarType>
+	<VarType Name="SquadMode">
+	</VarType>
+	<VarType Name="ExposedScript">
+	</VarType>
+	<VarType Name="KBBase">
+	</VarType>
+	<VarType Name="KBBaseList" ListType="KBBase">
+	</VarType>
+	<VarType Name="DataScalar">
+	</VarType>
+	<VarType Name="KBBaseQuery">
+	</VarType>
+	<VarType Name="DesignLine">
+	</VarType>
+	<VarType Name="LocStringID">
+	</VarType>
+	<VarType Name="Leader">
+	</VarType>
+	<VarType Name="Cinematic">
+	</VarType>
+	<VarType Name="FlareType">
+	</VarType>
+	<VarType Name="CinematicTag">
+	</VarType>
+	<VarType Name="IconType">
+	</VarType>
+	<VarType Name="Difficulty">
+	</VarType>
+	<VarType Name="Integer" Format="Integer">
+		<Aliases>
+			<Alias>Count</Alias>
+		</Aliases>
+	</VarType>
+	<VarType Name="HUDItem">
+	</VarType>
+	<VarType Name="ControlType">
+	</VarType>
+	<VarType Name="UIButton">
+	</VarType>
+	<VarType Name="MissionType">
+	</VarType>
+	<VarType Name="MissionState">
+	</VarType>
+	<VarType Name="MissionTargetType">
+	</VarType>
+	<VarType Name="IntegerList" ListType="Integer">
+	</VarType>
+	<VarType Name="BidType">
+	</VarType>
+	<VarType Name="BidState">
+	</VarType>
+	<VarType Name="BuildingCommandState">
+	</VarType>
+	<VarType Name="Vector">
+		<Aliases>
+			<Alias>Location</Alias>
+			<Alias>Direction</Alias>
+		</Aliases>
+	</VarType>
+	<VarType Name="VectorList" ListType="Vector">
+		<Aliases>
+			<Alias>LocationList</Alias>
+			<Alias>DirectionList</Alias>
+		</Aliases>
+	</VarType>
+	<VarType Name="PlacementRule">
+	</VarType>
+	<VarType Name="KBSquad">
+	</VarType>
+	<VarType Name="KBSquadList" ListType="KBSquad">
+	</VarType>
+	<VarType Name="KBSquadQuery">
+	</VarType>
+	<VarType Name="AISquadAnalysis">
+	</VarType>
+	<VarType Name="AISquadAnalysisComponent">
+	</VarType>
+	<VarType Name="KBSquadFilterSet">
+	</VarType>
+	<VarType Name="ChatSpeaker">
+	</VarType>
+	<VarType Name="RumbleType">
+	</VarType>
+	<VarType Name="RumbleMotor">
+	</VarType>
+	<VarType Name="CommandType">
+		<Aliases>
+			<Alias>TechDataCommandType</Alias>
+		</Aliases>
+	</VarType>
+	<VarType Name="SquadDataType">
+	</VarType>
+	<VarType Name="EventType">
+	</VarType>
+	<VarType Name="TimeList" ListType="Time">
+	</VarType>
+	<VarType Name="DesignLineList" ListType="DesignLine">
+	</VarType>
+	<VarType Name="GameStatePredicate">
+	</VarType>
+	<VarType Name="FloatList" ListType="Float">
+	</VarType>
+	<VarType Name="UILocationMinigame">
+	</VarType>
+	<VarType Name="SquadFlag">
+	</VarType>
+	<VarType Name="FlashableUIItem">
+	</VarType>
+	<VarType Name="TalkingHead">
+	</VarType>
+	<VarType Name="Concept">
+	</VarType>
+	<VarType Name="ConceptList" ListType="Concept">
+	</VarType>
+	<VarType Name="UserClassType">
+	</VarType>
+</Variables>

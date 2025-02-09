@@ -94,6 +94,10 @@
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>effects.tsdef</TargetPath>
       </ContentWithTargetPath>
+	  <ContentWithTargetPath Include="HW1\Script\vars.tsdef">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <TargetPath>vars.tsdef</TargetPath>
+	  </ContentWithTargetPath>
   </ItemGroup>
 
   <ItemGroup>
