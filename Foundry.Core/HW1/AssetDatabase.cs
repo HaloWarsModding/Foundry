@@ -1,7 +1,6 @@
 ﻿using Chef.HW1.Map;
 using Chef.HW1.Script;
 using Chef.HW1.Unit;
-using Chef.HW1.Workspace;
 using DirectXTexNet;
 using System;
 using System.Collections.Generic;

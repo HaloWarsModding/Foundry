@@ -1,5 +1,25 @@
-﻿using System.Xml.Linq;
+﻿using System.Runtime.InteropServices;
+using System.Xml.Linq;
 
+int[] arr1 = new int[6] { 0, 1, 2, 3, 4, 5 };
+int[] func1(out int[] arr3)
+{
+    arr3 = arr1;
+    return arr1;
+}
+
+int[] arr3;
+int[] arr2 = func1(out arr3);
+arr2[0] = 100;
+Console.WriteLine(arr1[0]);
+
+Array.Resize(ref arr2, 10);
+Console.WriteLine(arr2.Length);
+Console.WriteLine(arr1.Length);
+Console.WriteLine(arr3.Length);
+
+
+#if false
 string type = @"Tech,TechStatus,Operator,ProtoObject,ObjectType,ProtoSquad,Sound,Entity,EntityList,Trigger,Time,Player,UILocation,UIEntity,Cost,AnimType,ActionStatus,Power,Bool,Float,Iterator,Team,PlayerList,TeamList,PlayerState,Objective,Unit,UnitList,Squad,SquadList,UIUnit,UISquad,UISquadList,String,MessageIndex,MessageJustify,MessagePoint,Color,ProtoObjectList,ObjectTypeList,ProtoSquadList,TechList,MathOperator,ObjectDataType,ObjectDataRelative,Civ,ProtoObjectCollection,Object,ObjectList,Group,RefCountType,UnitFlag,LOSType,EntityFilterSet,PopBucket,ListPosition,Diplomacy,ExposedAction,SquadMode,ExposedScript,KBBase,KBBaseList,DataScalar,KBBaseQuery,DesignLine,LocStringID,Leader,Cinematic,FlareType,CinematicTag,IconType,Difficulty,Integer,HUDItem,ControlType,UIButton,MissionType,MissionState,MissionTargetType,IntegerList,BidType,BidState,BuildingCommandState,Vector,VectorList,PlacementRule,KBSquad,KBSquadList,KBSquadQuery,AISquadAnalysis,AISquadAnalysisComponent,KBSquadFilterSet,ChatSpeaker,RumbleType,RumbleMotor,CommandType,SquadDataType,EventType,TimeList,DesignLineList,GameStatePredicate,FloatList,UILocationMinigame,SquadFlag,FlashableUIItem,TalkingHead,Concept,ConceptList,UserClassType";
 string[] types = type.Split(",");
 
@@ -54,3 +74,4 @@ foreach(string t in types)
 }
 
 doc.Save("vars.tsdef");
+#endif

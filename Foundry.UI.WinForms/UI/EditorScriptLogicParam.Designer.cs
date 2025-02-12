@@ -30,8 +30,7 @@
         {
             varlabel = new Label();
             vallabel = new Label();
-            varsel = new ComboBox();
-            valsel = new ComboBox();
+            varname = new TextBox();
             SuspendLayout();
             // 
             // varlabel
@@ -54,35 +53,25 @@
             vallabel.TabIndex = 1;
             vallabel.Text = "Value:";
             // 
-            // varsel
+            // varname
             // 
-            varsel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            varsel.FormattingEnabled = true;
-            varsel.Location = new Point(3, 26);
-            varsel.Name = "varsel";
-            varsel.Size = new Size(194, 28);
-            varsel.TabIndex = 2;
-            // 
-            // valsel
-            // 
-            valsel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            valsel.FormattingEnabled = true;
-            valsel.Location = new Point(3, 83);
-            valsel.Name = "valsel";
-            valsel.Size = new Size(194, 28);
-            valsel.TabIndex = 3;
+            varname.Location = new Point(3, 26);
+            varname.Name = "varname";
+            varname.Size = new Size(200, 27);
+            varname.TabIndex = 2;
             // 
             // EditorScriptLogicParam
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(valsel);
-            Controls.Add(varsel);
+            AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            Controls.Add(varname);
             Controls.Add(vallabel);
             Controls.Add(varlabel);
             Margin = new Padding(6);
             Name = "EditorScriptLogicParam";
-            Size = new Size(200, 114);
+            Size = new Size(206, 80);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -91,7 +80,6 @@
 
         private Label varlabel;
         private Label vallabel;
-        private ComboBox varsel;
-        private ComboBox valsel;
+        private TextBox varname;
     }
 }
