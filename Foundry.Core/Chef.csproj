@@ -34,13 +34,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="HW1\Workspace\**" />
     <Compile Remove="Util\ERA\**" />
     <Compile Remove="Views\**" />
-    <EmbeddedResource Remove="HW1\Workspace\**" />
     <EmbeddedResource Remove="Util\ERA\**" />
     <EmbeddedResource Remove="Views\**" />
-    <None Remove="HW1\Workspace\**" />
     <None Remove="Util\ERA\**" />
     <None Remove="Views\**" />
   </ItemGroup>

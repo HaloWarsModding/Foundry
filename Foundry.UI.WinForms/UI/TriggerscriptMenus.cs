@@ -249,7 +249,6 @@ namespace Chef.Win.UI
 
             return items;
         }
-
         public static IEnumerable<ToolStripItem> LogicAddItems(Trigger trigger, LogicSlot slot, int index, EventHandler onEdit = null)
         {
             List<ToolStripItem> items = new List<ToolStripItem>();

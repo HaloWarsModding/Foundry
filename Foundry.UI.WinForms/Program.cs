@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
 using Chef.HW1;
 using Chef.HW1.Script;
 using Chef.Win.UI;
@@ -47,7 +49,17 @@ namespace Chef.Win
             MainWindow window = new MainWindow();
 
 #if DEBUG
-            AssetDatabase.Index("E:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\test\\data\\triggerscripts", window.Assets);
+            Workspace.ScriptsNode root = new Workspace.ScriptsNode("E:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\extract");
+            foreach (var c in root.ChildNames())
+                Console.WriteLine(c);
+            return;
+
+            //Workspace.Workspace w = new Workspace.Workspace();
+            //Workspace.Triggerscript.Init(w, "E:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\test");
+            //float[] val = w.GetOrLoad(["unscdoodst.triggerscript", "vars", "vector", "HELLO"]);
+            //return;
+
+            //AssetDatabase.Index("E:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\test\\data\\triggerscripts", window.Assets);
             //AssetDatabase.Index("E:\\SteamLibrary\\steamapps\\common\\HaloWarsDE\\extract", window.Assets);
             //AssetDatabase.Index("E:\\repos\\emod", window.Assets);
 

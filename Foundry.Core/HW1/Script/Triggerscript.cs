@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using YAXLib;
@@ -197,5 +198,51 @@ namespace Chef.HW1.Script
         }
         public Dictionary<string, Trigger> Triggers { get; set; }
         public Dictionary<VarType, Dictionary<string, string>> Constants { get; set; }
+    }
+
+
+    public enum ConditionMode
+    {
+        AwaitAll,
+        AwaitAny,
+        TestAll,
+        TestAny
+    };
+    public struct Trigger2
+    {
+        public string Name;
+        public ConditionMode ConditionMode;
+        public bool Active;
+        public int EvalLimit;
+        public float EvalFrequency;
+        public Vector2 Position;
+    }
+    public struct Effect2
+    {
+        public int PrototypeIndex;
+
+        public int NextIndex;
+    }
+    public struct Condition2
+    {
+        public int PrototypeIndex;
+        public bool Invert;
+        public bool Async;
+        public int AsyncParameterKey;
+
+        public int NextIndex;
+    }
+
+    public class ProtoEffect
+    {
+        public int ParamCount { get; set; }
+        public VarType[] Types { get; private set; }
+    }
+
+    public class Script
+    {
+        public Trigger2[] Triggers { get; private set; }
+        public Effect2[] Effects { get; private set; }
+        public Condition2[] Conditions { get; private set; }
     }
 }
